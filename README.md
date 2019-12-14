@@ -19,3 +19,58 @@ losowane są przy pomocy osobnego modułu do rzutu kośćmi - wszystko to dzieje
 ---
 
 ### Strona testowa dostępna na: http://warhammer.usermd.net/
+
+---
+
+## Uruchomienie aplikacji w środowisku deweloperskim
+**1. Pobranie projektu z repozytorium**
+
+```
+git clone -b develop https://github.com/Baakoma/warhammer-character-creator.git
+```
+```
+cd warhammer-character-creator
+```
+
+**2. Pobranie zależności**
+
+```
+composer install
+```
+
+**3. Konfiguracja pliku .env**
+
+```
+cp .env.example .env
+```
+
+**4. Wygenerowanie klucza**
+
+```
+php artisan key:generate
+```
+
+**5. Migracja tabel w bazie danych i seed początkowych danych**
+
+```
+php artisan migrate --seed
+```
+
+**6. Uruchomienie serwera deweloperskiego**
+
+```
+php artisan serve
+```
+
+**Aplikacja powinna być dostępna na:**
+
+```
+http://localhost:8000
+```
+
+**Laravel Telescope powinien być dostępny na:**
+
+```
+http://localhost:8000/telescope
+```
+
