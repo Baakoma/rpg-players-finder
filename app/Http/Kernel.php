@@ -52,6 +52,14 @@ class Kernel extends HttpKernel
         ],
     ];
 
+    /**
+     * The application's route middleware.
+     *
+     * These middleware may be assigned to groups or used individually.
+     *
+     * @var array
+     */
+
     protected $routeMiddleware = [
         'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
@@ -63,6 +71,7 @@ class Kernel extends HttpKernel
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
+        'auth.jwt'  =>  \Tymon\JWTAuth\Http\Middleware\Authenticate::class, // JWT middleware
     ];
 
     protected $middlewarePriority = [
@@ -74,4 +83,6 @@ class Kernel extends HttpKernel
         SubstituteBindings::class,
         Authorize::class,
     ];
+
+
 }

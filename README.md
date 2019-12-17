@@ -54,6 +54,8 @@ php artisan key:generate
 
 ```
 php artisan migrate --seed
+
+php artisan jwt:secret
 ```
 
 **6. Uruchomienie serwera deweloperskiego**
