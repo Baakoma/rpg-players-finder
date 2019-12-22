@@ -83,6 +83,4 @@ class Kernel extends HttpKernel
         SubstituteBindings::class,
         Authorize::class,
     ];
-
-
 }

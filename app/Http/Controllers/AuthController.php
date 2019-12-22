@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use JWTAuth;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Tymon\JWTAuth\JWTAuth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Requests\RegistrationFormRequest;
 
-class APIController extends Controller
+class AuthController extends Controller
 {
     /**
      * @var bool
      */
     public $loginAfterSignUp = true;
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function login(Request $request)
+    public function login(Request $request): JsonResource
     {
         $input = $request->only('email', 'password');
         $token = null;
@@ -37,12 +34,7 @@ class APIController extends Controller
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResource
     {
         $this->validate($request, [
             'token' => 'required'
@@ -63,16 +55,13 @@ class APIController extends Controller
         }
     }
 
-    /**
-     * @param RegistrationFormRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function register(RegistrationFormRequest $request)
+    public function register(RegistrationFormRequest $request): JsonResource
     {
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
+        $user = new User([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password'])
+        ]);
         $user->save();
 
         if ($this->loginAfterSignUp) {
@@ -80,8 +69,7 @@ class APIController extends Controller
         }
 
         return response()->json([
-            'success'   =>  true,
-            'data'      =>  $user
-        ], 200);
+            'success' => true
+        ], 201);
     }
 }

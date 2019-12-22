@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use phpDocumentor\Reflection\Types\Mixed_;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -14,7 +13,6 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
@@ -23,7 +21,6 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * The attributes that should be hidden for arrays.
-     *
      * @var array
      */
     protected $hidden = [
@@ -32,38 +29,25 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * The attributes that should be cast to native types.
-     *
      * @var array
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
+    public function __construct(array $fillable)
+    {
+        parent::__construct();
+        $this->fillable = $fillable;
+    }
+
+    public function getJWTIdentifier(): Mixed_
     {
         return $this->getKey();
     }
 
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function tasks()
-    {
-        return $this->hasMany(Task::class);
     }
 }
