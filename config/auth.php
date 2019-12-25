@@ -13,6 +13,12 @@ return [
     |
     */
 
+//    'defaults' => [
+//        'guard' => 'api',
+//        'passwords' => 'users',
+//    ],
+
+
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
@@ -34,6 +40,15 @@ return [
     | Supported: "session", "token"
     |
     */
+
+
+//    'guards' => [
+//        'api' => [
+//            'driver' => 'token',
+//            'provider' => 'users',
+//            'hash' => false,
+//        ],
+//    ],
 
     'guards' => [
         'web' => [
@@ -66,15 +81,15 @@ return [
     */
 
     'providers' => [
-//        'users' => [
-//            'driver' => 'eloquent',
-//            'model' => App\Models\User;
-//        ],
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+//        'users' => [
+//             'driver' => 'database',
+//             'table' => 'users',
+//        ],
     ],
 
     /*
