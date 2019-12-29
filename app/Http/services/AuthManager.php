@@ -2,7 +2,7 @@
 
 namespace App\services;
 
-use App\Exceptions\ApIException;
+use App\Exceptions\ApiException;
 use App\Models\User;
 use JWTAuth;
 
@@ -13,13 +13,16 @@ class AuthManager
         $request['password']=bcrypt($request['password']);
         $user = new User($request);
         $user->save();
+        if($user==null){
+            throw new ApiException();
+        }
         return $user;
     }
 
     public function login(array $input): string
     {
         if (!$token = JWTAuth::attempt($input)) {
-            throw new ApIException();
+            throw new ApiException();
         }
         return $token;
     }

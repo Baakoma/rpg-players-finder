@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\ApIException;
+use App\Exceptions\ApiException;
 use App\Http\Requests\LogoutFormRequest;
 use App\services\AuthManager;
 use Illuminate\Http\JsonResponse;
@@ -17,12 +17,13 @@ class AuthController extends Controller
 {
     public function register(RegistrationFormRequest $request, AuthManager $auth): JsonResponse
     {
-        if ($user = $auth->register($request->only('name', 'email', 'password')) != null) {
+        try{
+            $user = $auth->register($request->only('name', 'email', 'password'));
             return response()->json([
                 'success' => true,
                 'data' => $user
             ], 200);
-        } else {
+        }catch (ApiException $exception){
             return response()->json([
                 'success' => false,],
                 Response::HTTP_UNAUTHORIZED);
@@ -37,7 +38,7 @@ class AuthController extends Controller
                 'success' => true,
                 'token' => $token,
             ]);
-        }catch (ApIException $exception) {
+        }catch (ApiException $exception) {
             return response()->json([
                 'success' => false,
                 'message' => 'Invalid Email or Password',
