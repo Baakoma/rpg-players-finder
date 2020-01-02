@@ -9,6 +9,6 @@ class Rpgsystem_user extends Model
     protected $table='rpgsystem_user';
 
     public function rpgsystems(){
-        return $this->belongsToMany(Rpgsystem::class);
+        return $this->belongsTo(Rpgsystem::class);
     }
 }

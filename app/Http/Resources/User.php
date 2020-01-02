@@ -20,7 +20,7 @@ class User extends JsonResource
             'birth_date' => $this->birth_date,
             'sex' => $this->sex,
             'description' => $this->description,
-            'rpgsystems' => Rpgsystem_user::collection($this->rpgsystem_user),
+            'rpgsystems' => Rpgsystem_user::collection($this->rpgsystem_user)
         ];
     }
 }
