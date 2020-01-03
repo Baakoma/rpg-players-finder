@@ -50,4 +50,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }
