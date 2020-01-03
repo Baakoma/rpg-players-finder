@@ -9,8 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
-    public const admin = 1;
-    public const user = 0;
+    public const ROLE_ADMIN = 1;
+    public const ROLE_USER = 0;
 
     /**
      * The attributes that are mass assignable.

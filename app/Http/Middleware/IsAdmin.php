@@ -11,7 +11,7 @@ class IsAdmin
 {
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role == User::admin) {
+        if (auth()->user()->role == User::ROLE_USER) {
             return $next($request);
         }
     }
