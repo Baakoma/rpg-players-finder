@@ -6,12 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateLanguagesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): Blueprint
     {
         Schema::create('languages', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -20,12 +15,7 @@ class CreateLanguagesTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): Blueprint
     {
         Schema::dropIfExists('languages');
     }

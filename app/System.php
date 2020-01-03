@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Language extends Model
+class System extends Model
 {
     public function profiles(): BelongsToMany
     {
