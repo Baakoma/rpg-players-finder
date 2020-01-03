@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
 use App\Http\Requests\LogoutFormRequest;
+use App\Models\User;
 use App\services\AuthManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegistrationFormRequest;
 use Illuminate\Http\Response;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 
 class AuthController extends Controller
@@ -60,5 +61,18 @@ class AuthController extends Controller
                 'message' => 'Sorry, the user cannot be logged out'
             ], 500);
         }
+    }
+
+    public function user(LogoutFormRequest $request):JsonResponse
+    {
+        return response()->json([
+            'message' => 'User'
+        ]);
+    }
+    public function admin(LogoutFormRequest $request):JsonResponse
+    {
+        return response()->json([
+            'message' => 'Admin'
+        ]);
     }
 }
