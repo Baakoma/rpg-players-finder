@@ -9,13 +9,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    public const ROLE_ADMIN = 1;
+    public const ROLE_USER = 0;
 
     /**
      * The attributes that are mass assignable.
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'role', 'name', 'email', 'password',
     ];
 
     /**
