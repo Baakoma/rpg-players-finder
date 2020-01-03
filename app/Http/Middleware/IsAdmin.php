@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 
 
-class Role
+class IsAdmin
 {
     public function handle(Request $request, Closure $next)
     {

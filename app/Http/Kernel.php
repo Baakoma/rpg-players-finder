@@ -4,7 +4,8 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckForMaintenanceMode;
 use App\Http\Middleware\EncryptCookies;
-use App\Http\Middleware\Role;
+use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\IsUser;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
@@ -75,7 +76,8 @@ class Kernel extends HttpKernel
         'verified' => EnsureEmailIsVerified::class,
 
         'auth.jwt'  =>  Authenticate::class, // JWT middleware
-        'role' => Role::class,
+        'is.admin' => IsAdmin::class,
+        'is.user' => IsUser::class,
     ];
 
     protected $middlewarePriority = [
