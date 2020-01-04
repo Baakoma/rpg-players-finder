@@ -12,3 +12,6 @@ Route::post('register', 'AuthController@register');
 Route::group(['middleware' => ['auth.jwt']], function () {
     Route::post('logout', 'AuthController@logout');
 });
+
+Route::get('/event/{id}', 'EventController@showEvent');
+//Route::put('/event/{id}/update', 'EventController@update');

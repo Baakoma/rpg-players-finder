@@ -5,13 +5,24 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
 {
-    public $publicAccess=true;
+    protected $table = 'events';
 
-    public function user()
+    protected $fillable = [
+        'name', 'user_id', 'max_users', 'access'
+    ];
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function userEvents(): HasMany
+    {
+        return $this->hasMany(UserEvent::class);
     }
 }
