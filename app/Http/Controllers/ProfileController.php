@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\ProfileResource;
-use Illuminate\Http\Request;
-use App\Models\{Profile, ProfileSystem};
+use App\Models\Profile;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
