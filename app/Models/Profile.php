@@ -7,6 +7,8 @@ use \Illuminate\Database\Eloquent\Relations\{BelongsToMany, hasMany};
 
 class Profile extends Model
 {
+    protected $fillable = ['name', 'birth_date', 'description'];
+
     public function languages(): BelongsToMany
     {
         return $this->belongsToMany(Language::class);

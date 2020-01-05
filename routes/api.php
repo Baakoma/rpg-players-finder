@@ -7,4 +7,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/profile/{id}', 'ProfileController@show');
+
 Route::put('/profile/{id}/update', 'ProfileController@update');

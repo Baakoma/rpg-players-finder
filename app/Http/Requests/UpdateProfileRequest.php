@@ -9,9 +9,9 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:20',
-            'birth_date' => 'date_format:d-m-Y|before:', //getdate()?
-            'description' => 'string|max:255',
+            'name' => 'required|string|between:1,20|unique:profiles,name',
+            'birth_date' => 'required|date_format:d-m-Y|before:today',
+            'description' => 'string|max:255|nullable',
         ];
     }
 }
