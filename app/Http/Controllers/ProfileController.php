@@ -24,20 +24,19 @@ class ProfileController extends Controller
             'description' => $request->description
         ]);
 
-        $systems = [];
         foreach ($request->systems as $system)
         {
-            $data = [$system['id'] => [
+            $systems[$system['id']] = [
                 'lore_knowledge_rating' => $system['lore_knowledge_rating'],
                 'mechanic_knowledge_rating' => $system['mechanic_knowledge_rating'],
                 'roleplay_rating' => $system['roleplay_rating'],
                 'experience' => $system['experience']
-            ]];
-            array_push($systems, $data);
+            ];
         }
 
-        $profile->systems()->sync($systems[0]); //przyjmuje tylko pojedyncze elementy, a nie może całej tablicy
-        $profile->save();                       //issue lvl 20
+        $profile->systems()->sync($systems);
+        $profile->save();
+
         return response()->json(
             new ProfileResource($profile)
         , 201);
