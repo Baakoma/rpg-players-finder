@@ -14,6 +14,7 @@ class EventResource extends JsonResource
             'name' => $this->name,
             'max_users' => $this->max_users,
             'public_access' => $this->public_access,
+            'is_active' => $this->is_active,
             'user_event' => UserEventResource::collection($this->userEvents)
         ];
     }

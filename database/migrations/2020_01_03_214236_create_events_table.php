@@ -13,7 +13,8 @@ class CreateEventsTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('user_id')->unique();
             $table->integer('max_users');
-            $table->boolean('public_access')->default(true);
+            $table->boolean('public_access');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
