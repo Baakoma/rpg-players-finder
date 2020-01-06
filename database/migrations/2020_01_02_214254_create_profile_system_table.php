@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateProfileSystemTable extends Migration
 {
-    public function up(): Blueprint
+    public function up(): void
     {
         Schema::create('profile_system', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -19,12 +19,20 @@ class CreateProfileSystemTable extends Migration
             $table->timestamps();
 
             $table->unique(['profile_id', 'system_id']);
-            $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
-            $table->foreign('system_id')->references('id')->on('systems')->onDelete('cascade');
+
+            $table->foreign('profile_id')
+                ->references('id')
+                ->on('profiles')
+                ->onDelete('cascade');
+
+            $table->foreign('system_id')
+                ->references('id')
+                ->on('systems')
+                ->onDelete('cascade');
         });
     }
 
-    public function down(): Blueprint
+    public function down(): void
     {
         Schema::dropIfExists('profile_system');
     }

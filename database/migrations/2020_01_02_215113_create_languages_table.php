@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateLanguagesTable extends Migration
 {
-    public function up(): Blueprint
+    public function up(): void
     {
         Schema::create('languages', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -15,7 +15,7 @@ class CreateLanguagesTable extends Migration
         });
     }
 
-    public function down(): Blueprint
+    public function down(): void
     {
         Schema::dropIfExists('languages');
     }

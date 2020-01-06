@@ -7,20 +7,17 @@ use Illuminate\Support\Facades\Schema;
 class CreateSystemsTable extends Migration
 {
 
-    public function up(): Blueprint
+    public function up(): void
     {
         Schema::create('systems', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->string('link1');
-            $table->string('link2');
-            $table->string('link3');
             $table->timestamps();
         });
     }
 
-    public function down(): Blueprint
+    public function down(): void
     {
         Schema::dropIfExists('systems');
     }

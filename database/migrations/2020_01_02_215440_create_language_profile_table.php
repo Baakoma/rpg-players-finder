@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateLanguageProfileTable extends Migration
 {
-    public function up(): Blueprint
+    public function up(): void
     {
         Schema::create('language_profile', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -15,12 +15,20 @@ class CreateLanguageProfileTable extends Migration
             $table->timestamps();
 
             $table->unique(['language_id', 'profile_id']);
-            $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
-            $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
+
+            $table->foreign('language_id')
+                ->references('id')
+                ->on('languages')
+                ->onDelete('cascade');
+
+            $table->foreign('profile_id')
+                ->references('id')
+                ->on('profiles')
+                ->onDelete('cascade');
         });
     }
 
-    public function down(): Blueprint
+    public function down(): void
     {
         Schema::dropIfExists('language_profile');
     }

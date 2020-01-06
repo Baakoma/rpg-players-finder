@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateProfilesTable extends Migration
 {
-    public function up(): Blueprint
+    public function up(): void
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -18,7 +18,7 @@ class CreateProfilesTable extends Migration
         });
     }
 
-    public function down(): Blueprint
+    public function down(): void
     {
         Schema::dropIfExists('profiles');
     }
