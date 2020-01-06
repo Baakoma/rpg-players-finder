@@ -17,8 +17,9 @@ class EventController extends Controller
         return new EventResource(Event::query()->findOrFail($id));
     }
 
-    public function createEvent(CreateEventFormRequest $request, EventManager $eventManager): JsonResponse
+    public function createEvents(CreateEventFormRequest $request, EventManager $eventManager): JsonResponse
     {
+        abort(400);
         try {
             $event = $eventManager->createEvent($request->only('name', 'user_id', 'max_users', 'public_access'));
             return response()->json([

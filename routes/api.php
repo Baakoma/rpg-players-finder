@@ -14,4 +14,4 @@ Route::group(['middleware' => ['auth.jwt']], function (): void {
 });
 
 Route::get('/event/{id}', 'EventController@showEvent');
-Route::post('/event/create', 'EventController@createEvent');
+Route::post('/event/create', 'EventController@createEvents');

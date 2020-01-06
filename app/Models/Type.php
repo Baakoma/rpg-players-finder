@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Type extends Model
 {
-    protected $table = 'type_event';
+    protected $table = 'type';
 
     protected $fillable = [
         'name', 'description'

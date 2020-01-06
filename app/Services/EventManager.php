@@ -11,9 +11,6 @@ class EventManager
     {
         $event=new Event($request);
         $event->save();
-        if($event==null){
-            throw new EventException();
-        }
         return $event;
     }
 }
