@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
@@ -13,7 +14,7 @@ class Event extends Model
     protected $table = 'events';
 
     protected $fillable = [
-        'name', 'user_id', 'max_users', 'access'
+        'name', 'user_id', 'max_users', 'public_access'
     ];
 
     public function user(): BelongsTo
@@ -24,5 +25,10 @@ class Event extends Model
     public function userEvents(): HasMany
     {
         return $this->hasMany(UserEvent::class);
+    }
+
+    public function types(): BelongsToMany
+    {
+        return $this->belongsToMany(Type::class);
     }
 }
