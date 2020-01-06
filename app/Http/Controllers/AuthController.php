@@ -61,17 +61,4 @@ class AuthController extends Controller
             ], 500);
         }
     }
-
-    public function user(LogoutFormRequest $request):JsonResponse
-    {
-        return response()->json([
-            'message' => 'User'
-        ]);
-    }
-    public function admin(LogoutFormRequest $request):JsonResponse
-    {
-        return response()->json([
-            'message' => 'Admin'
-        ]);
-    }
 }

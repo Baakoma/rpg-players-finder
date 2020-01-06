@@ -11,7 +11,7 @@ class IsUser
 {
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role == User::user) {
+        if (auth()->user()->role == User::ROLE_USER) {
             return $next($request);
         }
     }
