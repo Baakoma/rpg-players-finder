@@ -12,7 +12,6 @@ class UpdateEventRequest extends FormRequest
             'name' => 'required|string|between:1,30',
             'max_users' => 'required|integer',
             'public_access' => 'required|boolean',
-            'is_active' => 'required|boolean',
         ];
     }
 }

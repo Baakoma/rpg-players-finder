@@ -10,9 +10,10 @@ Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
 
 Route::post('/event/create', 'EventController@createEvent');
-Route::get('/event/{id}', 'EventController@showEvent');
-Route::get('/event/{id}/delete', 'EventController@deleteEvent');
-Route::post('/event/{id}/update', 'EventController@updateEvent');
+Route::get('/event/{event}', 'EventController@showEvent');
+Route::post('/event/{event}', 'EventController@updateEvent');
+Route::put('/event/{event}/close', 'EventController@closeEvent');
+Route::delete('/event/{event}', 'EventController@deleteEvent');
 
 Route::group(['middleware' => ['auth.jwt']], function (): void {
     Route::post('logout', 'AuthController@logout');

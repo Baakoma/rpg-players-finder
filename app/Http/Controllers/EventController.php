@@ -13,9 +13,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventController extends Controller
 {
-    public function showEvent(int $id): JsonResource
+    public function showEvent(Event $event): JsonResource
     {
-        return new EventResource(Event::query()->findOrFail($id));
+        return new EventResource($event);
     }
 
     public function createEvent(CreateEventFormRequest $request, EventManager $eventManager): JsonResponse
@@ -32,17 +32,21 @@ class EventController extends Controller
         }
     }
 
-    public function deleteEvent(int $id): JsonResource
+    public function deleteEvent(Event $event): JsonResource
     {
-        $event = $this->showEvent($id);
-        Event::query()->findOrFail($id)->delete();
-        return $event;
+        $event->delete();
+        return $this->showEvent($event);
     }
 
-    public function updateEvent(UpdateEventRequest $request, int $id): JsonResource
+    public function updateEvent(UpdateEventRequest $request, Event $event): JsonResource
     {
-        $event = Event::query()->findOrFail($id);
         $event->update($request->all());
-        return $this->showEvent($id);
+        return $this->showEvent($event);
+    }
+
+    public function closeEvent(Event $event): JsonResource
+    {
+        $event->update(['is_active' => 0]);
+        return $this->showEvent($event);
     }
 }
