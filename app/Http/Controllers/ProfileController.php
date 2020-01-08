@@ -26,7 +26,7 @@ class ProfileController extends Controller
 
         foreach ($request->systems as $system)
         {
-            $systems[$system['id']] = [
+            $systems[$system['system_id']] = [
                 'lore_knowledge_rating' => $system['lore_knowledge_rating'],
                 'mechanic_knowledge_rating' => $system['mechanic_knowledge_rating'],
                 'roleplay_rating' => $system['roleplay_rating'],
@@ -37,8 +37,6 @@ class ProfileController extends Controller
         $profile->systems()->sync($systems);
         $profile->save();
 
-        return response()->json(
-            new ProfileResource($profile)
-        , 201);
+        return (new ProfileResource($profile))->response()->setStatusCode(201);
     }
 }

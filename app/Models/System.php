@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class System extends Model
 {
+    protected $fillable = ['name', 'description'];
+
     public function profiles(): BelongsToMany
     {
-        return $this->belongsToMany(Profile::class)->withTimestamps();
+        return $this->belongsToMany(Profile::class);
     }
 
     public function links(): HasMany

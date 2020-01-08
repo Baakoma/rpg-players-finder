@@ -7,7 +7,10 @@ class SystemsTableSeeder extends Seeder
 {
     public function run(): void
     {
-        factory(System::class)->create(['name' => 'Warhammer']);
-        factory(System::class)->create(['name' => 'Zew Cthulhu']);
+        $names = ['Warhammer', 'Zew Cthulhu', 'Dungeons & Dragons'];
+        foreach ($names as $name){
+            factory(System::class)->create(['name' => $name]);
+        }
+
     }
 }
