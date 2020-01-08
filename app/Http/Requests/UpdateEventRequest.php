@@ -10,7 +10,7 @@ class UpdateEventRequest extends FormRequest
     {
         return [
             'name' => 'required|string|between:1,30',
-            'max_users' => 'required|integer',
+            'max_users' => 'required|numeric|min:2|max:10',
             'public_access' => 'required|boolean',
         ];
     }

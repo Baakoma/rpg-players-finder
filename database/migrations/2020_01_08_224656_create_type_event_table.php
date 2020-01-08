@@ -22,6 +22,6 @@ class CreateTypeEventTable extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('type_events');
+        Schema::dropIfExists('type_event');
     }
 }

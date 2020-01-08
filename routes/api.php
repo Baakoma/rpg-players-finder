@@ -11,7 +11,7 @@ Route::post('register', 'AuthController@register');
 
 Route::post('/event/create', 'EventController@createEvent');
 Route::get('/event/{event}', 'EventController@showEvent');
-Route::post('/event/{event}', 'EventController@updateEvent');
+Route::put('/event/{event}', 'EventController@updateEvent');
 Route::put('/event/{event}/close', 'EventController@closeEvent');
 Route::delete('/event/{event}', 'EventController@deleteEvent');
 

@@ -32,21 +32,18 @@ class EventController extends Controller
         }
     }
 
-    public function deleteEvent(Event $event): JsonResource
+    public function deleteEvent(Event $event, EventManager $eventManager): JsonResource
     {
-        $event->delete();
-        return $this->showEvent($event);
+        return new EventResource($eventManager->deleteEvent($event));
     }
 
-    public function updateEvent(UpdateEventRequest $request, Event $event): JsonResource
+    public function updateEvent(UpdateEventRequest $request, Event $event, EventManager $eventManager): JsonResource
     {
-        $event->update($request->all());
-        return $this->showEvent($event);
+        return new EventResource($eventManager->updateEvent($event, $request->only('name', 'max_users', 'public_access')));
     }
 
-    public function closeEvent(Event $event): JsonResource
+    public function closeEvent(Event $event, EventManager $eventManager): JsonResource
     {
-        $event->update(['is_active' => 0]);
-        return $this->showEvent($event);
+        return new EventResource($eventManager->closeEvent($event));
     }
 }

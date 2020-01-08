@@ -7,9 +7,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class UserEvent extends Model
+class Invitation extends Model
 {
-    protected $table = 'user_event';
+    protected $table = 'invitations';
 
     public function users(): BelongsToMany
     {

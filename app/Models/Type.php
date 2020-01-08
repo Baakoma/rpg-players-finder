@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Type extends Model
 {
-    protected $table = 'type';
+    protected $table = 'types';
 
     protected $fillable = [
         'name', 'description'
@@ -15,6 +15,6 @@ class Type extends Model
 
     public function events(): BelongsToMany
     {
-        return $this->belongsToMany(Event::class);
+        return $this->belongsToMany(Event::class,'type_event','type_id','event_id')->withTimestamps();
     }
 }

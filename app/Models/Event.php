@@ -22,13 +22,13 @@ class Event extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function userEvents(): HasMany
+    public function invitation(): HasMany
     {
-        return $this->hasMany(UserEvent::class);
+        return $this->hasMany(Invitation::class);
     }
 
     public function types(): BelongsToMany
     {
-        return $this->belongsToMany(Type::class);
+        return $this->belongsToMany(Type::class,'type_event','event_id','type_id')->withTimestamps();
     }
 }

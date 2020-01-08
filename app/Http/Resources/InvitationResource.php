@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserEventResource extends JsonResource
+class InvitationResource extends JsonResource
 {
     public function toArray($request): array
     {
