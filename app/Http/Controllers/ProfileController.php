@@ -10,19 +10,26 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProfileController extends Controller
 {
-    public function show(int $id): JsonResource
+    public function show(Profile $profile): JsonResource
     {
-        return new ProfileResource(Profile::query()->findOrFail($id));
+        return new ProfileResource($profile);
     }
 
-    public function update(UpdateProfileRequest $request, int $id): JsonResponse
+    public function update(UpdateProfileRequest $request, Profile $profile): JsonResponse
     {
-        $profile = Profile::query()->find($id);
         $profile->fill([
             'name' => $request->name,
             'birth_date' => $request->birth_date,
             'description' => $request->description
         ]);
+
+        $languages = [];
+        foreach ($request['languages'] as $language)
+        {
+            array_push($languages, $language['id']);
+        }
+
+        $profile->languages()->sync($languages);
 
         foreach ($request->systems as $system)
         {
