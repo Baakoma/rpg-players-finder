@@ -6,7 +6,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
@@ -14,7 +13,7 @@ class Event extends Model
     protected $table = 'events';
 
     protected $fillable = [
-        'name', 'user_id', 'max_users', 'public_access', 'is_active'
+        'name', 'user_id', 'max_users', 'public_access', 'is_active','type_id'
     ];
 
     public function user(): BelongsTo
@@ -27,8 +26,8 @@ class Event extends Model
         return $this->hasMany(Invitation::class);
     }
 
-    public function types(): BelongsToMany
+    public function type(): BelongsTo
     {
-        return $this->belongsToMany(Type::class,'type_event','event_id','type_id')->withTimestamps();
+        return $this->belongsTo(Type::class);
     }
 }

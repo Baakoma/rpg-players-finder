@@ -6,9 +6,9 @@ use App\Models\Event;
 
 class EventManager
 {
-    public function createEvent(array $createEventRequest): Event
+    public function createEvent(array $eventRequest): Event
     {
-        $event = new Event($createEventRequest);
+        $event = new Event($eventRequest);
         $event->save();
         return $event;
     }

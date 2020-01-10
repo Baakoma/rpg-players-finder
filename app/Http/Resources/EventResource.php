@@ -15,7 +15,7 @@ class EventResource extends JsonResource
             'max_users' => $this->max_users,
             'public_access' => $this->public_access,
             'is_active' => $this->is_active,
-            'types' => TypeResource::collection($this->types),
+            'type_id' => $this->type_id ,
             'invitations' => InvitationResource::collection($this->invitation),
         ];
     }

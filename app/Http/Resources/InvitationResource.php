@@ -10,7 +10,8 @@ class InvitationResource extends JsonResource
     {
         return [
             'event_id' => $this->event_id,
-            'user_id' => $this->user_id
+            'user_id' => $this->user_id,
+            'accepted' => $this->accepted,
         ];
     }
 }

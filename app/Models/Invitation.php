@@ -5,13 +5,18 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Invitation extends Model
 {
     protected $table = 'invitations';
 
-    public function users(): BelongsToMany
+    protected $fillable = [
+        'user_id', 'event_id',
+    ];
+
+    public function user(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
