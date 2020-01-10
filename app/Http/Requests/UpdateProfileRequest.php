@@ -12,7 +12,7 @@ class UpdateProfileRequest extends FormRequest
             'name' => 'required|string|between:1,20',
             'birth_date' => 'required|date_format:Y-m-d|before:today',
             'description' => 'string|max:255|nullable',
-            'languages.*.id' => 'required|numeric|exists:languages,id',
+            'languages.*.language_id' => 'required|numeric|exists:languages,id',
             'systems.*.system_id' => 'required|numeric|exists:systems,id',
             'systems.*.lore_knowledge_rating' => 'required|numeric|min:0|max:10',
             'systems.*.mechanic_knowledge_rating' => 'required|numeric|min:0|max:10',

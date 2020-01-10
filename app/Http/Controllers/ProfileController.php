@@ -23,14 +23,11 @@ class ProfileController extends Controller
             'description' => $request->description
         ]);
 
-        $languages = [];
-        foreach ($request['languages'] as $language)
-        {
-            array_push($languages, $language['id']);
-        }
+        $languages = $request->language;
+        $profile->languages()->detach();
+        $profile->languages()->attach($languages);
 
-        $profile->languages()->sync($languages);
-
+        $systems= [];
         foreach ($request->systems as $system)
         {
             $systems[$system['system_id']] = [
