@@ -5,7 +5,6 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Invitation extends Model
@@ -13,7 +12,7 @@ class Invitation extends Model
     protected $table = 'invitations';
 
     protected $fillable = [
-        'user_id', 'event_id',
+        'user_id', 'event_id','accepted',
     ];
 
     public function user(): BelongsToMany

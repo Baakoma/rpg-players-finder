@@ -17,8 +17,8 @@ Route::put('/event/{event}/close', 'EventController@close');
 Route::delete('/event/{event}', 'EventController@delete');
 
 Route::post('/event/{event}/invite','EventController@invite');
-Route::post('/event/{event}/removal','EventController@removal');
-Route::post('/event/{event}/accept','EventController@accept');
+Route::delete('/event/{event}/removal','EventController@removal');
+Route::put('/event/{event}/accept','EventController@accept');
 
 Route::group(['middleware' => ['auth.jwt']], function (): void {
     Route::post('logout', 'AuthController@logout');

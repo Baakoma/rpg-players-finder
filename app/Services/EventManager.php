@@ -13,13 +13,13 @@ class EventManager
         return $event;
     }
 
-    public function updateEvent(Event $event, array $updateEventRequest): Event
+    public function updateEvent(Event $event, array $updateRequest): Event
     {
-        $event->update($updateEventRequest);
+        $event->update($updateRequest);
         return $event;
     }
 
-    public function closeEvent(Event $event)
+    public function closeEvent(Event $event): Event
     {
         $event->update(['is_active' => 0]);
         return $event;
