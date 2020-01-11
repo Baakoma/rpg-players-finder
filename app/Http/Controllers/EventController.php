@@ -41,7 +41,8 @@ class EventController extends Controller
 
     public function update(UpdateEventRequest $request, Event $event, EventManager $eventManager): JsonResource
     {
-        return new EventResource($eventManager->updateEvent($event, $request->only('name', 'max_users', 'public_access', 'type_id')));
+        $updateRequest=$request->only('name', 'max_users', 'public_access', 'type_id');
+        return new EventResource($eventManager->updateEvent($event, $updateRequest));
     }
 
     public function close(Event $event): JsonResource
