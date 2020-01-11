@@ -55,7 +55,7 @@ class EventController extends Controller
         return new EventResource($event);
     }
 
-    public function removal(InviteEventFormRequest $request, Event $event, InvitationManager $invitationManager): JsonResource
+    public function leave(InviteEventFormRequest $request, Event $event, InvitationManager $invitationManager): JsonResource
     {
         $invitationManager->deleteUser($event->id, $request->user_id);
         return new EventResource($event);

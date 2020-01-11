@@ -12,7 +12,7 @@ class Invitation extends Model
     protected $table = 'invitations';
 
     protected $fillable = [
-        'user_id', 'event_id','accepted',
+        'user_id', 'event_id', 'accepted',
     ];
 
     public function user(): BelongsToMany

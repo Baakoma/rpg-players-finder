@@ -14,7 +14,6 @@ class CreateTypesTable extends Migration
             $table->string('description');
             $table->timestamps();
         });
-
     }
 
     public function down(): void

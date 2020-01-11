@@ -13,7 +13,7 @@ class Event extends Model
     protected $table = 'events';
 
     protected $fillable = [
-        'name', 'user_id', 'max_users', 'public_access', 'is_active','type_id'
+        'name', 'user_id', 'max_users', 'public_access', 'is_active', 'type_id'
     ];
 
     public function user(): BelongsTo
