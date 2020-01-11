@@ -4,17 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInvitationsTable extends Migration
+class CreateEventUsersTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('invitations', function (Blueprint $table) {
+        Schema::create('event_users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('user_id');
-            $table->boolean('accepted')->default(0);
-            $table->boolean('close')->default(0);
-            $table->timestamps();
 
             $table->unique(['event_id', 'user_id']);
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
@@ -24,6 +21,6 @@ class CreateInvitationsTable extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('invitations');
+        Schema::dropIfExists('event_users');
     }
 }

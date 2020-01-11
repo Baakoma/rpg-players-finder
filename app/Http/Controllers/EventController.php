@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\EventException;
 use App\Http\Requests\CreateEventFormRequest;
-use App\Http\Requests\InviteEventFormRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
 use App\Services\EventManager;
-use App\Services\InvitationManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -48,24 +46,6 @@ class EventController extends Controller
     public function close(Event $event): JsonResource
     {
         $event->close();
-        return new EventResource($event);
-    }
-
-    public function invite(InviteEventFormRequest $request, Event $event, InvitationManager $invitationManager): JsonResource
-    {
-        $invitationManager->invite($event, $request->user_id);
-        return new EventResource($event);
-    }
-
-    public function leave(InviteEventFormRequest $request, Event $event, InvitationManager $invitationManager): JsonResource
-    {
-        $invitationManager->deleteUser($event->id, $request->user_id);
-        return new EventResource($event);
-    }
-
-    public function accept(InviteEventFormRequest $request, Event $event, InvitationManager $invitationManager): JsonResource
-    {
-        $invitationManager->acceptInvitation($event->id, $request->user_id);
         return new EventResource($event);
     }
 }
