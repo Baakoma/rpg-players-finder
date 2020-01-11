@@ -44,9 +44,10 @@ class EventController extends Controller
         return new EventResource($eventManager->updateEvent($event, $request->only('name', 'max_users', 'public_access', 'type_id')));
     }
 
-    public function close(Event $event, EventManager $eventManager): JsonResource
+    public function close(Event $event): JsonResource
     {
-        return new EventResource($eventManager->closeEvent($event));
+        $event->close();
+        return new EventResource($event);
     }
 
     public function invite(InviteEventFormRequest $request, Event $event, InvitationManager $invitationManager): JsonResource

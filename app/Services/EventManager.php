@@ -19,12 +19,6 @@ class EventManager
         return $event;
     }
 
-    public function closeEvent(Event $event): Event
-    {
-        $event->update(['is_active' => 0]);
-        return $event;
-    }
-
     public function deleteEvent(Event $event): Event
     {
         $event->delete();

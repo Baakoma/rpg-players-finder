@@ -30,4 +30,9 @@ class Event extends Model
     {
         return $this->belongsTo(Type::class);
     }
+
+    public function close(): void
+    {
+        $this->update(['is_active' => 0]);
+    }
 }
