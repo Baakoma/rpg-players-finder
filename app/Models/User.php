@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -53,13 +54,18 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function event(): BelongsTo
+    public function events(): BelongsToMany
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsToMany(Event::class, 'event_users', 'user_id', 'event_id');
     }
 
-    public function invitation(): BelongsTo
+    public function event(): HasMany
     {
-        return $this->belongsTo(Invitation::class);
+        return $this->hasMany(Event::class, 'user_id', 'id');
+    }
+
+    public function invitation(): HasMany
+    {
+        return $this->hasMany(Invitation::class);
     }
 }

@@ -2,37 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ApiException;
 use App\Http\Requests\InviteEventFormRequest;
 use App\Http\Resources\InvitationResource;
-use App\Models\Event;
 use App\Models\Invitation;
 use App\Services\InvitationManager;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class InvitationController extends Controller
 {
-    public function show(Invitation $invitation,Event $event):JsonResource
+    public function show(Invitation $invitation): JsonResource
     {
         return new InvitationResource($invitation);
     }
 
-    public function create(InviteEventFormRequest $request, Event $event, InvitationManager $invitationManager): JsonResource
+    public function create(InviteEventFormRequest $request, InvitationManager $invitationManager): JsonResponse
     {
-        return new InvitationResource($invitationManager->creatInvitation($event->id, $request->user_id));
+        try {
+            $invitation = $invitationManager->creatInvitation($request->only('event_id', 'user_id'));
+            return response()->json([
+                'success' => true,
+                'data' => $invitation
+            ], 200);
+        } catch (ApiException $exception) {
+            return response()->json(['success' => false], 400);
+        }
     }
 
-    public function delete(Invitation $invitation, Event $event, InvitationManager $invitationManager): JsonResource
+    public function delete(Invitation $invitation, InvitationManager $invitationManager): JsonResource
     {
         return new InvitationResource($invitationManager->deleteInvitation($invitation));
     }
 
-    public function accept(Invitation $invitation, Event $event): JsonResource
+    public function accept(Invitation $invitation, InvitationManager $invitationManager): JsonResource
     {
-        $invitation->accept();
-        return new InvitationResource($invitation);
+        try {
+            return new InvitationResource($invitationManager->acceptInvitation($invitation));
+        } catch (ApiException $e) {
+            return response()->json(['success' => false], 422);
+        }
     }
 
-    public function close(Invitation $invitation, Event $event): JsonResource
+    public function close(Invitation $invitation): JsonResource
     {
         $invitation->close();
         return new InvitationResource($invitation);

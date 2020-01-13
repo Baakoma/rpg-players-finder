@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Invitation extends Model
 {
@@ -13,14 +13,14 @@ class Invitation extends Model
         'user_id', 'event_id', 'accepted', 'close',
     ];
 
-    public function user(): BelongsToMany
+    public function user(): BelongsTo
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function events(): BelongsToMany
+    public function event(): BelongsTo
     {
-        return $this->belongsToMany(Event::class);
+        return $this->belongsTo(Event::class);
     }
 
     public function close(): void
