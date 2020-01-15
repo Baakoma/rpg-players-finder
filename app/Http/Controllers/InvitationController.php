@@ -21,12 +21,9 @@ class InvitationController extends Controller
     {
         try {
             $invitation = $invitationManager->creatInvitation($request->only('event_id', 'user_id'));
-            return response()->json([
-                'success' => true,
-                'data' => $invitation
-            ], 200);
+            return response()->json(['data' => $invitation], 201);
         } catch (ApiException $exception) {
-            return response()->json(['success' => false], 400);
+            return response()->json(422);
         }
     }
 

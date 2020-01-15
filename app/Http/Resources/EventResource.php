@@ -16,8 +16,7 @@ class EventResource extends JsonResource
             'public_access' => $this->public_access,
             'is_active' => $this->is_active,
             'type_id' => $this->type,
-            'event_users_count' => $this->count(),
-            'event_users' => $this->users,
+            'players' => $this->players,
         ];
     }
 }

@@ -54,14 +54,14 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function events(): BelongsToMany
+    public function players(): BelongsToMany
     {
-        return $this->belongsToMany(Event::class, 'event_users', 'user_id', 'event_id');
+        return $this->belongsToMany(Event::class, 'players', 'user_id', 'event_id');
     }
 
     public function event(): HasMany
     {
-        return $this->hasMany(Event::class, 'user_id', 'id');
+        return $this->hasMany(Event::class, 'owner_id', 'id');
     }
 
     public function invitation(): HasMany

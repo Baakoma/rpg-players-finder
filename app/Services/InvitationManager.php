@@ -19,10 +19,10 @@ class InvitationManager
     {
         $event = Event::query()->findOrFail($invitation->event_id);
         if ($event->canAccess()) {
-            $event->users()->attach($invitation->user_id);
+            $event->players()->attach($invitation->user_id);
             $invitation->accept();
             return $invitation;
-        }else{
+        } else {
             throw new ApiException();
         }
     }

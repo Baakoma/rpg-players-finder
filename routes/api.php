@@ -15,11 +15,11 @@ Route::put('/event/{event}', 'EventController@update');
 Route::get('/event/{event}/close', 'EventController@close');
 Route::delete('/event/{event}', 'EventController@delete');
 
-Route::post('/invite', 'InvitationController@create');
-Route::get('/invite/{invitation}', 'InvitationController@show');
-Route::get('/invite/{invitation}/accept', 'InvitationController@accept');
-Route::get('/invite/{invitation}/close', 'InvitationController@close');
-Route::delete('/invite/{invitation}', 'InvitationController@delete');
+Route::post('/invitation', 'InvitationController@create');
+Route::get('/invitation/{invitation}', 'InvitationController@show');
+Route::get('/invitation/{invitation}/accept', 'InvitationController@accept');
+Route::get('/invitation/{invitation}/close', 'InvitationController@close');
+Route::delete('/invitation/{invitation}', 'InvitationController@delete');
 
 Route::group(['middleware' => ['auth.jwt']], function (): void {
     Route::post('logout', 'AuthController@logout');

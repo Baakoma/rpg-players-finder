@@ -12,12 +12,12 @@ class Event extends Model
     protected $table = 'events';
 
     protected $fillable = [
-        'name', 'user_id', 'max_users', 'public_access', 'is_active', 'type_id'
+        'name', 'owner_id', 'max_users', 'public_access', 'is_active', 'type_id'
     ];
 
-    public function users(): BelongsToMany
+    public function players(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'event_users', 'event_id', 'user_id');
+        return $this->belongsToMany(User::class, 'players', 'event_id', 'user_id');
     }
 
     public function user(): BelongsTo
@@ -40,9 +40,9 @@ class Event extends Model
         $this->update(['is_active' => 0]);
     }
 
-    public function count(): int
+    private function count(): int
     {
-        return $this->users()->count();
+        return $this->players()->count();
     }
 
     public function canAccess(): bool
