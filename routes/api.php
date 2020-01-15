@@ -6,12 +6,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('login', 'AuthController@login');
-Route::post('register', 'AuthController@register');
-
-Route::group(['middleware' => ['auth.jwt']], function () {
-    Route::post('logout', 'AuthController@logout');
-});
-
 Route::get('/profile/{profile}', 'ProfileController@show');
 Route::put('/profile/{profile}', 'ProfileController@update');
+
+//Route::post('/tickets/{profile}', 'TicketController@create');
+Route::get('/tickets/{profile}', 'TicketController@show');
+//Route::put('/tickets/{profile}', 'TicketController@update');
+//Route::delete('/tickets/{profile}', 'TicketController@destroy');

@@ -23,9 +23,8 @@ class ProfileController extends Controller
             'description' => $request->description
         ]);
 
-        $languages = $request->language;
         $profile->languages()->detach();
-        $profile->languages()->attach($languages);
+        $profile->languages()->attach($request->get('languages'));
 
         $systems= [];
         foreach ($request->systems as $system)
