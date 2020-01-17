@@ -13,11 +13,6 @@ class Invitation extends Model
         'player_id', 'event_id', 'accepted', 'close',
     ];
 
-    protected $casts = [
-        'created_at' => 'date_format',
-        'updated_at' => 'date_format',
-    ];
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class,'id');
