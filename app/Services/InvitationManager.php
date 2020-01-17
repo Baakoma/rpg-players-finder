@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Exceptions\ApiException;
-use App\Models\Event;
 use App\Models\Invitation;
 
 class InvitationManager
@@ -17,9 +16,9 @@ class InvitationManager
 
     public function acceptInvitation(Invitation $invitation): Invitation
     {
-        $event = Event::query()->findOrFail($invitation->event_id);
+        $event = $invitation->event;
         if ($event->canAccess()) {
-            $event->players()->attach($invitation->user_id);
+            $event->players()->attach($invitation->user);
             $invitation->accept();
             return $invitation;
         } else {

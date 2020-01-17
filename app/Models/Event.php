@@ -17,7 +17,7 @@ class Event extends Model
 
     public function players(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'players', 'event_id', 'user_id');
+        return $this->belongsToMany(User::class, 'event_players', 'event_id', 'player_id');
     }
 
     public function user(): BelongsTo
@@ -40,13 +40,8 @@ class Event extends Model
         $this->update(['is_active' => 0]);
     }
 
-    private function count(): int
-    {
-        return $this->players()->count();
-    }
-
     public function canAccess(): bool
     {
-        return ($this->max_users) - 1 > $this->count();
+        return ($this->max_users) - 1 > $this->players()->count();
     }
 }

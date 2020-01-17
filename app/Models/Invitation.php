@@ -10,12 +10,17 @@ class Invitation extends Model
     protected $table = 'invitations';
 
     protected $fillable = [
-        'user_id', 'event_id', 'accepted', 'close',
+        'player_id', 'event_id', 'accepted', 'close',
+    ];
+
+    protected $casts = [
+        'created_at' => 'date_format',
+        'updated_at' => 'date_format',
     ];
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'id');
     }
 
     public function event(): BelongsTo

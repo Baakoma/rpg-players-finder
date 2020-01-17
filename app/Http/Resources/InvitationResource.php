@@ -14,7 +14,7 @@ class InvitationResource extends JsonResource
             'user' => $this->user,
             'accepted' => $this->accepted,
             'close' => $this->close,
-            'date' => date($this->created_at),
+            'date' => $this->created_at
         ];
     }
 }

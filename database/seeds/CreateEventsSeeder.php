@@ -11,14 +11,14 @@ class CreateEventsSeeder extends Seeder
         $events = [
             [
                 'name' => 'event1',
-                'user_id' => '1',
+                'owner_id' => '1',
                 'max_users' => '7',
                 'public_access' => '1',
                 'type_id' => '1',
             ],
             [
                 'name' => 'event2',
-                'user_id' => '2',
+                'owner_id' => '2',
                 'max_users' => '5',
                 'public_access' => '0',
                 'type_id' => '2',

@@ -7,6 +7,7 @@ use App\Http\Requests\InviteEventFormRequest;
 use App\Http\Resources\InvitationResource;
 use App\Models\Invitation;
 use App\Services\InvitationManager;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,12 +20,8 @@ class InvitationController extends Controller
 
     public function create(InviteEventFormRequest $request, InvitationManager $invitationManager): JsonResponse
     {
-        try {
-            $invitation = $invitationManager->creatInvitation($request->only('event_id', 'user_id'));
-            return response()->json(['data' => $invitation], 201);
-        } catch (ApiException $exception) {
-            return response()->json(422);
-        }
+        $invitation = $invitationManager->creatInvitation($request->only('event_id', 'player_id'));
+        return response()->json(['data' => $invitation], 201);
     }
 
     public function delete(Invitation $invitation, InvitationManager $invitationManager): JsonResource
@@ -37,7 +34,9 @@ class InvitationController extends Controller
         try {
             return new InvitationResource($invitationManager->acceptInvitation($invitation));
         } catch (ApiException $e) {
-            return response()->json(['success' => false], 422);
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'exception' => ['You cannot accept the invitation'],
+            ]);
         }
     }
 

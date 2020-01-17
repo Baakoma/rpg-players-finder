@@ -21,7 +21,7 @@ class EventController extends Controller
     public function create(CreateEventFormRequest $request, EventManager $eventManager): JsonResponse
     {
         try {
-            $event = $eventManager->createEvent($request->only('name', 'user_id', 'max_users', 'public_access', 'type_id'));
+            $event = $eventManager->createEvent($request->only('name', 'owner_id', 'max_users', 'public_access', 'type_id'));
             return response()->json([
                 'success' => true,
                 'data' => $event

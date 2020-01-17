@@ -12,7 +12,7 @@ class InviteEventFormRequest extends FormRequest
     {
         return [
             'event_id' => 'required|numeric',
-            'user_id' => 'required|numeric',
+            'player_id' => 'required|numeric',
         ];
     }
 }

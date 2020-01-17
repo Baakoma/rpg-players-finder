@@ -4,17 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlayersTable extends Migration
+class CreateEventPlayersTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('players', function (Blueprint $table) {
+        Schema::create('event_players', function (Blueprint $table) {
             $table->unsignedBigInteger('event_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('player_id');
 
-            $table->unique(['event_id', 'user_id']);
+            $table->unique(['event_id', 'player_id']);
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('player_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
