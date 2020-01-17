@@ -40,8 +40,8 @@ class Event extends Model
         $this->update(['is_active' => 0]);
     }
 
-    public function canAccess(): bool
+    public function canAccess(User $user): bool
     {
-        return ($this->max_users) - 1 > $this->players()->count();
+        return ($this->max_users) - 1 > $this->players()->count() && !$this->players->contains($user);
     }
 }

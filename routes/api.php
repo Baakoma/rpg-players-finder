@@ -17,8 +17,8 @@ Route::delete('/event/{event}', 'EventController@delete');
 
 Route::post('/invitation', 'InvitationController@create');
 Route::get('/invitation/{invitation}', 'InvitationController@show');
-Route::get('/invitation/{invitation}/accept', 'InvitationController@accept');
-Route::get('/invitation/{invitation}/close', 'InvitationController@close');
+Route::post('/invitation/{invitation}/accept', 'InvitationController@accept');
+Route::post('/invitation/{invitation}/close', 'InvitationController@close');
 Route::delete('/invitation/{invitation}', 'InvitationController@delete');
 
 Route::group(['middleware' => ['auth.jwt']], function (): void {

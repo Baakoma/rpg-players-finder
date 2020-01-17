@@ -8,6 +8,8 @@ use App\Http\Resources\InvitationResource;
 use App\Models\Invitation;
 use App\Services\InvitationManager;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 
 class InvitationController extends Controller
@@ -30,13 +32,7 @@ class InvitationController extends Controller
 
     public function accept(Invitation $invitation, InvitationManager $invitationManager): JsonResource
     {
-        try {
-            return new InvitationResource($invitationManager->acceptInvitation($invitation));
-        } catch (ApiException $e) {
-            throw ValidationException::withMessages([
-                'exception' => ['You cannot accept the invitation'],
-            ]);
-        }
+        return new InvitationResource($invitationManager->acceptInvitation($invitation));
     }
 
     public function close(Invitation $invitation): JsonResource

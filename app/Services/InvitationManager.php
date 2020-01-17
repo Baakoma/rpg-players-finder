@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Exceptions\ApiException;
 use App\Models\Invitation;
+use Illuminate\Validation\ValidationException;
 
 class InvitationManager
 {
@@ -17,12 +17,14 @@ class InvitationManager
     public function acceptInvitation(Invitation $invitation): Invitation
     {
         $event = $invitation->event;
-        if ($event->canAccess()) {
+        if ($event->canAccess($invitation->user)) {
             $event->players()->attach($invitation->user);
             $invitation->accept();
             return $invitation;
         } else {
-            throw new ApiException();
+            throw ValidationException::withMessages([
+                'exception' => ['You cannot accept the invitation'],
+            ]);
         }
     }
 
