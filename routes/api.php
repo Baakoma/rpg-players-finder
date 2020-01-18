@@ -24,6 +24,12 @@ Route::get('/system', 'SystemController@index');
 Route::put('/system/{system}', 'SystemController@update');
 Route::delete('/system/{system}', 'SystemController@delete');
 
+Route::post('/languages', 'LanguageController@create');
+Route::get('/languages', 'LanguageController@index');
+Route::get('/languages/{language}', 'LanguageController@show');
+Route::put('/languages/{language}', 'LanguageController@update');
+Route::delete('/languages/{language}', 'LanguageController@delete');
+
 Route::group(['middleware' => ['auth.jwt']], function (): void {
     Route::post('logout', 'AuthController@logout');
 });
