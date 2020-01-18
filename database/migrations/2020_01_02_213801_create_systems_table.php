@@ -12,7 +12,7 @@ class CreateSystemsTable extends Migration
         Schema::create('systems', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('description');
+            $table->string('description', 500)->nullable();
             $table->timestamps();
         });
     }

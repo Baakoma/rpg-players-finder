@@ -23,13 +23,12 @@ class ProfileController extends Controller
             'description' => $request->description
         ]);
 
-        $profile->languages()->detach();
-        $profile->languages()->attach($request->get('languages'));
+        $profile->languages()->sync($request->get('languages'));
 
-        $systems= [];
+        $systems = [];
         foreach ($request->systems as $system)
         {
-            $systems[$system['system_id']] = [
+            $systems[$system['id']] = [
                 'lore_knowledge_rating' => $system['lore_knowledge_rating'],
                 'mechanic_knowledge_rating' => $system['mechanic_knowledge_rating'],
                 'roleplay_rating' => $system['roleplay_rating'],

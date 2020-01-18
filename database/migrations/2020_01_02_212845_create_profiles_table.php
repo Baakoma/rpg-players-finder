@@ -13,7 +13,7 @@ class CreateProfilesTable extends Migration
             $table->string('name');
             $table->date('birth_date');
             $table->integer('sex');
-            $table->string('description');
+            $table->string('description', 500)->nullable();
             $table->timestamps();
         });
     }
