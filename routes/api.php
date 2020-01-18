@@ -18,11 +18,11 @@ Route::delete('/invitation/{invitation}', 'InvitationController@delete');
 Route::post('/invitation/{invitation}/accept', 'InvitationController@accept');
 Route::post('/invitation/{invitation}/close', 'InvitationController@close');
 
-Route::post('/system', 'SystemController@create');
-Route::get('/system/{system}', 'SystemController@show');
-Route::get('/system', 'SystemController@index');
-Route::put('/system/{system}', 'SystemController@update');
-Route::delete('/system/{system}', 'SystemController@delete');
+Route::post('/systems', 'SystemController@create');
+Route::get('/systems/{system}', 'SystemController@show');
+Route::get('/systems', 'SystemController@index');
+Route::put('/systems/{system}', 'SystemController@update');
+Route::delete('/systems/{system}', 'SystemController@delete');
 
 Route::post('/languages', 'LanguageController@create');
 Route::get('/languages', 'LanguageController@index');
