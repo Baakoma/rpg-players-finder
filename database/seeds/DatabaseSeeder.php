@@ -9,7 +9,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LanguagesTableSeeder::class,
             SystemsTableSeeder::class,
-            ProfilesTableSeeder::class
+            TypesTableSeeder::class,
+            ProfilesTableSeeder::class,
+            TicketsTableSeeder::class
         ]);
     }
 }
