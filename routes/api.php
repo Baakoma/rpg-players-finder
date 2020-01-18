@@ -9,7 +9,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/profile/{profile}', 'ProfileController@show');
 Route::put('/profile/{profile}', 'ProfileController@update');
 
-//Route::post('/tickets/{profile}', 'TicketController@create');
-Route::get('/tickets/{profile}', 'TicketController@show');
-//Route::put('/tickets/{profile}', 'TicketController@update');
-//Route::delete('/tickets/{profile}', 'TicketController@destroy');
+Route::post('/ticket/{profile}', 'TicketController@create');
+Route::get('/ticket/{profile}', 'TicketController@show');
+Route::put('/ticket/{profile}', 'TicketController@update');
+Route::delete('/ticket/{profile}', 'TicketController@destroy');
