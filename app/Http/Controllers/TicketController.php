@@ -17,18 +17,18 @@ class TicketController extends Controller
             'description' => $request->description
         ]);
 
-        $ticket = Ticket::query()->where('profile_id', $profile->id)->firstOrFail();
+        $ticket = $profile->ticket;
 
         $ticket->systems()->sync($request->get('systems'));
         $ticket->types()->sync($request->get('types'));
         $ticket->languages()->sync($request->get('languages'));
 
-        return (new TicketResource($profile))->response()->setStatusCode(201);
+        return (new TicketResource($ticket))->response()->setStatusCode(201);
     }
 
     public function show(Profile $profile): JsonResource
     {
-        return new TicketResource($profile);
+        return new TicketResource($profile->ticket());
     }
 
     public function update(TicketRequest $request, Profile $profile): JsonResponse
@@ -38,13 +38,13 @@ class TicketController extends Controller
             'description' => $request->description
         ]);
 
-        $ticket = Ticket::query()->where('profile_id', $profile->id)->firstOrFail();
+        $ticket = $profile->ticket;
 
         $ticket->systems()->sync($request->get('systems'));
         $ticket->types()->sync($request->get('types'));
         $ticket->languages()->sync($request->get('languages'));
 
-        return (new TicketResource($profile))->response()->setStatusCode(201);
+        return (new TicketResource($ticket))->response()->setStatusCode(201);
     }
 
     public function destroy(Profile $profile): void
