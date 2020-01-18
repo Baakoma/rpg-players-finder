@@ -19,7 +19,7 @@ class InvitationManager
         $event = $invitation->event;
         if ($event->canAccess($invitation->user)) {
             $event->players()->attach($invitation->user);
-            $invitation->accept();
+            $invitation->acceptInvitation();
             return $invitation;
         } else {
             throw ValidationException::withMessages([

@@ -13,6 +13,7 @@ class UpdateEventRequest extends FormRequest
             'max_users' => 'required|numeric|min:2|max:10',
             'public_access' => 'required|boolean',
             'type_id' => 'required|numeric',
+            'system_id' => 'required|numeric',
         ];
     }
 }

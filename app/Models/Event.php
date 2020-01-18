@@ -12,7 +12,7 @@ class Event extends Model
     protected $table = 'events';
 
     protected $fillable = [
-        'name', 'owner_id', 'max_users', 'public_access', 'is_active', 'type_id'
+        'name', 'owner_id', 'max_users', 'public_access', 'is_active', 'type_id', 'system_id'
     ];
 
     public function players(): BelongsToMany
@@ -22,12 +22,12 @@ class Event extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'owner_id', 'id');
     }
 
     public function invitation(): HasMany
     {
-        return $this->hasMany(Invitation::class);
+        return $this->hasMany(Invitation::class, 'id');
     }
 
     public function type(): BelongsTo
@@ -35,7 +35,12 @@ class Event extends Model
         return $this->belongsTo(Type::class);
     }
 
-    public function close(): void
+    public function system(): BelongsTo
+    {
+        return $this->belongsTo(System::class);
+    }
+
+    public function closeEvent(): void
     {
         $this->update(['is_active' => 0]);
     }

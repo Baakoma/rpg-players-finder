@@ -37,7 +37,7 @@ class InvitationController extends Controller
 
     public function close(Invitation $invitation): JsonResource
     {
-        $invitation->close();
+        $invitation->closeInvitation();
         return new InvitationResource($invitation);
     }
 }

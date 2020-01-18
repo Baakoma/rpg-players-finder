@@ -15,6 +15,7 @@ class CreateEventsSeeder extends Seeder
                 'max_users' => '7',
                 'public_access' => '1',
                 'type_id' => '1',
+                'system_id' => '1',
             ],
             [
                 'name' => 'event2',
@@ -22,6 +23,7 @@ class CreateEventsSeeder extends Seeder
                 'max_users' => '5',
                 'public_access' => '0',
                 'type_id' => '2',
+                'system_id' => '2',
             ]
         ];
         foreach ($events as $event) {

@@ -21,14 +21,14 @@ class EventController extends Controller
     public function create(CreateEventFormRequest $request, EventManager $eventManager): JsonResponse
     {
         try {
-            $event = $eventManager->createEvent($request->only('name', 'owner_id', 'max_users', 'public_access', 'type_id'));
+            $createRequest = $request->only('name', 'owner_id', 'max_users', 'public_access', 'type_id', 'system_id');
+            $event = $eventManager->createEvent($createRequest);
             return response()->json([
                 'success' => true,
                 'data' => $event
             ], 200);
         } catch (EventException $exception) {
-            return response()->json([
-                'success' => false,], 400);
+            return response()->json(['success' => false], 400);
         }
     }
 
@@ -39,13 +39,13 @@ class EventController extends Controller
 
     public function update(UpdateEventRequest $request, Event $event, EventManager $eventManager): JsonResource
     {
-        $updateRequest = $request->only('name', 'max_users', 'public_access', 'type_id');
+        $updateRequest = $request->only('name', 'max_users', 'public_access', 'type_id', 'system_id');
         return new EventResource($eventManager->updateEvent($event, $updateRequest));
     }
 
     public function close(Event $event): JsonResource
     {
-        $event->close();
+        $event->closeEvent();
         return new EventResource($event);
     }
 }

@@ -15,7 +15,8 @@ class EventResource extends JsonResource
             'max_users' => $this->max_users,
             'public_access' => $this->public_access,
             'is_active' => $this->is_active,
-            'type_id' => $this->type,
+            'type' => $this->type,
+            'system' => $this->system,
             'players' => $this->players,
         ];
     }

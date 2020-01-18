@@ -8,11 +8,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class System extends Model
 {
+    protected $table = 'systems';
+
     protected $fillable = ['name', 'description'];
 
     public function profiles(): BelongsToMany
     {
         return $this->belongsToMany(Profile::class);
+    }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
     }
 
     public function links(): HasMany
