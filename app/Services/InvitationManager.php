@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Invitation;
-use Illuminate\Validation\ValidationException;
 
 class InvitationManager
 {
@@ -11,21 +10,19 @@ class InvitationManager
     {
         $invitation = new Invitation($invitationData);
         $invitation->save();
+        $invitation->refresh();
         return $invitation;
     }
 
     public function acceptInvitation(Invitation $invitation): Invitation
     {
         $event = $invitation->event;
-        if ($event->canAccess($invitation->user)) {
-            $event->players()->attach($invitation->user);
-            $invitation->acceptInvitation();
-            return $invitation;
-        } else {
-            throw ValidationException::withMessages([
-                'exception' => ['You cannot accept the invitation'],
-            ]);
+        if (!$event->canAccess($invitation->user)) {
+            abort(400, 'You cannot accept the invitation');
         }
+        $event->players()->attach($invitation->user);
+        $invitation->acceptInvitation();
+        return $invitation;
     }
 
     public function deleteInvitation(Invitation $invitation): Invitation

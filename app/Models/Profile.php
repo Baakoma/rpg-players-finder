@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use \Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Profile extends Model
 {
-    protected $fillable = ['name', 'birth_date', 'description'];
+    protected $table = 'profiles';
+
+    protected $fillable = [
+        'name', 'birth_date', 'description'
+    ];
 
     public function languages(): BelongsToMany
     {

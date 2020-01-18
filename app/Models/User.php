@@ -14,26 +14,14 @@ class User extends Authenticatable implements JWTSubject
     public const ROLE_ADMIN = 1;
     public const ROLE_USER = 0;
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array
-     */
     protected $fillable = [
         'role', 'name', 'email', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -53,12 +41,12 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function players(): BelongsToMany
+    public function events(): BelongsToMany
     {
         return $this->belongsToMany(Event::class, 'event_players', 'player_id', 'event_id');
     }
 
-    public function events(): HasMany
+    public function ownerEvents(): HasMany
     {
         return $this->hasMany(Event::class, 'id');
     }

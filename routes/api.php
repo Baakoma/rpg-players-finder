@@ -3,8 +3,8 @@
 Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
 
-Route::get('/profile/{profile}', 'ProfileController@show');
-Route::put('/profile/{profile}', 'ProfileController@update');
+Route::get('/profiles/{profile}', 'ProfileController@show');
+Route::put('/profiles/{profile}', 'ProfileController@update');
 
 Route::post('/events', 'EventController@create');
 Route::get('/events/{event}', 'EventController@show');

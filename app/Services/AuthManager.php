@@ -10,10 +10,10 @@ class AuthManager
 {
     public function register(array $request): User
     {
-        $request['password']=bcrypt($request['password']);
+        $request['password'] = bcrypt($request['password']);
         $user = new User($request);
         $user->save();
-        if($user==null){
+        if ($user == null) {
             throw new ApiException();
         }
         return $user;

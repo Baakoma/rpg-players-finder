@@ -26,9 +26,8 @@ class ProfileController extends Controller
         $profile->languages()->detach();
         $profile->languages()->attach($request->get('languages'));
 
-        $systems= [];
-        foreach ($request->systems as $system)
-        {
+        $systems = [];
+        foreach ($request->systems as $system) {
             $systems[$system['system_id']] = [
                 'lore_knowledge_rating' => $system['lore_knowledge_rating'],
                 'mechanic_knowledge_rating' => $system['mechanic_knowledge_rating'],

@@ -16,7 +16,6 @@ class CreateInvitationsTable extends Migration
             $table->boolean('close')->default(0);
             $table->timestamps();
 
-            $table->unique(['event_id', 'player_id']);
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->foreign('player_id')->references('id')->on('users')->onDelete('cascade');
         });

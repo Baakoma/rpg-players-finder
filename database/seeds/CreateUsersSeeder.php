@@ -3,27 +3,18 @@
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class CreateUsersSeeder extends Seeder
+class  CreateUsersSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        $users = [
-            [
-                'name' => 'Admin',
-                'email' => 'admin@gmmmm.com',
-                'role' => '1',
-                'password' => bcrypt('123456'),
-            ],
-            [
-                'name' => 'User',
-                'email' => 'user@gmmmm.com',
-                'role' => '0',
-                'password' => bcrypt('123456'),
-            ],
+        $admin = [
+            'name' => 'Admin',
+            'email' => 'admin@gmmmm.com',
+            'role' => '1',
+            'password' => bcrypt('123456'),
         ];
 
-        foreach ($users as $user) {
-            User::create($user);
-        }
+        factory(User::class, 5)->create();
+        factory(User::class)->create($admin);
     }
 }

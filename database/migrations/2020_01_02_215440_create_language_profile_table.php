@@ -12,7 +12,6 @@ class CreateLanguageProfileTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('language_id');
             $table->unsignedBigInteger('profile_id');
-            $table->timestamps();
 
             $table->unique(['language_id', 'profile_id']);
 

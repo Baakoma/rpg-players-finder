@@ -13,6 +13,11 @@ class Invitation extends Model
         'player_id', 'event_id', 'accepted', 'close',
     ];
 
+    protected $casts = [
+        'accepted' => 'boolean',
+        'close' => 'boolean',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'player_id');

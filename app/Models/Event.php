@@ -15,6 +15,11 @@ class Event extends Model
         'name', 'owner_id', 'max_users', 'public_access', 'is_active', 'type_id', 'system_id'
     ];
 
+    protected $casts = [
+        'is_active' => 'boolean',
+        'public_access' => 'boolean',
+    ];
+
     public function players(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'event_players', 'event_id', 'player_id');

@@ -19,7 +19,6 @@ class CreateEventsTable extends Migration
             $table->unsignedBigInteger('system_id');
             $table->timestamps();
 
-            $table->unique(['owner_id', 'type_id', 'system_id']);
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
             $table->foreign('system_id')->references('id')->on('systems')->onDelete('cascade');
