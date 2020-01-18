@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -49,5 +52,20 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims(): array
     {
         return [];
+    }
+
+    public function players(): BelongsToMany
+    {
+        return $this->belongsToMany(Event::class, 'event_players', 'player_id', 'event_id');
+    }
+
+    public function event(): HasMany
+    {
+        return $this->hasMany(Event::class, 'owner_id', 'id');
+    }
+
+    public function invitation(): HasMany
+    {
+        return $this->hasMany(Invitation::class);
     }
 }
