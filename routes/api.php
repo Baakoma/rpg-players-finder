@@ -3,6 +3,10 @@
 Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
 
+Route::group(['middleware' => ['auth.jwt']], function (): void {
+    Route::post('logout', 'AuthController@logout');
+});
+
 Route::get('/profile/{profile}', 'ProfileController@show');
 Route::put('/profile/{profile}', 'ProfileController@update');
 
@@ -18,6 +22,7 @@ Route::delete('/invitation/{invitation}', 'InvitationController@delete');
 Route::post('/invitation/{invitation}/accept', 'InvitationController@accept');
 Route::post('/invitation/{invitation}/close', 'InvitationController@close');
 
-Route::group(['middleware' => ['auth.jwt']], function (): void {
-    Route::post('logout', 'AuthController@logout');
-});
+Route::post('/ticket/{profile}', 'TicketController@create');
+Route::get('/ticket/{profile}', 'TicketController@show');
+Route::put('/ticket/{profile}', 'TicketController@update');
+Route::delete('/ticket/{profile}', 'TicketController@destroy');
