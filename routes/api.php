@@ -18,6 +18,12 @@ Route::delete('/invitation/{invitation}', 'InvitationController@delete');
 Route::post('/invitation/{invitation}/accept', 'InvitationController@accept');
 Route::post('/invitation/{invitation}/close', 'InvitationController@close');
 
+Route::post('/system', 'SystemController@create');
+Route::get('/system/{system}', 'SystemController@show');
+Route::get('/system', 'SystemController@index');
+Route::put('/system/{system}', 'SystemController@update');
+Route::delete('/system/{system}', 'SystemController@delete');
+
 Route::group(['middleware' => ['auth.jwt']], function (): void {
     Route::post('logout', 'AuthController@logout');
 });
