@@ -11,19 +11,13 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('profile_id');
-            $table->unsignedBigInteger('system_id');
             $table->boolean('camera');
-            $table->string('description');
+            $table->string('description', 500)->nullable();
             $table->timestamps();
 
             $table->foreign('profile_id')
                 ->references('id')
                 ->on('profiles')
-                ->onDelete('cascade');
-
-            $table->foreign('system_id')
-                ->references('id')
-                ->on('systems')
                 ->onDelete('cascade');
         });
     }
