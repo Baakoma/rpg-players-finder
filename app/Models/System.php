@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class System extends Model
 {
+    protected $table = 'systems';
+
     protected $fillable = ['name', 'description'];
 
     public function profiles(): BelongsToMany

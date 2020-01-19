@@ -10,10 +10,10 @@ class CreateEventFormRequest extends FormRequest
     {
         return [
             'name' => 'required|string|between:1,30',
-            'owner_id' => 'required|integer|unique:events',
+            'owner_id' => 'required|integer|exists:users,id',
             'max_users' => 'required|numeric|min:2|max:10',
             'public_access' => 'required|boolean',
-            'type_id' => 'required|numeric',
+            'type_id' => 'required|numeric|exists:types,id',
         ];
     }
 }

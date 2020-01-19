@@ -1,12 +1,10 @@
 <?php
 
-
 namespace App\Http\Requests;
-
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SystemFormRequest extends FormRequest
+class UpdateTypeFormRequest extends FormRequest
 {
     public function rules(): array
     {

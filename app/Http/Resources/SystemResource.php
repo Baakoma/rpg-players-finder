@@ -14,6 +14,7 @@ class SystemResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'links' => $this->links,
         ];
     }
 }
