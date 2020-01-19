@@ -11,20 +11,13 @@ class SystemManager
         $system = new System($systemData);
         $system->save();
         $system->links()->createMany($linksData);
-        $system->save();
-        $system->refresh();
         return $system;
     }
 
     public function updateSystem(System $system, array $updateSystem, array $updateLinks): System
     {
         $system->update($updateSystem);
-        foreach ($updateLinks as $updateLink) {
-            $system->links()->update([
-                'name' => $updateLink['name'],
-                'url' => $updateLink['url'],
-            ]);
-        }
+        $system->syncLinks($updateLinks);
         $system->refresh();
         return $system;
     }
