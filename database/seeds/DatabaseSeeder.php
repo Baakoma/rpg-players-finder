@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
             SystemsTableSeeder::class,
             TypesTableSeeder::class,
             CreateUsersSeeder::class,
-            ProfilesTableSeeder::class,
+            //ProfilesTableSeeder::class,
             CreateTypeSeeder::class,
             CreateEventsSeeder::class,
             TicketsTableSeeder::class

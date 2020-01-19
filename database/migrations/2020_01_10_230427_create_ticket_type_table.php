@@ -12,7 +12,6 @@ class CreateTicketTypeTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('ticket_id');
             $table->unsignedBigInteger('type_id');
-            $table->timestamps();
 
             $table->unique(['ticket_id', 'type_id']);
 

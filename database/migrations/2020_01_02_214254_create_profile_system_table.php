@@ -16,7 +16,6 @@ class CreateProfileSystemTable extends Migration
             $table->integer('mechanic_knowledge_rating');
             $table->integer('roleplay_rating');
             $table->integer('experience');
-            $table->timestamps();
 
             $table->unique(['profile_id', 'system_id']);
 
