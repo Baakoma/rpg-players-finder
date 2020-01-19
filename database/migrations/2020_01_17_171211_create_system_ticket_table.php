@@ -12,7 +12,6 @@ class CreateSystemTicketTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('system_id');
             $table->unsignedBigInteger('ticket_id');
-            $table->timestamps();
 
             $table->unique(['system_id', 'ticket_id']);
 

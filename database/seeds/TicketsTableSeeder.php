@@ -10,7 +10,7 @@ class TicketsTableSeeder extends Seeder
         $systems = System::all();
         $languages = Language::all();
         $types = Type::all();
-        Ticket::all()->each(function ($ticket) use ($systems, $languages, $types){
+        Ticket::all()->each(function (Ticket $ticket) use ($systems, $languages, $types){
             $ticket->systems()->attach(
                 $systems->random(rand(1,3))->pluck('id')->toArray()
             );

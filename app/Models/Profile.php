@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\{BelongsToMany, HasOne};
+use Illuminate\Database\Eloquent\Relations\{BelongsToMany, HasOne, BelongsTo};
 
 class Profile extends Model
 {
@@ -25,4 +25,8 @@ class Profile extends Model
         return $this->hasOne(Ticket::class);
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -12,7 +12,6 @@ class CreateLanguageTicketTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('language_id');
             $table->unsignedBigInteger('ticket_id');
-            $table->timestamps();
 
             $table->unique(['language_id', 'ticket_id']);
 
