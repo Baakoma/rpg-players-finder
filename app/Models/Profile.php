@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\{BelongsToMany, HasOne, BelongsTo};
 
 class Profile extends Model
 {
-    protected $fillable = ['name', 'birth_date', 'description'];
+    protected $fillable = ['name', 'birth_date', 'sex', 'description'];
 
     public function languages(): BelongsToMany
     {
