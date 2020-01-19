@@ -7,8 +7,6 @@ class ProfilesTableSeeder extends Seeder
 {
     public function run(): void
     {
-        factory(Profile::class, 3)->create();
-
         $languages = Language::all();
         Profile::all()->each(function ($profile) use ($languages)
         {
