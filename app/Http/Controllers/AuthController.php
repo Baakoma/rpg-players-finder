@@ -17,17 +17,11 @@ class AuthController extends Controller
 {
     public function register(RegistrationFormRequest $request, AuthManager $auth): JsonResponse
     {
-        try {
-            $user = $auth->register($request->only('name', 'email', 'password'));
-            return response()->json([
-                'success' => true,
-                'data' => $user
-            ], 200);
-        } catch (ApiException $exception) {
-            return response()->json([
-                'success' => false,],
-                Response::HTTP_UNAUTHORIZED);
-        }
+        $user = $auth->register($request->only('name', 'email', 'password'));
+        return response()->json([
+            'success' => true,
+            'data' => $user
+        ], 200);
     }
 
     public function login(LoginFormRequest $request, AuthManager $auth): JsonResponse

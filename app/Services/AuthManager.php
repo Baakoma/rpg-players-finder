@@ -13,9 +13,6 @@ class AuthManager
         $request['password'] = bcrypt($request['password']);
         $user = new User($request);
         $user->save();
-        if ($user == null) {
-            throw new ApiException();
-        }
         return $user;
     }
 
