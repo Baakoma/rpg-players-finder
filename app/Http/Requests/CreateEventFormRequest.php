@@ -15,6 +15,7 @@ class CreateEventFormRequest extends FormRequest
             'public_access' => 'required|boolean',
             'type_id' => 'required|numeric|exists:types,id',
             'system_id' => 'required|numeric|exists:systems,id',
+            'language_id' => 'required|numeric|exists:languages,id',
         ];
     }
 }
