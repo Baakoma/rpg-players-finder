@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class System extends Model
 {
+    protected $table = 'systems';
+
     protected $fillable = ['name', 'description'];
 
     public function profiles(): BelongsToMany
@@ -19,4 +21,9 @@ class System extends Model
     {
         return $this->hasMany(Link::class);
     }
-}
+
+    public function syncLinks(array $updateData): void
+    {
+        $this->links()->delete();
+        $this->links()->createMany($updateData);
+    }}

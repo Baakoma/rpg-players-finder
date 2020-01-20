@@ -22,6 +22,24 @@ Route::delete('/invitation/{invitation}', 'InvitationController@delete');
 Route::post('/invitation/{invitation}/accept', 'InvitationController@accept');
 Route::post('/invitation/{invitation}/close', 'InvitationController@close');
 
+Route::post('/systems', 'SystemController@create');
+Route::get('/systems', 'SystemController@index');
+Route::get('/systems/{system}', 'SystemController@show');
+Route::put('/systems/{system}', 'SystemController@update');
+Route::delete('/systems/{system}', 'SystemController@delete');
+
+Route::post('/languages', 'LanguageController@create');
+Route::get('/languages', 'LanguageController@index');
+Route::get('/languages/{language}', 'LanguageController@show');
+Route::put('/languages/{language}', 'LanguageController@update');
+Route::delete('/languages/{language}', 'LanguageController@delete');
+
+Route::post('/types', 'TypeController@create');
+Route::get('/types', 'TypeController@index');
+Route::get('/types/{type}', 'TypeController@show');
+Route::put('/types/{type}', 'TypeController@update');
+Route::delete('/types/{type}', 'TypeController@delete');
+
 Route::post('/ticket/{profile}', 'TicketController@create');
 Route::get('/ticket/{profile}', 'TicketController@show');
 Route::put('/ticket/{profile}', 'TicketController@update');

@@ -7,6 +7,10 @@ use \Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Language extends Model
 {
+    protected $table = 'languages';
+
+    protected $fillable = ['name'];
+
     public function profiles(): BelongsToMany
     {
         return $this->belongsToMany(Profile::class);
