@@ -1,16 +1,14 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\{Profile, Language, System};
+use App\Models\{Profile, Language, System, Ticket};
 
 class ProfilesTableSeeder extends Seeder
 {
     public function run(): void
     {
-        factory(Profile::class, 3)->create();
-
         $languages = Language::all();
-        Profile::all()->each(function ($profile) use ($languages)
+        Profile::all()->each(function (Profile $profile) use ($languages)
         {
             $profile->languages()->attach(
               $languages->random(rand(1,3))->pluck('id')->toArray()
@@ -18,7 +16,7 @@ class ProfilesTableSeeder extends Seeder
         });
 
         $systems = System::all();
-        Profile::all()->each(function ($profile) use ($systems)
+        Profile::all()->each(function (Profile $profile) use ($systems)
         {
             $profile->systems()->attach(
               $systems->random(rand(1,3))->pluck('id')->toArray(),
@@ -29,6 +27,11 @@ class ProfilesTableSeeder extends Seeder
                     'experience' => rand(0,10)
                 ]
             );
+        });
+
+        Profile::all()->each(function (Profile $profile)
+        {
+            $profile->ticket()->save(factory(Ticket::class)->make());
         });
     }
 }

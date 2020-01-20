@@ -15,6 +15,6 @@ class Type extends Model
 
     public function events(): BelongsToMany
     {
-        return $this->belongsToMany(Event::class);
+        return $this->belongsToMany(Event::class,'type_event','type_id','event_id');
     }
 }
