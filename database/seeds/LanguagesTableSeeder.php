@@ -7,7 +7,7 @@ class LanguagesTableSeeder extends Seeder
 {
     public function run(): void
     {
-        $names = ['Polski', 'Angielski', 'Niemiecki'];
+        $names = ['Polish', 'English', 'German'];
         foreach ($names as $name){
             factory(Language::class)->create(['name' => $name]);
         }
