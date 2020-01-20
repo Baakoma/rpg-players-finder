@@ -26,3 +26,5 @@ Route::post('/ticket/{profile}', 'TicketController@create');
 Route::get('/ticket/{profile}', 'TicketController@show');
 Route::put('/ticket/{profile}', 'TicketController@update');
 Route::delete('/ticket/{profile}', 'TicketController@destroy');
+
+Route::get('/search/tickets', 'SearchController@indexTickets');
