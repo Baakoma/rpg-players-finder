@@ -9,7 +9,9 @@ class Link extends Model
 {
     protected $table = 'links';
 
-    protected $fillable = ['system_id', 'name', 'url'];
+    protected $fillable = [
+        'system_id', 'name', 'url'
+    ];
 
     public function system(): BelongsTo
     {

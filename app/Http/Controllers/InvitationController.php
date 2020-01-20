@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\ApiException;
 use App\Http\Requests\InviteEventFormRequest;
 use App\Http\Resources\InvitationResource;
 use App\Models\Invitation;
 use App\Services\InvitationManager;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\Resource;
-use Illuminate\Http\Response;
-use Illuminate\Validation\ValidationException;
 
 class InvitationController extends Controller
 {
@@ -37,7 +33,7 @@ class InvitationController extends Controller
 
     public function close(Invitation $invitation): JsonResource
     {
-        $invitation->close();
+        $invitation->closeInvitation();
         return new InvitationResource($invitation);
     }
 }

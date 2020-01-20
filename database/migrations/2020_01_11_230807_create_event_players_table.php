@@ -12,7 +12,6 @@ class CreateEventPlayersTable extends Migration
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('player_id');
 
-            $table->unique(['event_id', 'player_id']);
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->foreign('player_id')->references('id')->on('users')->onDelete('cascade');
         });
