@@ -13,6 +13,7 @@ class AuthManager
         $request['password'] = bcrypt($request['password']);
         $user = new User($request);
         $user->save();
+        $user->refresh();
         return $user;
     }
 
