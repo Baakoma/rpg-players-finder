@@ -19,8 +19,8 @@ Route::post('/invitation/{invitation}/accept', 'InvitationController@accept');
 Route::post('/invitation/{invitation}/close', 'InvitationController@close');
 
 Route::post('/systems', 'SystemController@create');
-Route::get('/systems/{system}', 'SystemController@show');
 Route::get('/systems', 'SystemController@index');
+Route::get('/systems/{system}', 'SystemController@show');
 Route::put('/systems/{system}', 'SystemController@update');
 Route::delete('/systems/{system}', 'SystemController@delete');
 
