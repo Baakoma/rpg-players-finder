@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\{BelongsToMany, BelongsTo};
 
 class Ticket extends Model
 {
@@ -22,5 +22,10 @@ class Ticket extends Model
     public function types(): BelongsToMany
     {
         return $this->belongsToMany(Type::class);
+    }
+
+    public function profile(): BelongsTo
+    {
+        return $this->belongsTo(Profile::class);
     }
 }
