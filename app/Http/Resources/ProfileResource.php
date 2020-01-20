@@ -8,10 +8,12 @@ class ProfileResource extends JsonResource
 {
     public function toArray($request): array
     {
+        $today = date("Y-m-d");
+        $diff = date_diff(date_create($this->birth_date), date_create($today))->format('%y');
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'birth_date' => $this->birth_date,
+            'age' => $diff,
             'sex' => $this->sex,
             'description' => $this->description,
             'languages' => $this->languages,
