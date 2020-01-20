@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
 
 class SearchController extends Controller
 {
@@ -52,12 +51,5 @@ class SearchController extends Controller
         }
 
         return $tickets->orderBy($sortBy, $orderBy)->paginate($perPage);
-
-        /*if(Schema::hasColumn('tickets', $sortBy))
-        {
-            return $tickets->orderBy($sortBy, $orderBy)->paginate($perPage);
-        }
-        else{
-            return $tickets->orderByJoin($sortBy, $orderBy)->paginate($perPage);
-        }*/
     }
+}
