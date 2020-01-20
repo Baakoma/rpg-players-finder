@@ -1,8 +1,8 @@
+
 <?php
 
 namespace App\Models;
 
-use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Relations\{BelongsToMany, HasMany, HasOne};
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -11,38 +11,22 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+
     public const ROLE_ADMIN = 1;
     public const ROLE_USER = 0;
 
-    /**
-     * The attributes that are mass assignable.
-     * @var array
-     */
     protected $fillable = [
         'role', 'name', 'email', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     * @var array
-     */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -53,17 +37,17 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function players(): BelongsToMany
+    public function events(): BelongsToMany
     {
         return $this->belongsToMany(Event::class, 'event_players', 'player_id', 'event_id');
     }
 
-    public function event(): HasMany
+    public function ownerEvents(): HasMany
     {
-        return $this->hasMany(Event::class, 'owner_id', 'id');
+        return $this->hasMany(Event::class, 'id');
     }
 
-    public function invitation(): HasMany
+    public function invitations(): HasMany
     {
         return $this->hasMany(Invitation::class);
     }
