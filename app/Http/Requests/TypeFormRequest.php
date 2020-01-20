@@ -3,16 +3,17 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateSystemFormRequest extends FormRequest
+class TypeFormRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => [
+                'required', Rule::unique('types', 'name')->ignore($this->type)
+            ],
             'description' => 'required|string',
-            'links.*.name' => 'required|string',
-            'links.*.url' => 'required|string',
         ];
     }
 }
