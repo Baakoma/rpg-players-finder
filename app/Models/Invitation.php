@@ -18,7 +18,7 @@ class Invitation extends Model
         'close' => 'boolean',
     ];
 
-    public function user(): BelongsTo
+    public function player(): BelongsTo
     {
         return $this->belongsTo(User::class, 'player_id');
     }

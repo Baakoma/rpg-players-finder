@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\EventException;
 use App\Http\Requests\CreateEventFormRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
 use App\Services\EventManager;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventController extends Controller
@@ -18,18 +16,11 @@ class EventController extends Controller
         return new EventResource($event);
     }
 
-    public function create(CreateEventFormRequest $request, EventManager $eventManager): JsonResponse
+    public function create(CreateEventFormRequest $request, EventManager $eventManager): JsonResource
     {
-        try {
-            $createRequest = $request->only('name', 'owner_id', 'max_users', 'public_access', 'type_id', 'system_id');
-            $event = $eventManager->createEvent($createRequest);
-            return response()->json([
-                'success' => true,
-                'data' => $event
-            ], 200);
-        } catch (EventException $exception) {
-            return response()->json(['success' => false], 400);
-        }
+        $createRequest = $request->only('name', 'owner_id', 'max_users', 'public_access', 'type_id', 'system_id');
+        $event = $eventManager->createEvent($createRequest);
+        return new EventResource($event);
     }
 
     public function delete(Event $event, EventManager $eventManager): JsonResource

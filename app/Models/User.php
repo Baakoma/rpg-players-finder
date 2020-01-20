@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
     protected $casts = [
@@ -51,8 +51,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Event::class, 'id');
     }
 
-    public function invitation(): HasMany
+    public function invitations(): HasMany
     {
-        return $this->hasMany(Invitation::class, 'id');
+        return $this->hasMany(Invitation::class);
     }
 }

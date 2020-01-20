@@ -25,12 +25,12 @@ class Event extends Model
         return $this->belongsToMany(User::class, 'event_players', 'event_id', 'player_id');
     }
 
-    public function user(): BelongsTo
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id', 'id');
     }
 
-    public function invitation(): HasMany
+    public function invitations(): HasMany
     {
         return $this->hasMany(Invitation::class, 'id');
     }

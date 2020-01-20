@@ -10,7 +10,7 @@ class EventResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'owner' => $this->user,
+            'owner' => $this->owner,
             'name' => $this->name,
             'max_users' => $this->max_users,
             'public_access' => $this->public_access,
