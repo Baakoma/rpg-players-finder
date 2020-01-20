@@ -3,17 +3,17 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
 class ProfileResource extends JsonResource
 {
     public function toArray($request): array
     {
-        $today = date("Y-m-d");
-        $diff = date_diff(date_create($this->birth_date), date_create($today))->format('%y');
+        $age = Carbon::parse($this->birth_date)->age;
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'age' => $diff,
+            'age' => $age,
             'sex' => $this->sex,
             'description' => $this->description,
             'languages' => $this->languages,
