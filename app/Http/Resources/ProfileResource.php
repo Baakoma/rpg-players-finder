@@ -15,7 +15,9 @@ class ProfileResource extends JsonResource
             'sex' => $this->sex,
             'description' => $this->description,
             'languages' => $this->languages,
-            'systems' => $this->systems
+            'systems' => $this->systems,
+            'your_events' => $this->user->event, //eventy które założył
+            'events' => $this->user->players    //eventy w których uczestniczy
         ];
     }
 }
