@@ -17,11 +17,13 @@ class CreateEventsTable extends Migration
             $table->boolean('is_active')->default(1);
             $table->unsignedBigInteger('type_id');
             $table->unsignedBigInteger('system_id');
+            $table->unsignedBigInteger('language_id');
             $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
             $table->foreign('system_id')->references('id')->on('systems')->onDelete('cascade');
+            $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
         });
     }
 

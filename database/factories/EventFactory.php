@@ -13,5 +13,6 @@ $factory->define(Event::class, function (Faker $faker) {
         'public_access' => $faker->boolean,
         'type_id' => $faker->numberBetween(1, 2),
         'system_id' => $faker->numberBetween(1, 2),
+        'language_id' => $faker->numberBetween(1, 3),
     ];
 });
