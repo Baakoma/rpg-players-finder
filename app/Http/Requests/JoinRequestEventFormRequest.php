@@ -11,6 +11,7 @@ class JoinRequestEventFormRequest extends FormRequest
         return [
             'event_id' => 'required|numeric|exists:events,id',
             'player_id' => 'required|numeric|exists:users,id',
+            'message' => 'required|string',
         ];
     }
 }

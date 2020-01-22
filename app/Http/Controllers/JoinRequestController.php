@@ -17,7 +17,7 @@ class JoinRequestController extends Controller
 
     public function create(JoinRequestEventFormRequest $request, JoinRequestManager $joinRequestManager): JsonResource
     {
-        $joinRequest = $joinRequestManager->creatJoinRequest($request->only('event_id', 'player_id'));
+        $joinRequest = $joinRequestManager->creatJoinRequest($request->only('event_id', 'player_id', 'message'));
         return new JoinRequestResource($joinRequest);
     }
 
@@ -29,6 +29,11 @@ class JoinRequestController extends Controller
     public function accept(JoinRequest $joinRequest, JoinRequestManager $joinRequestManager): JsonResource
     {
         return new JoinRequestResource($joinRequestManager->acceptJoinRequest($joinRequest));
+    }
+
+    public function decline(JoinRequest $joinRequest, JoinRequestManager $joinRequestManager): JsonResource
+    {
+        return new JoinRequestResource($joinRequestManager->declineJoinRequest($joinRequest));
     }
 
     public function close(JoinRequest $joinRequest): JsonResource

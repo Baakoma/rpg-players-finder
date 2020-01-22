@@ -9,13 +9,12 @@ class Invitation extends Model
 {
     protected $table = 'invitations';
 
-    protected $fillable = [
-        'player_id', 'event_id', 'accepted', 'close',
-    ];
+    public const ACCEPT = 1;
+    public const DECLINED = 2;
+    public const CLOSE = 3;
 
-    protected $casts = [
-        'accepted' => 'boolean',
-        'close' => 'boolean',
+    protected $fillable = [
+        'player_id', 'event_id', 'message', 'status',
     ];
 
     public function player(): BelongsTo
@@ -28,13 +27,18 @@ class Invitation extends Model
         return $this->belongsTo(Event::class, 'event_id');
     }
 
-    public function closeInvitation(): void
-    {
-        $this->update(['close' => 1]);
-    }
-
     public function acceptInvitation(): void
     {
-        $this->update(['accepted' => 1]);
+        $this->update(['status' => self::ACCEPT]);
+    }
+
+    public function declineInvitation(): void
+    {
+        $this->update(['status' => self::DECLINED]);
+    }
+
+    public function closeInvitation(): void
+    {
+        $this->update(['status' => self::CLOSE]);
     }
 }

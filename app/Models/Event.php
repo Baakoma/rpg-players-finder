@@ -52,6 +52,11 @@ class Event extends Model
 
     public function canAccess(User $user): bool
     {
-        return ($this->max_users) - 1 > $this->players()->count() && !$this->players->contains($user);
+        return ($this->max_users) - 1 > $this->players()->count() && !$this->playerExist($user);
+    }
+
+    public function playerExist(string $user): bool
+    {
+        return $this->players->contains($user);
     }
 }

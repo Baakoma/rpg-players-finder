@@ -12,9 +12,7 @@ class InvitationResource extends JsonResource
             'id' => $this->id,
             'event' => $this->event,
             'player' => $this->player,
-            'accepted' => $this->accepted,
-            'close' => $this->close,
-            'date' => $this->created_at
+            'message' => $this->message,
         ];
     }
 }

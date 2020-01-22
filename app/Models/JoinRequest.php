@@ -9,13 +9,12 @@ class JoinRequest extends Model
 {
     protected $table = 'join_requests';
 
-    protected $fillable = [
-        'player_id', 'event_id', 'accepted', 'close',
-    ];
+    public const ACCEPT = 1;
+    public const DECLINED = 2;
+    public const CLOSE = 3;
 
-    protected $casts = [
-        'accepted' => 'boolean',
-        'close' => 'boolean',
+    protected $fillable = [
+        'player_id', 'event_id', 'message', 'status',
     ];
 
     public function player(): BelongsTo
@@ -28,13 +27,18 @@ class JoinRequest extends Model
         return $this->belongsTo(Event::class, 'event_id');
     }
 
-    public function closeJoinRequest(): void
-    {
-        $this->update(['close' => 1]);
-    }
-
     public function acceptJoinRequest(): void
     {
-        $this->update(['accepted' => 1]);
+        $this->update(['status' => self::ACCEPT]);
+    }
+
+    public function declineJoinRequest(): void
+    {
+        $this->update(['status' => self::DECLINED]);
+    }
+
+    public function closeJoinRequest(): void
+    {
+        $this->update(['status' => self::CLOSE]);
     }
 }
