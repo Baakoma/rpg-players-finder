@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Resources\Json\PaginatedResourceResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\{Ticket, Event};
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 class SearchController extends Controller
 {
-    public function filterTickets(Request $request): PaginatedResourceResponse
+    public function filterTickets(Request $request): LengthAwarePaginator
     {
         $sortBy = 'created_at';
         $orderBy = 'desc';
@@ -26,7 +26,7 @@ class SearchController extends Controller
         if($request->has('systems'))
         {
             $systems = $request->systems;
-            $tickets = $tickets::whereHas('systems', function (Ticket $query) use ($systems): void
+            $tickets = $tickets::whereHas('systems', function ($query) use ($systems): void
             {
                 $query->whereIn('systems.id', $systems);
             });
@@ -35,7 +35,7 @@ class SearchController extends Controller
         if($request->has('types'))
         {
             $types = $request->types;
-            $tickets = $tickets->whereHas('types', function (Ticket $query) use ($types): void
+            $tickets = $tickets->whereHas('types', function ($query) use ($types): void
             {
                 $query->whereIn('types.id', $types);
             });
@@ -44,7 +44,7 @@ class SearchController extends Controller
         if($request->has('languages'))
         {
             $languages = $request->get('languages');
-            $tickets = $tickets->whereHas('languages', function (Ticket $query) use ($languages): void
+            $tickets = $tickets->whereHas('languages', function ($query) use ($languages): void
             {
                 $query->whereIn('languages.id', $languages);
             });
@@ -58,7 +58,7 @@ class SearchController extends Controller
         if($request->has('age'))
         {
             $age = $request->age;
-            $tickets = $tickets->whereHas('profile', function (Ticket $query) use ($age): void
+            $tickets = $tickets->whereHas('profile', function ($query) use ($age): void
             {
                 if($age['min'] === $age['max'])
                 {
@@ -74,7 +74,7 @@ class SearchController extends Controller
         return $tickets->orderBy($sortBy, $orderBy)->paginate($perPage, ['*'], 'page', $page);
     }
 
-    public function filterEvents(Request $request): PaginatedResourceResponse
+    public function filterEvents(Request $request): LengthAwarePaginator
     {
         $sortBy = 'created_at';
         $orderBy = 'desc';
