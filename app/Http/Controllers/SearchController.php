@@ -11,17 +11,7 @@ class SearchController extends Controller
 {
     public function filterTickets(Request $request): LengthAwarePaginator
     {
-        $sortBy = 'created_at';
-        $orderBy = 'desc';
-        $perPage = 10;
-        $page = 1;
-
         $tickets = new Ticket();
-
-        if ($request->has('orderBy')) $orderBy = $request->get('orderBy');
-        if ($request->has('sortBy')) $sortBy = $request->get('sortBy');
-        if ($request->has('perPage')) $perPage = $request->get('perPage');
-        if ($request->has('page')) $page = $request->get('page');
 
         if($request->has('systems'))
         {
@@ -63,29 +53,25 @@ class SearchController extends Controller
                 if($age['min'] === $age['max'])
                 {
                     $dateFrom = Carbon::createFromDate()->subYears($age['max']+1)->addDay()->toDateString();
-                }else{
+                } else {
                     $dateFrom = Carbon::createFromDate()->subYears($age['max'])->toDateString();
                 }
+
                 $dateTo = Carbon::createFromDate()->subYears($age['min'])->toDateString();
                 $query->whereBetween('birth_date', [$dateFrom, $dateTo]);
             });
         }
+
+        if ($request->has('orderBy')) $orderBy = $request->get('orderBy', 'desc');
+        if ($request->has('sortBy')) $sortBy = $request->get('sortBy', 'created_at');
+        if ($request->has('perPage')) $perPage = $request->get('perPage', 10);
+        if ($request->has('page')) $page = $request->get('page', 1);
 
         return $tickets->orderBy($sortBy, $orderBy)->paginate($perPage, ['*'], 'page', $page);
     }
 
     public function filterEvents(Request $request): LengthAwarePaginator
     {
-        $sortBy = 'created_at';
-        $orderBy = 'desc';
-        $perPage = 10;
-        $page = 1;
-
-        if ($request->has('orderBy')) $orderBy = $request->get('orderBy');
-        if ($request->has('sortBy')) $sortBy = $request->get('sortBy');
-        if ($request->has('perPage')) $perPage = $request->get('perPage');
-        if ($request->has('page')) $page = $request->get('page');
-
         $events = Event::where([['is_active', '=', '1'], ['public_access', '=', '1']]);
 
         $events = $events->whereIn('system_id', $request->systems);
@@ -93,6 +79,11 @@ class SearchController extends Controller
         $events = $events->whereIn('type_id', $request->types);
 
         $events = $events->whereIn('language_id', $request->get('languages'));
+
+        if ($request->has('orderBy')) $orderBy = $request->get('orderBy', 'desc');
+        if ($request->has('sortBy')) $sortBy = $request->get('sortBy', 'created_at');
+        if ($request->has('perPage')) $perPage = $request->get('perPage', 10);
+        if ($request->has('page')) $page = $request->get('page', 1);
 
         return $events->orderBy($sortBy, $orderBy)->paginate($perPage, ['*'], 'page', $page);
     }
