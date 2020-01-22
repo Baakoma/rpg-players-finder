@@ -11,7 +11,7 @@ class UpdateProfileRequest extends FormRequest
         return [
             'name' => 'required|string|between:1,20',
             'birth_date' => 'required|date_format:Y-m-d|before:today',
-            'sex' => 'required|boolean',
+            'sex' => 'boolean|nullable',
             'description' => 'string|max:500|nullable',
             'languages.*' => 'required|numeric|exists:languages,id',
             'systems.*.id' => 'required|numeric|exists:systems,id',
