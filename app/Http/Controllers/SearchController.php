@@ -62,10 +62,10 @@ class SearchController extends Controller
             });
         }
 
-        if ($request->has('orderBy')) $orderBy = $request->get('orderBy', 'desc');
-        if ($request->has('sortBy')) $sortBy = $request->get('sortBy', 'created_at');
-        if ($request->has('perPage')) $perPage = $request->get('perPage', 10);
-        if ($request->has('page')) $page = $request->get('page', 1);
+        $orderBy = $request->get('orderBy', 'desc');
+        $sortBy = $request->get('sortBy', 'created_at');
+        $perPage = $request->get('perPage', 10);
+        $page = $request->get('page', 1);
 
         return $tickets->orderBy($sortBy, $orderBy)->paginate($perPage, ['*'], 'page', $page);
     }
@@ -80,10 +80,10 @@ class SearchController extends Controller
 
         $events = $events->whereIn('language_id', $request->get('languages'));
 
-        if ($request->has('orderBy')) $orderBy = $request->get('orderBy', 'desc');
-        if ($request->has('sortBy')) $sortBy = $request->get('sortBy', 'created_at');
-        if ($request->has('perPage')) $perPage = $request->get('perPage', 10);
-        if ($request->has('page')) $page = $request->get('page', 1);
+        $orderBy = $request->get('orderBy', 'desc');
+        $sortBy = $request->get('sortBy', 'created_at');
+        $perPage = $request->get('perPage', 10);
+        $page = $request->get('page', 1);
 
         return $events->orderBy($sortBy, $orderBy)->paginate($perPage, ['*'], 'page', $page);
     }
