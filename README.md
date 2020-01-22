@@ -41,10 +41,14 @@ composer install
 cp .env.example .env
 ```
 
-**4. Wygenerowanie klucza**
+**4. Wygenerowanie kluczy**
 
 ```
 php artisan key:generate
+```
+
+```
+php artisan jwt:secret
 ```
 
 **5. Migracja tabel w bazie danych i seed początkowych danych**
