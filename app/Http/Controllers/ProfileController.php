@@ -20,6 +20,7 @@ class ProfileController extends Controller
         $profile->fill([
             'name' => $request->name,
             'birth_date' => $request->birth_date,
+            'sex' =>$request->sex,
             'description' => $request->description
         ]);
 
