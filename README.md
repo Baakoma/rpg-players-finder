@@ -1,35 +1,32 @@
-# Kreator postaci do Warhammer 4ed
+# Wyszukiwarka graczy i sesji dla "papierowych" RPG
 
-Kreator postaci pozwala tworzyć i rozwijać bohaterów graczy. Mistrz gry tworzy pokoje, do których zaprasza swoich graczy. 
-Każdy gracz może stworzyć jednego bohatera (postać) w pokoju. Mistrz gry może edytować bohaterów graczy, przyznawać im punkty doświadczenia.
-Kreator nowych postaci pozwala w prosty i przyjemny sposób stworzyć nowego bohatera. Pilnuje on również wszystkich zasad i limitów. Rzuty
-losowane są przy pomocy osobnego modułu do rzutu kośćmi - wszystko to dzieje się na serwerze, aby uniknąć oszustw.
+Wyszukiwarka pozwala graczom wyszukiwać innych graczy oraz sesji RPG, w których mogliby wziąć udział. Oczywiście, każdy z graczy może również utworzyć własne, publiczne wydarzenie (sesje) i zapraszać innych do niego lub czekać, aż chętni będą chcieli dołączyć. 
+
+**Funkcjonalności:**
+- profil gracza
+- "zgłaszanie się" do bycia wyszukiwanym
+- tworzenie i zarządzanie wydarzeniem
+- zapraszanie innych graczy do wydarzenia
+- zatwierdzanie (lub nie) próśb o dołączenie
+- wyszukiwanie graczy na podstawie filtrów
+- wyszukiwanie wydarzeń na podstawie filtrów
+- przeglądanie listy dostępnych systemów RPG
 
 ## Stack technologiczny:
 - PHP 7.3
 - Laravel 6
-- MySQL 5
+- MySQL
 - Vue 2
-- Bootstsrap 4
-
-## Organizacja pracy:
-- uproszczony Kanban
-- uproszczony GitFlow
-
----
-
-### Strona testowa dostępna na: http://warhammer.usermd.net/
-
----
+- Bulma
 
 ## Uruchomienie aplikacji w środowisku deweloperskim
 **1. Pobranie projektu z repozytorium**
 
 ```
-git clone -b develop https://github.com/Baakoma/warhammer-character-creator.git
+git clone -b develop https://github.com/Baakoma/rpg-players-finder.git
 ```
 ```
-cd warhammer-character-creator
+cd rpg-players-finder
 ```
 
 **2. Pobranie zależności**

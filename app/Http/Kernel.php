@@ -2,10 +2,9 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckForMaintenanceMode;
 use App\Http\Middleware\EncryptCookies;
-use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\VerifyCsrfToken;
@@ -24,6 +23,7 @@ use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Tymon\JWTAuth\Http\Middleware\Authenticate;
 
 class Kernel extends HttpKernel
 {
@@ -40,7 +40,6 @@ class Kernel extends HttpKernel
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
-            // \Illuminate\Session\Middleware\AuthenticateSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
@@ -53,16 +52,16 @@ class Kernel extends HttpKernel
     ];
 
     protected $routeMiddleware = [
-        'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
         'bindings' => SubstituteBindings::class,
         'cache.headers' => SetCacheHeaders::class,
         'can' => Authorize::class,
-        'guest' => RedirectIfAuthenticated::class,
         'password.confirm' => RequirePassword::class,
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
+        'auth.jwt'  =>  Authenticate::class,
+        'is.admin' => IsAdmin::class,
     ];
 
     protected $middlewarePriority = [
