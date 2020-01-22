@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Invitation extends Model
+class JoinRequest extends Model
 {
-    protected $table = 'invitations';
+    protected $table = 'join_requests';
 
     public const ACCEPT = 1;
     public const DECLINED = 2;
@@ -27,17 +27,17 @@ class Invitation extends Model
         return $this->belongsTo(Event::class, 'event_id');
     }
 
-    public function acceptInvitation(): void
+    public function acceptJoinRequest(): void
     {
         $this->update(['status' => self::ACCEPT]);
     }
 
-    public function declineInvitation(): void
+    public function declineJoinRequest(): void
     {
         $this->update(['status' => self::DECLINED]);
     }
 
-    public function closeInvitation(): void
+    public function closeJoinRequest(): void
     {
         $this->update(['status' => self::CLOSE]);
     }

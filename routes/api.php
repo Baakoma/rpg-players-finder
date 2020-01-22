@@ -20,7 +20,15 @@ Route::post('/invitations', 'InvitationController@create');
 Route::get('/invitations/{invitation}', 'InvitationController@show');
 Route::delete('/invitations/{invitation}', 'InvitationController@delete');
 Route::post('/invitations/{invitation}/accept', 'InvitationController@accept');
+Route::post('/invitations/{invitation}/decline', 'InvitationController@decline');
 Route::post('/invitations/{invitation}/close', 'InvitationController@close');
+
+Route::post('/join-request', 'JoinRequestController@create');
+Route::get('/join-request/{joinRequest}', 'JoinRequestController@show');
+Route::delete('/join-request/{joinRequest}', 'JoinRequestController@delete');
+Route::post('/join-request/{joinRequest}/accept', 'JoinRequestController@accept');
+Route::post('/join-request/{joinRequest}/decline', 'JoinRequestController@decline');
+Route::post('/join-request/{joinRequest}/close', 'JoinRequestController@close');
 
 Route::post('/systems', 'SystemController@create');
 Route::get('/systems', 'SystemController@index');
