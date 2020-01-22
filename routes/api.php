@@ -7,8 +7,8 @@ Route::group(['middleware' => ['auth.jwt']], function (): void {
     Route::post('logout', 'AuthController@logout');
 });
 
-Route::get('/profile/{profile}', 'ProfileController@show');
-Route::put('/profile/{profile}', 'ProfileController@update');
+Route::get('/profiles/{profile}', 'ProfileController@show');
+Route::put('/profiles/{profile}', 'ProfileController@update');
 
 Route::post('/events', 'EventController@create');
 Route::get('/events/{event}', 'EventController@show');
@@ -48,9 +48,11 @@ Route::get('/types/{type}', 'TypeController@show');
 Route::put('/types/{type}', 'TypeController@update');
 Route::delete('/types/{type}', 'TypeController@delete');
 
-Route::post('/ticket/{profile}', 'TicketController@create');
-Route::get('/ticket/{profile}', 'TicketController@show');
-Route::put('/ticket/{profile}', 'TicketController@update');
-Route::delete('/ticket/{profile}', 'TicketController@destroy');
+Route::post('/tickets/{profile}', 'TicketController@create');
+Route::get('/tickets/{profile}', 'TicketController@show');
+Route::put('/tickets/{profile}', 'TicketController@update');
+Route::delete('/tickets/{profile}', 'TicketController@destroy');
 
-Route::get('/search/tickets', 'SearchController@indexTickets');
+Route::get('/tickets', 'SearchController@filterTickets');
+Route::get('/events', 'SearchController@filterEvents');
+
