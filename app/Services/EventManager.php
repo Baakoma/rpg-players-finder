@@ -10,6 +10,7 @@ class EventManager
     {
         $event = new Event($eventData);
         $event->save();
+        $event->refresh();
         return $event;
     }
 

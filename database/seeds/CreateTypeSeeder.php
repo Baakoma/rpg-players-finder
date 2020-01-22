@@ -20,7 +20,7 @@ class CreateTypeSeeder extends Seeder
         ];
 
         foreach ($types as $type) {
-            Type::create($type);
+            factory(Type::class)->create($type);
         }
     }
 }

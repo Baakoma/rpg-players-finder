@@ -13,22 +13,27 @@ class Invitation extends Model
         'player_id', 'event_id', 'accepted', 'close',
     ];
 
-    public function user(): BelongsTo
+    protected $casts = [
+        'accepted' => 'boolean',
+        'close' => 'boolean',
+    ];
+
+    public function player(): BelongsTo
     {
-        return $this->belongsTo(User::class,'id');
+        return $this->belongsTo(User::class, 'player_id');
     }
 
     public function event(): BelongsTo
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(Event::class, 'event_id');
     }
 
-    public function close(): void
+    public function closeInvitation(): void
     {
         $this->update(['close' => 1]);
     }
 
-    public function accept(): void
+    public function acceptInvitation(): void
     {
         $this->update(['accepted' => 1]);
     }

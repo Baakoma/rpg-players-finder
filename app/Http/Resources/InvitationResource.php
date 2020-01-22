@@ -11,7 +11,7 @@ class InvitationResource extends JsonResource
         return [
             'id' => $this->id,
             'event' => $this->event,
-            'user' => $this->user,
+            'player' => $this->player,
             'accepted' => $this->accepted,
             'close' => $this->close,
             'date' => $this->created_at

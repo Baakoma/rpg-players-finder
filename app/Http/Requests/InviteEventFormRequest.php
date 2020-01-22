@@ -11,8 +11,8 @@ class InviteEventFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'event_id' => 'required|numeric',
-            'player_id' => 'required|numeric',
+            'event_id' => 'required|numeric|exists:events,id',
+            'player_id' => 'required|numeric|exists:users,id',
         ];
     }
 }
