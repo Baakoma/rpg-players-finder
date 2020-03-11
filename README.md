@@ -1,20 +1,30 @@
-# Wyszukiwarka graczy i sesji dla "papierowych" RPG
+# Wyszukiwarka graczy i sesji dla “papierowych” RPG-ów
 
-Wyszukiwarka pozwala graczom wyszukiwać innych graczy oraz sesji RPG, w których mogliby wziąć udział. Oczywiście, każdy z graczy może również utworzyć własne, publiczne wydarzenie (sesje) i zapraszać innych do niego lub czekać, aż chętni będą chcieli dołączyć. 
+Wyszukiwarka pomaga graczom znaleźć innych graczy bądź sesje RPG w których mogą wziąć udział. Jej zadaniem jest znalezienie i umożliwienie nawiązania kontaktu z osobami zainteresowanymi konkretnymi systemami. Graczę mogą tworzyć własne “pokoje” lub wyszukiwać już istniejące.
 
-**Funkcjonalności:**
-- profil gracza
-- "zgłaszanie się" do bycia wyszukiwanym
-- tworzenie i zarządzanie wydarzeniem
-- zapraszanie innych graczy do wydarzenia
-- zatwierdzanie (lub nie) próśb o dołączenie
-- wyszukiwanie graczy na podstawie filtrów
-- wyszukiwanie wydarzeń na podstawie filtrów
-- przeglądanie listy dostępnych systemów RPG
+### Autorzy:
+* Adrian Hopek *(PM/Frontend)*
+* Damian Grzelak *(Backend)*
+* Dawid Rudnik *(Backend)*
+
+
+### Funkcjonalności:
+- Profil gracza;
+- Panel administratora;
+- Tworzenie/zarządzanie pokojem;
+- Wyszukiwanie pokoi i graczy przy pomocy filtrów;
+- Możliwość zapraszania graczy do pokoju;
+- Możliwość zgłaszania prośby o dołączenie do pokoju;
+- System powiadomień;
+- Przeglądanie historii rozegranych sesji;
+- Komunikacja w pokoju poprzez chat;
+- Recenzowanie gracza po rozegranej sesji (opcjonalne)
+- Podstawowy system listy znajomych
+
 
 ## Stack technologiczny:
-- PHP 7.3
-- Laravel 6
+- PHP
+- Laravel 7
 - MySQL
 - Vue 2
 - Bulma
