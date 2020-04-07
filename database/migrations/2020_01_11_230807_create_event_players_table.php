@@ -11,7 +11,6 @@ class CreateEventPlayersTable extends Migration
         Schema::create('event_players', function (Blueprint $table) {
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('player_id');
-
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->foreign('player_id')->references('id')->on('users')->onDelete('cascade');
         });

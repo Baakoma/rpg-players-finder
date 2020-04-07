@@ -15,7 +15,6 @@ class CreateInvitationsTable extends Migration
             $table->string('message');
             $table->boolean('status')->default(0);
             $table->timestamps();
-
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->foreign('player_id')->references('id')->on('users')->onDelete('cascade');
         });

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateLinksTable extends Migration
 {
-
     public function up(): void
     {
         Schema::create('links', function (Blueprint $table) {
@@ -15,11 +14,7 @@ class CreateLinksTable extends Migration
             $table->string('name');
             $table->string('url');
             $table->timestamps();
-
-            $table->foreign('system_id')
-                ->references('id')
-                ->on('systems')
-                ->onDelete('cascade');
+            $table->foreign('system_id')->references('id')->on('systems')->onDelete('cascade');
         });
     }
 
