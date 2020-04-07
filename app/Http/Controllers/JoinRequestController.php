@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\JoinRequestEventFormRequest;
+use App\Http\Requests\JoinRequestEventRequest;
 use App\Http\Resources\JoinRequestResource;
 use App\Models\JoinRequest;
 use App\Services\JoinRequestManager;
@@ -15,7 +15,7 @@ class JoinRequestController extends Controller
         return new JoinRequestResource($joinRequest);
     }
 
-    public function create(JoinRequestEventFormRequest $request, JoinRequestManager $joinRequestManager): JsonResource
+    public function create(JoinRequestEventRequest $request, JoinRequestManager $joinRequestManager): JsonResource
     {
         $joinRequest = $joinRequestManager->creatJoinRequest($request->only('event_id', 'player_id', 'message'));
         return new JoinRequestResource($joinRequest);

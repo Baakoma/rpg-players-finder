@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateEventFormRequest;
+use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
@@ -16,7 +16,7 @@ class EventController extends Controller
         return new EventResource($event);
     }
 
-    public function create(CreateEventFormRequest $request, EventManager $eventManager): JsonResource
+    public function create(CreateEventRequest $request, EventManager $eventManager): JsonResource
     {
         $createRequest = $request->only('name', 'owner_id', 'max_users', 'public_access', 'type_id', 'system_id', 'language_id');
         $event = $eventManager->createEvent($createRequest);

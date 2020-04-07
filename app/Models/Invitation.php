@@ -9,9 +9,9 @@ class Invitation extends Model
 {
     protected $table = 'invitations';
 
-    public const ACCEPT = 1;
-    public const DECLINED = 2;
-    public const CLOSE = 3;
+    private const ACCEPT = 1;
+    private const DECLINED = 2;
+    private const CLOSE = 3;
 
     protected $fillable = [
         'player_id', 'event_id', 'message', 'status',
