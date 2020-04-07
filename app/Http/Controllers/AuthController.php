@@ -14,7 +14,6 @@ use Illuminate\Http\Response;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-
 class AuthController extends Controller
 {
     public function register(RegistrationRequest $request, AuthManager $auth): JsonResource
