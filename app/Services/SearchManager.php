@@ -5,71 +5,52 @@ namespace App\Services;
 use App\Models\Event;
 use App\Models\Ticket;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchManager
 {
-    public function filterTicket(Ticket $tickets, Request $request): LengthAwarePaginator
+    public function filterTicket(array $filters): Ticket
     {
-        if ($request->has('systems')) {
-            $systems = $request->systems;
-            $tickets = $tickets->whereHas('systems', function ($query) use ($systems): void {
-                $query->whereIn('systems.id', $systems);
-            });
+        $tickets = new Ticket();
+
+        foreach (['systems', 'types', 'languages'] as $value) {
+            if (isset($filters[$value])) {
+                $tickets = $this->keysFilter($tickets, $filters[$value], $value);
+            }
         }
 
-        if ($request->has('types')) {
-            $types = $request->types;
-            $tickets = $tickets->whereHas('types', function ($query) use ($types): void {
-                $query->whereIn('types.id', $types);
-            });
+        if (isset($filters['camera'])) {
+            $tickets = $tickets->whereIn('camera', $filters['camera']);
         }
 
-        if ($request->has('languages')) {
-            $languages = $request->get('languages');
-            $tickets = $tickets->whereHas('languages', function ($query) use ($languages): void {
-                $query->whereIn('languages.id', $languages);
-            });
-        }
-
-        if ($request->has('camera')) {
-            $tickets = $tickets->whereIn('camera', $request->camera);
-        }
-
-        if ($request->has('age')) {
-            $age = $request->age;
+        if (isset($filters['age'])) {
+            $age = $filters['age'];
             $tickets = $tickets->whereHas('profile', function ($query) use ($age): void {
                 if ($age['min'] === $age['max']) {
                     $dateFrom = Carbon::createFromDate()->subYears($age['max'] + 1)->addDay()->toDateString();
                 } else {
                     $dateFrom = Carbon::createFromDate()->subYears($age['max'])->toDateString();
                 }
-
                 $dateTo = Carbon::createFromDate()->subYears($age['min'])->toDateString();
                 $query->whereBetween('birth_date', [$dateFrom, $dateTo]);
             });
         }
 
-        $orderBy = $request->get('orderBy', 'desc');
-        $sortBy = $request->get('sortBy', 'created_at');
-        $perPage = $request->get('perPage', 10);
-        $page = $request->get('page', 1);
-
-        return $tickets->orderBy($sortBy, $orderBy)->paginate($perPage, ['*'], 'page', $page);
+        return $tickets;
     }
 
-    public function filterEvents(Event $events, Request $request): LengthAwarePaginator
+    public function filterEvents(array $filters): Event
     {
-        $events = $events->whereIn('system_id', $request->systems);
-        $events = $events->whereIn('type_id', $request->types);
-        $events = $events->whereIn('language_id', $request->get('languages'));
+        $events = Event::where([['is_active', '=', '1'], ['public_access', '=', '1']]);
+        $events = $events->whereIn('system_id', $filters['systems']);
+        $events = $events->whereIn('type_id', $filters['types']);
+        $events = $events->whereIn('language_id', $filters['languages']);
+        return $events;
+    }
 
-        $orderBy = $request->get('orderBy', 'desc');
-        $sortBy = $request->get('sortBy', 'created_at');
-        $perPage = $request->get('perPage', 10);
-        $page = $request->get('page', 1);
-
-        return $events->orderBy($sortBy, $orderBy)->paginate($perPage, ['*'], 'page', $page);
+    private function keysFilter(Ticket $tickets, array $filter, string $filterName): Ticket
+    {
+        return $tickets->whereHas($filterName, function ($query) use ($filter, $filterName): void {
+            $query->whereIn($filterName . '.id', $filter);
+        });
     }
 }
