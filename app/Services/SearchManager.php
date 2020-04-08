@@ -5,10 +5,11 @@ namespace App\Services;
 use App\Models\Event;
 use App\Models\Ticket;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 class SearchManager
 {
-    public function filterTicket(array $filters): Ticket
+    public function filterTicket(array $filters)
     {
         $tickets = new Ticket();
 
@@ -38,7 +39,7 @@ class SearchManager
         return $tickets;
     }
 
-    public function filterEvents(array $filters): Event
+    public function filterEvents(array $filters): Builder
     {
         $events = Event::where([['is_active', '=', '1'], ['public_access', '=', '1']]);
         $events = $events->whereIn('system_id', $filters['systems']);
@@ -47,7 +48,7 @@ class SearchManager
         return $events;
     }
 
-    private function keysFilter(Ticket $tickets, array $filter, string $filterName): Ticket
+    private function keysFilter($tickets, array $filter, string $filterName)
     {
         return $tickets->whereHas($filterName, function ($query) use ($filter, $filterName): void {
             $query->whereIn($filterName . '.id', $filter);
