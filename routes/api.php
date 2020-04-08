@@ -12,13 +12,11 @@ Route::get('/systems', 'SystemController@index');
 Route::get('/languages', 'LanguageController@index');
 Route::get('/types', 'TypeController@index');
 
-Route::get('/profile/{profile}', 'ProfileController@show');
-Route::put('/profile/{profile}', 'ProfileController@update');
-
 Route::middleware('auth.jwt')->group(function (): void {
     Route::post('logout', 'AuthController@logout');
 
-
+    Route::get('/profile/{profile}', 'ProfileController@show');
+    Route::put('/profile/{profile}', 'ProfileController@update');
 
     Route::post('/events', 'EventController@create');
     Route::get('/events/{event}', 'EventController@show');
