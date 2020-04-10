@@ -23,9 +23,9 @@ class Profile extends Model
         return $this->belongsToMany(System::class)->withPivot('lore_knowledge_rating', 'mechanic_knowledge_rating', 'roleplay_rating', 'experience');
     }
 
-    public function ticket(): HasOne
+    public function filter(): HasOne
     {
-        return $this->hasOne(Ticket::class);
+        return $this->hasOne(Filter::class);
     }
 
     public function user(): BelongsTo

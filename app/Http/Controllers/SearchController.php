@@ -5,20 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SearchRequest;
 use App\Services\SearchManager;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class SearchController extends Controller
 {
-    public function filterTickets(SearchRequest $request, SearchManager $searchManager): LengthAwarePaginator
+    public function showFilters(SearchRequest $request, SearchManager $searchManager): LengthAwarePaginator
     {
         $filters = [
             'systems', 'types', 'languages', 'camera', 'age'
         ];
 
         $sortFilters = $this->getBasicFilters($request);
-        $tickets = $searchManager->filterTicket($this->findFilters($request, $filters));
-        $tickets->orderBy($sortFilters['sortBy'], $sortFilters['orderBy']);
+        $filter = $searchManager->filterTicket($this->findFilters($request, $filters));
+        $filter->orderBy($sortFilters['sortBy'], $sortFilters['orderBy']);
 
-        return $tickets->paginate($sortFilters['perPage'], ['*'], 'page', $sortFilters['page']);
+        return $filter->paginate($sortFilters['perPage'], ['*'], 'page', $sortFilters['page']);
     }
 
     public function filterEvents(SearchRequest $request, SearchManager $searchManager): LengthAwarePaginator
@@ -30,9 +31,9 @@ class SearchController extends Controller
         return $events->paginate($sortFilters['perPage'], ['*'], 'page', $sortFilters['page']);
     }
 
-    private function findFilters(SearchRequest $request, array $filters): array
+    private function findFilters(SearchRequest $request, array $filters): Collection
     {
-        $filtersFound = [];
+        $filtersFound = collect();
         foreach ($filters as $filter) {
             if ($request->has($filter)) {
                 $filtersFound[$filter] = $request->input($filter);

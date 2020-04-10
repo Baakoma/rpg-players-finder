@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\{BelongsToMany, BelongsTo};
 
-class Ticket extends Model
+class Filter extends Model
 {
     protected $fillable = [
         'camera', 'description'

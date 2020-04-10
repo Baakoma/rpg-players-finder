@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\Ticket;
+use App\Models\Filter;
 use Faker\Generator as Faker;
 
-$factory->define(Ticket::class, function (Faker $faker) {
+$factory->define(Filter::class, function (Faker $faker) {
     return [
         'camera' => $faker->boolean,
         'description' => $faker->paragraph

@@ -3,29 +3,29 @@
 namespace App\Services;
 
 use App\Models\Event;
-use App\Models\Ticket;
+use App\Models\Filter;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 class SearchManager
 {
-    public function filterTicket(array $filters)
+    public function filterTicket(Collection $filters)
     {
-        $tickets = new Ticket();
+        $filter = new Filter();
 
         foreach (['systems', 'types', 'languages'] as $value) {
-            if (isset($filters[$value])) {
-                $tickets = $this->keysFilter($tickets, $filters[$value], $value);
+            if ($filters->has($value)) {
+                $filter = $this->keysFilter($filter, $filters->get($value), $value);
             }
         }
 
-        if (isset($filters['camera'])) {
-            $tickets = $tickets->whereIn('camera', $filters['camera']);
+        if ($filters->has('camera')) {
+            $filter = $filter->where('camera', $filters->get('camera'));
         }
 
-        if (isset($filters['age'])) {
-            $age = $filters['age'];
-            $tickets = $tickets->whereHas('profile', function ($query) use ($age): void {
+        if ($filters->has('age')) {
+            $age = $filters->get('age');
+            $filter = $filter->whereHas('profile', function ($query) use ($age): void {
                 if ($age['min'] === $age['max']) {
                     $dateFrom = Carbon::createFromDate()->subYears($age['max'] + 1)->addDay()->toDateString();
                 } else {
@@ -35,11 +35,10 @@ class SearchManager
                 $query->whereBetween('birth_date', [$dateFrom, $dateTo]);
             });
         }
-
-        return $tickets;
+        return $filter;
     }
 
-    public function filterEvents(array $filters): Builder
+    public function filterEvents(array $filters)
     {
         $events = Event::where([['is_active', '=', '1'], ['public_access', '=', '1']]);
         $events = $events->whereIn('system_id', $filters['systems']);

@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\{Ticket, System, Language, Type};
+use App\Models\{Filter, System, Language, Type};
 use Illuminate\Database\Seeder;
 
-class TicketsTableSeeder extends Seeder
+class FiltersTableSeeder extends Seeder
 {
     public function run(): void
     {
@@ -11,14 +11,14 @@ class TicketsTableSeeder extends Seeder
         $languages = Language::all();
         $types = Type::all();
 
-        Ticket::all()->each(function (Ticket $ticket) use ($systems, $languages, $types){
-            $ticket->systems()->attach(
+        Filter::all()->each(function (Filter $filter) use ($systems, $languages, $types){
+            $filter->systems()->attach(
                 $systems->random(rand(1,3))->pluck('id')->toArray()
             );
-            $ticket->languages()->attach(
+            $filter->languages()->attach(
                 $languages->random(rand(1,3))->pluck('id')->toArray()
             );
-            $ticket->types()->attach(
+            $filter->types()->attach(
                 $types->random(rand(1,5))->pluck('id')->toArray()
             );
         });
