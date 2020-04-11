@@ -22,13 +22,13 @@ class SystemController extends Controller
 
     public function create(SystemRequest $request, SystemManager $systemManager): JsonResource
     {
-        $system = $systemManager->createSystem($request->only('name', 'description'), $request->links);
+        $system = $systemManager->createSystem($request->only('name', 'description', 'links'));
         return new SystemResource($system);
     }
 
     public function update(SystemRequest $request, System $system, SystemManager $systemManager): JsonResource
     {
-        $updateRequest = $systemManager->updateSystem($system, $request->only('name', 'description'), $request->links);
+        $updateRequest = $systemManager->updateSystem($system, $request->only('name', 'description', 'links'));
         return new SystemResource($updateRequest);
     }
 

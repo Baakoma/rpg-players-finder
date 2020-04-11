@@ -18,6 +18,7 @@ class TicketManager
         $ticket->systems()->sync($data['systems']);
         $ticket->types()->sync($data['types']);
         $ticket->languages()->sync($data['languages']);
+        $ticket->refresh();
         return $ticket;
     }
 }
