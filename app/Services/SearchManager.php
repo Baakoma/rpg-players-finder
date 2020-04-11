@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Event;
-use App\Models\Filter;
+use App\Models\Ticket;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
@@ -11,7 +11,7 @@ class SearchManager
 {
     public function filterTicket(Collection $filters)
     {
-        $filter = new Filter();
+        $filter = new Ticket();
 
         foreach (['systems', 'types', 'languages'] as $value) {
             if ($filters->has($value)) {

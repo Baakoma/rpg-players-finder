@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 class SearchController extends Controller
 {
-    public function showFilters(SearchRequest $request, SearchManager $searchManager): LengthAwarePaginator
+    public function searchTicket(SearchRequest $request, SearchManager $searchManager): LengthAwarePaginator
     {
         $filters = [
             'systems', 'types', 'languages', 'camera', 'age'
@@ -22,7 +22,7 @@ class SearchController extends Controller
         return $filter->paginate($sortFilters['perPage'], ['*'], 'page', $sortFilters['page']);
     }
 
-    public function filterEvents(SearchRequest $request, SearchManager $searchManager): LengthAwarePaginator
+    public function searchEvent(SearchRequest $request, SearchManager $searchManager): LengthAwarePaginator
     {
         $sortFilters = $this->getBasicFilters($request);
         $events = $searchManager->filterEvents($request->only('systems', 'types', 'languages'));

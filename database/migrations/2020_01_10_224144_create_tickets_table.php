@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFiltersTable extends Migration
+class CreateTicketsTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('filters', function (Blueprint $table) {
+        Schema::create('tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('profile_id');
             $table->boolean('camera');
@@ -20,6 +20,6 @@ class CreateFiltersTable extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('filters');
+        Schema::dropIfExists('tickets');
     }
 }

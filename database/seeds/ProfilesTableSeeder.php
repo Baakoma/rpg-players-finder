@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\{Profile, Language, System, Filter};
+use App\Models\{Profile, Language, System, Ticket};
 
 class ProfilesTableSeeder extends Seeder
 {
@@ -33,7 +33,7 @@ class ProfilesTableSeeder extends Seeder
 
         Profile::all()->each(function (Profile $profile)
         {
-            $profile->filter()->save(factory(Filter::class)->make());
+            $profile->ticket()->save(factory(Ticket::class)->make());
         });
     }
 }
