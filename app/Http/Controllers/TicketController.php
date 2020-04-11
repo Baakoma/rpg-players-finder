@@ -4,26 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TicketRequest;
 use App\Http\Resources\TicketResource;
-use App\Models\{Profile, Ticket};
-use Illuminate\Http\JsonResponse;
+use App\Models\Profile;
+use App\Services\TicketManager;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TicketController extends Controller
 {
-    public function create(TicketRequest $request, Profile $profile): JsonResponse
+    public function create(TicketRequest $request, Profile $profile, TicketManager $ticketManager): JsonResource
     {
-        $profile->ticket()->updateOrCreate([
-            'camera' => $request->camera,
-            'description' => $request->description
-        ]);
-
         $ticket = $profile->ticket;
-
-        $ticket->systems()->sync($request->input('systems'));
-        $ticket->types()->sync($request->input('types'));
-        $ticket->languages()->sync($request->input('languages'));
-
-        return (new TicketResource($ticket))->response()->setStatusCode(201);
+        $date = $request->only('camera', 'description', 'systems', 'types', 'languages');
+        return new TicketResource($ticketManager->createOrUpdateTicket($date, $ticket, $profile));
     }
 
     public function show(Profile $profile): JsonResource
@@ -31,20 +22,11 @@ class TicketController extends Controller
         return new TicketResource($profile->ticket());
     }
 
-    public function update(TicketRequest $request, Profile $profile): JsonResponse
+    public function update(TicketRequest $request, Profile $profile, TicketManager $ticketManager): JsonResource
     {
-        $profile->ticket()->update([
-            'camera' => $request->camera,
-            'description' => $request->description
-        ]);
-
         $ticket = $profile->ticket;
-
-        $ticket->systems()->sync($request->input('systems'));
-        $ticket->types()->sync($request->input('types'));
-        $ticket->languages()->sync($request->input('languages'));
-
-        return (new TicketResource($ticket))->response()->setStatusCode(201);
+        $date = $request->only('camera', 'description', 'systems', 'types', 'languages');
+        return new TicketResource($ticketManager->createOrUpdateTicket($date, $ticket, $profile));
     }
 
     public function destroy(Profile $profile): void
