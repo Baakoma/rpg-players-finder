@@ -22,8 +22,7 @@ class LanguageController extends Controller
 
     public function create(LanguageRequest $request, LanguageManager $languageManager): JsonResource
     {
-        $language = $languageManager->createLanguage($request->only('name'));
-        return new LanguageResource($language);
+        return new LanguageResource($languageManager->createLanguage($request->only('name')));
     }
 
     public function update(LanguageRequest $request, Language $language, LanguageManager $languageManager): JsonResource

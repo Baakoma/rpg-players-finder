@@ -19,8 +19,7 @@ class EventController extends Controller
     public function create(CreateEventRequest $request, EventManager $eventManager): JsonResource
     {
         $createRequest = $request->only('name', 'owner_id', 'max_users', 'public_access', 'type_id', 'system_id', 'language_id');
-        $event = $eventManager->createEvent($createRequest);
-        return new EventResource($event);
+        return new EventResource($eventManager->createEvent($createRequest));
     }
 
     public function delete(Event $event, EventManager $eventManager): JsonResource

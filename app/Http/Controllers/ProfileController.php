@@ -17,7 +17,7 @@ class ProfileController extends Controller
 
     public function update(UpdateProfileRequest $request, Profile $profile, ProfileManager $profileManager): JsonResource
     {
-        $updateRequest = $request->only('name', 'birth_date', 'sex', 'description', 'languages', 'systems');
-        return new ProfileResource($profileManager->updateProfile($profile, $updateRequest));
+        $updateRequest = $request->only('name', 'birth_date', 'sex', 'description', 'languages');
+        return new ProfileResource($profileManager->updateProfile($profile, $updateRequest, $request->input('systems')));
     }
 }

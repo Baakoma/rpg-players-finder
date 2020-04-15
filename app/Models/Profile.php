@@ -10,7 +10,10 @@ class Profile extends Model
     protected $table = 'profiles';
 
     protected $fillable = [
-        'name', 'birth_date', 'sex', 'description'
+        'name',
+        'birth_date',
+        'sex',
+        'description'
     ];
 
     public function languages(): BelongsToMany
@@ -20,7 +23,8 @@ class Profile extends Model
 
     public function systems(): BelongsToMany
     {
-        return $this->belongsToMany(System::class)->withPivot('lore_knowledge_rating', 'mechanic_knowledge_rating', 'roleplay_rating', 'experience');
+        return $this->belongsToMany(System::class)
+            ->withPivot('system_id', 'lore_knowledge_rating', 'mechanic_knowledge_rating', 'roleplay_rating', 'experience');
     }
 
     public function ticket(): HasOne

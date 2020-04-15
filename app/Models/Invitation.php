@@ -9,12 +9,15 @@ class Invitation extends Model
 {
     protected $table = 'invitations';
 
-    private const ACCEPT = 1;
+    private const ACCEPTED = 1;
     private const DECLINED = 2;
-    private const CLOSE = 3;
+    private const CLOSED = 3;
 
     protected $fillable = [
-        'player_id', 'event_id', 'message', 'status',
+        'player_id',
+        'event_id',
+        'message',
+        'status',
     ];
 
     public function player(): BelongsTo
@@ -29,7 +32,7 @@ class Invitation extends Model
 
     public function acceptInvitation(): void
     {
-        $this->update(['status' => self::ACCEPT]);
+        $this->update(['status' => self::ACCEPTED]);
     }
 
     public function declineInvitation(): void
@@ -39,6 +42,6 @@ class Invitation extends Model
 
     public function closeInvitation(): void
     {
-        $this->update(['status' => self::CLOSE]);
+        $this->update(['status' => self::CLOSED]);
     }
 }

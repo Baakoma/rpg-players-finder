@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchRequest;
 use App\Services\SearchManager;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class SearchController extends Controller
@@ -12,23 +12,47 @@ class SearchController extends Controller
     public function searchTicket(SearchRequest $request, SearchManager $searchManager): LengthAwarePaginator
     {
         $filters = [
-            'systems', 'types', 'languages', 'camera', 'age'
+            'systems',
+            'types',
+            'languages',
+            'camera',
+            'age'
         ];
 
         $sortFilters = $this->getBasicFilters($request);
-        $filter = $searchManager->filterTicket($this->findFilters($request, $filters));
-        $filter->orderBy($sortFilters['sortBy'], $sortFilters['orderBy']);
+        $tickets = $searchManager->searchTicket($this->findFilters($request, $filters));
+        $tickets->sortByDesc($tickets);
+        $tickets->forPage($sortFilters['page'], $sortFilters['perPage']);
 
-        return $filter->paginate($sortFilters['perPage'], ['*'], 'page', $sortFilters['page']);
+        return (new LengthAwarePaginator(
+            $tickets,
+            $tickets->count(),
+            $sortFilters['perPage'],
+            $sortFilters['page'],
+            ['path' => LengthAwarePaginator::resolveCurrentPath()])
+        );
     }
 
     public function searchEvent(SearchRequest $request, SearchManager $searchManager): LengthAwarePaginator
     {
-        $sortFilters = $this->getBasicFilters($request);
-        $events = $searchManager->filterEvents($request->only('systems', 'types', 'languages'));
-        $events->orderBy($sortFilters['sortBy'], $sortFilters['orderBy']);
+        $filters = [
+            'systems',
+            'types',
+            'languages',
+        ];
 
-        return $events->paginate($sortFilters['perPage'], ['*'], 'page', $sortFilters['page']);
+        $sortFilters = $this->getBasicFilters($request);
+        $events = $searchManager->searchEvent($this->findFilters($request, $filters));
+        $events->sortByDesc($events);
+        $events->forPage($sortFilters['page'], $sortFilters['perPage']);
+
+        return (new LengthAwarePaginator(
+            $events,
+            $events->count(),
+            $sortFilters['perPage'],
+            $sortFilters['page'],
+            ['path' => LengthAwarePaginator::resolveCurrentPath()])
+        );
     }
 
     private function findFilters(SearchRequest $request, array $filters): Collection

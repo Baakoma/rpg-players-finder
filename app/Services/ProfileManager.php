@@ -3,26 +3,19 @@
 namespace App\Services;
 
 use App\Models\Profile;
+use Illuminate\Support\Arr;
 
 class ProfileManager
 {
-    public function updateProfile(Profile $profile, array $updateRequest): Profile
+    public function updateProfile(Profile $profile, array $updateRequest, array $updateSystems): Profile
     {
-        $profile->update([
-            'name' => $updateRequest['name'],
-            'birth_date' => $updateRequest['birth_date'],
-            'sex' => $updateRequest['sex'],
-            'description' => $updateRequest['description'],
-        ]);
+        $profile->update($updateRequest);
 
         $systems = [];
-        foreach ($updateRequest['systems'] as $system) {
-            $systems[$system['id']] = [
-                'lore_knowledge_rating' => $system['lore_knowledge_rating'],
-                'mechanic_knowledge_rating' => $system['mechanic_knowledge_rating'],
-                'roleplay_rating' => $system['roleplay_rating'],
-                'experience' => $system['experience']
-            ];
+        foreach ($updateSystems as $system) {
+            $systems[$system['id']] = Arr::where($system, function ($key) {
+                return !($key === 'id');
+            });
         }
 
         $profile->systems()->sync($systems);

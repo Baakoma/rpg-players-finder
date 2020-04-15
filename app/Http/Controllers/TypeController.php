@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TypeRequest;
-use App\Http\Requests\UpdateTypeRequest;
 use App\Http\Resources\TypeResource;
 use App\Models\Type;
 use App\Services\TypeManager;
@@ -23,14 +22,12 @@ class TypeController extends Controller
 
     public function create(TypeRequest $request, TypeManager $typeManager): JsonResource
     {
-        $type = $typeManager->createType($request->only('name', 'description'));
-        return new TypeResource($type);
+        return new TypeResource($typeManager->createType($request->only('name', 'description')));
     }
 
     public function update(TypeRequest $request, Type $type, TypeManager $typeManager): JsonResource
     {
-        $type = $typeManager->updateType($type, $request->only('name', 'description'));
-        return new TypeResource($type);
+        return new TypeResource($typeManager->updateType($type, $request->only('name', 'description')));
     }
 
     public function delete(Type $type, TypeManager $typeManager): JsonResource

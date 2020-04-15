@@ -10,7 +10,8 @@ class Type extends Model
     protected $table = 'types';
 
     protected $fillable = [
-        'name', 'description'
+        'name',
+        'description'
     ];
 
     public function events(): HasMany

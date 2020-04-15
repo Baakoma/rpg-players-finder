@@ -5,27 +5,36 @@ namespace App\Services;
 use App\Models\Event;
 use App\Models\Ticket;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class SearchManager
 {
-    public function filterTicket(Collection $filters)
+    public function searchTicket(Collection $filters): Collection
     {
-        $filter = new Ticket();
+        $multipleFilters = [
+            'systems',
+            'types',
+            'languages'
+        ];
 
-        foreach (['systems', 'types', 'languages'] as $value) {
+        $tickets = (new Ticket())->newQuery();
+
+        foreach ($multipleFilters as $value) {
             if ($filters->has($value)) {
-                $filter = $this->keysFilter($filter, $filters->get($value), $value);
+                $tickets->whereHas($value, function (Builder $query) use ($filters, $value): void {
+                    $query->whereIn($value . '.id', $filters->get($value));
+                });
             }
         }
 
         if ($filters->has('camera')) {
-            $filter = $filter->where('camera', $filters->get('camera'));
+            $tickets->where('camera', $filters->get('camera'));
         }
 
         if ($filters->has('age')) {
             $age = $filters->get('age');
-            $filter = $filter->whereHas('profile', function ($query) use ($age): void {
+            $tickets->whereHas('profile', function (Builder $query) use ($age): void {
                 if ($age['min'] === $age['max']) {
                     $dateFrom = Carbon::createFromDate()->subYears($age['max'] + 1)->addDay()->toDateString();
                 } else {
@@ -35,22 +44,27 @@ class SearchManager
                 $query->whereBetween('birth_date', [$dateFrom, $dateTo]);
             });
         }
-        return $filter;
+        return $tickets->get();
     }
 
-    public function filterEvents(array $filters)
+    public function searchEvent(Collection $filters): Collection
     {
-        $events = Event::where([['is_active', '=', '1'], ['public_access', '=', '1']]);
-        $events = $events->whereIn('system_id', $filters['systems']);
-        $events = $events->whereIn('type_id', $filters['types']);
-        $events = $events->whereIn('language_id', $filters['languages']);
-        return $events;
-    }
+        $multipleFilters = [
+            'system',
+            'type',
+            'language'
+        ];
 
-    private function keysFilter($tickets, array $filter, string $filterName)
-    {
-        return $tickets->whereHas($filterName, function ($query) use ($filter, $filterName): void {
-            $query->whereIn($filterName . '.id', $filter);
-        });
+        $events = (new Event())->newQuery();
+        $events->where([['is_active', '=', '1'], ['public_access', '=', '1']]);
+
+        foreach ($multipleFilters as $value) {
+            if ($filters->has($value)) {
+                $events->whereHas($value, function (Builder $query) use ($filters, $value): void {
+                    $query->whereIn($value . '_id', $filters[$value . 's']);
+                });
+            }
+        }
+        return $events->get();
     }
 }

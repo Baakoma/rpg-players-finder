@@ -15,7 +15,10 @@ class User extends Authenticatable implements JWTSubject
     private const ROLE_USER = 0;
 
     protected $fillable = [
-        'role', 'name', 'email', 'password',
+        'role',
+        'name',
+        'email',
+        'password',
     ];
 
     protected $hidden = [
@@ -38,7 +41,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function isAdmin(): bool
     {
-        return self::ROLE_ADMIN == 'role';
+        return self::ROLE_ADMIN === 'role';
     }
 
     public function events(): BelongsToMany
