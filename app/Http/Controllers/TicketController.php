@@ -13,7 +13,7 @@ class TicketController extends Controller
     public function create(TicketRequest $request, Profile $profile, TicketManager $ticketManager): JsonResource
     {
         $date = $request->only('camera', 'description', 'systems', 'types', 'languages');
-        return new TicketResource($ticketManager->createOrUpdateTicket($date, $profile->ticket, $profile));
+        return new TicketResource($ticketManager->createOrUpdateTicket($date, $profile));
     }
 
     public function show(Profile $profile): JsonResource
@@ -23,8 +23,8 @@ class TicketController extends Controller
 
     public function update(TicketRequest $request, Profile $profile, TicketManager $ticketManager): JsonResource
     {
-        $date = $request->only('camera', 'description', 'systems', 'types', 'languages');
-        return new TicketResource($ticketManager->createOrUpdateTicket($date, $profile->ticket, $profile));
+        $data = $request->only('camera', 'description', 'systems', 'types', 'languages');
+        return new TicketResource($ticketManager->createOrUpdateTicket($data, $profile));
     }
 
     public function destroy(Profile $profile): void
