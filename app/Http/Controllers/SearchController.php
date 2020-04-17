@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchRequest;
 use App\Services\SearchManager;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class SearchController extends Controller
@@ -19,18 +19,9 @@ class SearchController extends Controller
             'age'
         ];
 
-        $sortFilters = $this->getBasicFilters($request);
-        $tickets = $searchManager->searchTicket($this->findFilters($request, $filters));
-        $tickets->sortByDesc($tickets);
-        $tickets->forPage($sortFilters['page'], $sortFilters['perPage']);
-
-        return (new LengthAwarePaginator(
-            $tickets,
-            $tickets->count(),
-            $sortFilters['perPage'],
-            $sortFilters['page'],
-            ['path' => LengthAwarePaginator::resolveCurrentPath()])
-        );
+        $basicFilters = $this->getBasicFilters($request);
+        $filtersFound = $this->findFilters($request, $filters);
+        return $searchManager->getTicketsPaginator($filtersFound, $basicFilters);
     }
 
     public function searchEvent(SearchRequest $request, SearchManager $searchManager): LengthAwarePaginator
@@ -41,18 +32,9 @@ class SearchController extends Controller
             'languages',
         ];
 
-        $sortFilters = $this->getBasicFilters($request);
-        $events = $searchManager->searchEvent($this->findFilters($request, $filters));
-        $events->sortByDesc($events);
-        $events->forPage($sortFilters['page'], $sortFilters['perPage']);
-
-        return (new LengthAwarePaginator(
-            $events,
-            $events->count(),
-            $sortFilters['perPage'],
-            $sortFilters['page'],
-            ['path' => LengthAwarePaginator::resolveCurrentPath()])
-        );
+        $basicFilters = $this->getBasicFilters($request);
+        $filtersFound = $this->findFilters($request, $filters);
+        return $searchManager->getEventsPaginator($filtersFound, $basicFilters);
     }
 
     private function findFilters(SearchRequest $request, array $filters): Collection
@@ -66,13 +48,13 @@ class SearchController extends Controller
         return $filtersFound;
     }
 
-    private function getBasicFilters(SearchRequest $request): array
+    private function getBasicFilters(SearchRequest $request): Collection
     {
-        return [
+        return collect([
             'orderBy' => $request->input('orderBy', 'desc'),
             'sortBy' => $request->input('sortBy', 'created_at'),
             'perPage' => $request->input('perPage', 10),
             'page' => $request->input('page', 1),
-        ];
+        ]);
     }
 }

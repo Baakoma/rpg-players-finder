@@ -5,12 +5,13 @@ namespace App\Services;
 use App\Models\Event;
 use App\Models\Ticket;
 use Carbon\Carbon;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class SearchManager
 {
-    public function searchTicket(Collection $filters): Collection
+    public function getTicketsPaginator(Collection $filters, Collection $basicFilters): LengthAwarePaginator
     {
         $multipleFilters = [
             'systems',
@@ -44,10 +45,10 @@ class SearchManager
                 $query->whereBetween('birth_date', [$dateFrom, $dateTo]);
             });
         }
-        return $tickets->get();
+        return $this->paginate($tickets, $basicFilters);
     }
 
-    public function searchEvent(Collection $filters): Collection
+    public function getEventsPaginator(Collection $filters, Collection $basicFilters): LengthAwarePaginator
     {
         $multipleFilters = [
             'system',
@@ -65,6 +66,13 @@ class SearchManager
                 });
             }
         }
-        return $events->get();
+        return $this->paginate($events, $basicFilters);
+    }
+
+    private function paginate(Builder $builder, Collection $sortFilters): LengthAwarePaginator
+    {
+        $sorted = $builder->orderBy($sortFilters->get('sortBy'), $sortFilters->get('orderBy'));
+        $chunk = $sorted->paginate($sortFilters->get('perPage'), ['*'], 'page', $sortFilters->get('page'));
+        return $chunk;
     }
 }

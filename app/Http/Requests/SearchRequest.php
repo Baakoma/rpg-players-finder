@@ -9,15 +9,16 @@ class SearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'systems' => '',
-            'types' => '',
-            'languages' => '',
-            'camera' => '',
-            'age' => '',
-            'orderBy' => '',
-            'sortBy' => '',
-            'perPage' => '',
-            'page' => '',
+            'systems' => 'exists:systems,id',
+            'types' => 'exists:types,id',
+            'languages' => 'exists:languages,id',
+            'camera' => 'boolean',
+            'age.min' => 'numeric',
+            'age.max' => 'numeric',
+            'orderBy' => 'string',
+            'sortBy' => 'string',
+            'perPage' => 'numeric',
+            'page' => 'numeric',
         ];
     }
 }
