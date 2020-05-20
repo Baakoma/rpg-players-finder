@@ -13,7 +13,7 @@ class CreateJoinRequestTable extends Migration
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('player_id');
             $table->string('message');
-            $table->boolean('status')->default(0);
+            $table->integer('status')->default(0);
             $table->timestamps();
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->foreign('player_id')->references('id')->on('users')->onDelete('cascade');
