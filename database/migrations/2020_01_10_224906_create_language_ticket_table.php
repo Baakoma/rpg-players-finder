@@ -12,18 +12,9 @@ class CreateLanguageTicketTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('language_id');
             $table->unsignedBigInteger('ticket_id');
-
             $table->unique(['language_id', 'ticket_id']);
-
-            $table->foreign('language_id')
-                ->references('id')
-                ->on('languages')
-                ->onDelete('cascade');
-
-            $table->foreign('ticket_id')
-                ->references('id')
-                ->on('tickets')
-                ->onDelete('cascade');
+            $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
+            $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
         });
     }
 

@@ -3,28 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
-use App\Http\Requests\LoginFormRequest;
-use App\Http\Requests\LogoutFormRequest;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\LogoutRequest;
 use App\Http\Resources\UserResource;
 use App\services\AuthManager;
 use Illuminate\Http\JsonResponse;
-use App\Http\Requests\RegistrationFormRequest;
+use App\Http\Requests\RegistrationRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-
 class AuthController extends Controller
 {
-    public function register(RegistrationFormRequest $request, AuthManager $auth): JsonResource
+    public function register(RegistrationRequest $request, AuthManager $auth): JsonResource
     {
         $user = $auth->register($request->only('name', 'email', 'password'));
 
         return new UserResource($user);
     }
 
-    public function login(LoginFormRequest $request, AuthManager $auth): JsonResponse
+    public function login(LoginRequest $request, AuthManager $auth): JsonResponse
     {
         try {
             $token = $auth->login($request->only('email', 'password'));
@@ -41,7 +40,7 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(LogoutFormRequest $request): JsonResponse
+    public function logout(LogoutRequest $request): JsonResponse
     {
         try {
             JWTAuth::invalidate($request->only('token'));

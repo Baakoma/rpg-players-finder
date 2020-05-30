@@ -12,18 +12,9 @@ class CreateTicketTypeTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('ticket_id');
             $table->unsignedBigInteger('type_id');
-
             $table->unique(['ticket_id', 'type_id']);
-
-            $table->foreign('ticket_id')
-                ->references('id')
-                ->on('tickets')
-                ->onDelete('cascade');
-
-            $table->foreign('type_id')
-                ->references('id')
-                ->on('types')
-                ->onDelete('cascade');
+            $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
         });
     }
 

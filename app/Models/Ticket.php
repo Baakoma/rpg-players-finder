@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Relations\{BelongsToMany, BelongsTo};
 
 class Ticket extends Model
 {
-    protected $fillable = ['camera', 'description'];
+    protected $fillable = [
+        'camera',
+        'description'
+    ];
 
     public function systems(): BelongsToMany
     {

@@ -12,18 +12,9 @@ class CreateLanguageProfileTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('language_id');
             $table->unsignedBigInteger('profile_id');
-
             $table->unique(['language_id', 'profile_id']);
-
-            $table->foreign('language_id')
-                ->references('id')
-                ->on('languages')
-                ->onDelete('cascade');
-
-            $table->foreign('profile_id')
-                ->references('id')
-                ->on('profiles')
-                ->onDelete('cascade');
+            $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
+            $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
         });
     }
 

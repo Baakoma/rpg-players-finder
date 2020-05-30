@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
 
-Route::get('/tickets', 'SearchController@filterTickets');
-Route::get('/events', 'SearchController@filterEvents');
+Route::get('/filters', 'SearchController@searchTicket');
+Route::get('/events', 'SearchController@searchEvent');
 
 Route::get('/systems', 'SystemController@index');
 Route::get('/languages', 'LanguageController@index');
@@ -38,10 +38,10 @@ Route::middleware('auth.jwt')->group(function (): void {
     Route::post('/join-request/{joinRequest}/decline', 'JoinRequestController@decline');
     Route::post('/join-request/{joinRequest}/close', 'JoinRequestController@close');
 
-    Route::post('/tickets/{profile}', 'TicketController@create');
-    Route::get('/tickets/{profile}', 'TicketController@show');
-    Route::put('/tickets/{profile}', 'TicketController@update');
-    Route::delete('/tickets/{profile}', 'TicketController@destroy');
+    Route::post('/ticket/{profile}', 'TicketController@create');
+    Route::get('/ticket/{profile}', 'TicketController@show');
+    Route::put('/ticket/{profile}', 'TicketController@update');
+    Route::delete('/ticket/{profile}', 'TicketController@destroy');
 });
 
 Route::group(['middleware' => ['auth.jwt', 'is.admin']], function (): void {
