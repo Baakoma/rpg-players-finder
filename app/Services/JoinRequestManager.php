@@ -7,7 +7,7 @@ use App\Models\JoinRequest;
 
 class JoinRequestManager
 {
-    public function creatJoinRequest(array $joinRequestData): JoinRequest
+    public function createJoinRequest(array $joinRequestData): JoinRequest
     {
         $event = Event::query()->findOrFail($joinRequestData['event_id']);
         if ($event->playerExist($joinRequestData['player_id'])) {
