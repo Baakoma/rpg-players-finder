@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 
+/** Authentication */
+Route::post('/register', 'RegisterController@register');
+Route::post('/login', 'LoginController@login');
+Route::post('/logout', 'LogoutController@logout');
+Route::get('/user', 'UserController@user');
+
+/** Everyone */
 Route::get('/filters', 'SearchController@searchTicket');
 Route::get('/events', 'SearchController@searchEvent');
 
@@ -11,9 +18,8 @@ Route::get('/systems', 'SystemController@index');
 Route::get('/languages', 'LanguageController@index');
 Route::get('/types', 'TypeController@index');
 
+/** Only users+ */
 Route::middleware('auth:sanctum')->group(function (): void {
-    Route::post('logout', 'AuthController@logout');
-
     Route::get('/profile/{profile}', 'ProfileController@show');
     Route::put('/profile/{profile}', 'ProfileController@update');
 
@@ -43,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::delete('/ticket/{profile}', 'TicketController@destroy');
 });
 
+/** Only admin */
 Route::group(['middleware' => ['auth:sanctum', 'is.admin']], function (): void {
     Route::post('/systems', 'SystemController@create');
     Route::get('/systems/{system}', 'SystemController@show');
