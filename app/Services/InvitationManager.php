@@ -7,7 +7,7 @@ use App\Models\Invitation;
 
 class InvitationManager
 {
-    public function createInvitation(array $invitationData): Invitation
+    public function creatInvitation(array $invitationData): Invitation
     {
         $event = Event::query()->findOrFail($invitationData['event_id']);
         if ($event->playerExist($invitationData['player_id'])) {

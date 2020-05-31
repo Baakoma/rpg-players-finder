@@ -43,7 +43,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function ownerEvents(): HasMany
     {
-        return $this->hasMany(Event::class, 'owner_id');
+        return $this->hasMany(Event::class, 'id');
     }
 
     public function invitations(): HasMany

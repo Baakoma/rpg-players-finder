@@ -5,7 +5,6 @@ namespace App\Http;
 use App\Http\Middleware\CheckForMaintenanceMode;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\IsAdmin;
-use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\VerifyCsrfToken;
@@ -63,7 +62,6 @@ class Kernel extends HttpKernel
         'verified' => EnsureEmailIsVerified::class,
         'auth.jwt'  =>  Authenticate::class,
         'is.admin' => IsAdmin::class,
-        'setLocale' => SetLocale::class,
     ];
 
     protected $middlewarePriority = [
