@@ -12,7 +12,14 @@ class Event extends Model
     protected $table = 'events';
 
     protected $fillable = [
-        'name', 'owner_id', 'max_users', 'public_access', 'is_active', 'type_id', 'system_id', 'language_id'
+        'name',
+        'owner_id',
+        'max_users',
+        'public_access',
+        'is_active',
+        'type_id',
+        'system_id',
+        'language_id'
     ];
 
     protected $casts = [

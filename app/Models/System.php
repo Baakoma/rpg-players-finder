@@ -11,7 +11,8 @@ class System extends Model
     protected $table = 'systems';
 
     protected $fillable = [
-        'name', 'description'
+        'name',
+        'description'
     ];
 
     public function profiles(): BelongsToMany

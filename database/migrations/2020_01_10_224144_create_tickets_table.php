@@ -14,11 +14,7 @@ class CreateTicketsTable extends Migration
             $table->boolean('camera');
             $table->string('description', 500)->nullable();
             $table->timestamps();
-
-            $table->foreign('profile_id')
-                ->references('id')
-                ->on('profiles')
-                ->onDelete('cascade');
+            $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
         });
     }
 

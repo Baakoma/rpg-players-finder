@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SystemFormRequest;
-use App\Http\Requests\UpdateSystemFormRequest;
+use App\Http\Requests\SystemRequest;
 use App\Http\Resources\SystemResource;
 use App\Models\System;
 use App\Services\SystemManager;
@@ -21,16 +20,14 @@ class SystemController extends Controller
         return SystemResource::collection(System::all());
     }
 
-    public function create(SystemFormRequest $request, SystemManager $systemManager): JsonResource
+    public function create(SystemRequest $request, SystemManager $systemManager): JsonResource
     {
-        $system = $systemManager->createSystem($request->only('name', 'description'), $request->links);
-        return new SystemResource($system);
+        return new SystemResource($systemManager->createSystem($request->only('name', 'description', 'links')));
     }
 
-    public function update(SystemFormRequest $request, System $system, SystemManager $systemManager): JsonResource
+    public function update(SystemRequest $request, System $system, SystemManager $systemManager): JsonResource
     {
-        $updateRequest = $systemManager->updateSystem($system, $request->only('name', 'description'), $request->links);
-        return new SystemResource($updateRequest);
+        return new SystemResource($systemManager->updateSystem($system, $request->only('name', 'description', 'links')));
     }
 
     public function delete(System $system, SystemManager $systemManager): JsonResource

@@ -3,13 +3,13 @@
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class  CreateUsersSeeder extends Seeder
+class  UsersTableSeeder extends Seeder
 {
     public function run(): void
     {
         $admin = [
             'name' => 'Admin',
-            'email' => 'admin@gmmmm.com',
+            'email' => 'admin@email.com',
             'role' => '1',
             'password' => bcrypt('123456'),
         ];

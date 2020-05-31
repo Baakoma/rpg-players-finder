@@ -16,18 +16,9 @@ class CreateProfileSystemTable extends Migration
             $table->integer('mechanic_knowledge_rating');
             $table->integer('roleplay_rating');
             $table->integer('experience');
-
             $table->unique(['profile_id', 'system_id']);
-
-            $table->foreign('profile_id')
-                ->references('id')
-                ->on('profiles')
-                ->onDelete('cascade');
-
-            $table->foreign('system_id')
-                ->references('id')
-                ->on('systems')
-                ->onDelete('cascade');
+            $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
+            $table->foreign('system_id')->references('id')->on('systems')->onDelete('cascade');
         });
     }
 

@@ -12,18 +12,9 @@ class CreateSystemTicketTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('system_id');
             $table->unsignedBigInteger('ticket_id');
-
             $table->unique(['system_id', 'ticket_id']);
-
-            $table->foreign('system_id')
-                ->references('id')
-                ->on('systems')
-                ->onDelete('cascade');
-
-            $table->foreign('ticket_id')
-                ->references('id')
-                ->on('tickets')
-                ->onDelete('cascade');
+            $table->foreign('system_id')->references('id')->on('systems')->onDelete('cascade');
+            $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
         });
     }
 

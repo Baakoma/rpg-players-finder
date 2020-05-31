@@ -34,6 +34,7 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
+        SetLocale::class,
     ];
 
     protected $middlewareGroups = [

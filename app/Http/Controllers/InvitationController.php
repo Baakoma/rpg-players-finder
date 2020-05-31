@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InviteEventFormRequest;
+use App\Http\Requests\InviteEventRequest;
 use App\Http\Resources\InvitationResource;
 use App\Models\{Invitation, Event};
 use App\Services\InvitationManager;
@@ -16,7 +16,7 @@ class InvitationController extends Controller
         return new InvitationResource($invitation);
     }
 
-    public function create(InviteEventFormRequest $request, InvitationManager $invitationManager): JsonResource
+    public function create(InviteEventRequest $request, InvitationManager $invitationManager): JsonResource
     {
         $this->authorize('create', [Invitation::class, $request]);
         $invitation = $invitationManager->createInvitation($request->only('event_id', 'player_id', 'message'));

@@ -16,11 +16,7 @@ class CreateProfilesTable extends Migration
             $table->integer('sex')->nullable();
             $table->string('description', 500)->nullable();
             $table->timestamps();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

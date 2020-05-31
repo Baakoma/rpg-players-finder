@@ -5,14 +5,11 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsAdmin
+class SetLocale
 {
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->isAdmin()){
-            return $next($request);
-        }
-
-        return abort(403 , 'Forbidden');
+        app()->setLocale($request->query('lang', 'en'));
+        return $next($request);
     }
 }

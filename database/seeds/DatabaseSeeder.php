@@ -10,10 +10,10 @@ class DatabaseSeeder extends Seeder
             LanguagesTableSeeder::class,
             SystemsTableSeeder::class,
             TypesTableSeeder::class,
-            CreateUsersSeeder::class,
+            UsersTableSeeder::class,
             ProfilesTableSeeder::class,
-            CreateEventsSeeder::class,
-            TicketsTableSeeder::class
+            EventsTableSeeder::class,
+            TicketTableSeeder::class
         ]);
     }
 }
