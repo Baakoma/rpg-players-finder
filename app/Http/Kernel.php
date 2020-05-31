@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'verified' => EnsureEmailIsVerified::class,
         'auth.jwt'  =>  Authenticate::class,
         'is.admin' => IsAdmin::class,
+        'setLocale' => SetLocale::class,
     ];
 
     protected $middlewarePriority = [
