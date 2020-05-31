@@ -17,6 +17,7 @@ class ProfileController extends Controller
 
     public function update(UpdateProfileRequest $request, Profile $profile): JsonResponse
     {
+        $this->authorize('update', $profile);
         $profile->fill([
             'name' => $request->name,
             'birth_date' => $request->birth_date,
@@ -28,7 +29,7 @@ class ProfileController extends Controller
 
         $systems = [];
         foreach ($request->systems as $system) {
-            $systems[$system['system_id']] = [
+            $systems[$system['id']] = [
                 'lore_knowledge_rating' => $system['lore_knowledge_rating'],
                 'mechanic_knowledge_rating' => $system['mechanic_knowledge_rating'],
                 'roleplay_rating' => $system['roleplay_rating'],
