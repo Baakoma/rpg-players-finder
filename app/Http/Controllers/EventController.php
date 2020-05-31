@@ -13,7 +13,6 @@ class EventController extends Controller
 {
     public function show(Event $event): JsonResource
     {
-        $this->authorize('view', $event);
         return new EventResource($event);
     }
 
@@ -26,20 +25,17 @@ class EventController extends Controller
 
     public function delete(Event $event, EventManager $eventManager): JsonResource
     {
-        $this->authorize('modify', $event);
         return new EventResource($eventManager->deleteEvent($event));
     }
 
     public function update(UpdateEventRequest $request, Event $event, EventManager $eventManager): JsonResource
     {
-        $this->authorize('modify', $event);
         $updateRequest = $request->only('name', 'max_users', 'public_access', 'type_id', 'system_id', 'language_id');
         return new EventResource($eventManager->updateEvent($event, $updateRequest));
     }
 
     public function close(Event $event): JsonResource
     {
-        $this->authorize('modify', $event);
         $event->closeEvent();
         return new EventResource($event);
     }

@@ -12,7 +12,6 @@ class TicketController extends Controller
 {
     public function create(TicketRequest $request, Profile $profile): JsonResponse
     {
-        $this->authorize('createOrModify', [Ticket::class, $profile]);
         $profile->ticket()->updateOrCreate([
             'camera' => $request->camera,
             'description' => $request->description
@@ -29,13 +28,11 @@ class TicketController extends Controller
 
     public function show(Profile $profile): JsonResource
     {
-        $this->authorize('view', [Ticket::class, $profile]);
         return new TicketResource($profile->ticket());
     }
 
     public function update(TicketRequest $request, Profile $profile): JsonResponse
     {
-        $this->authorize('createOrModify', [Ticket::class, $profile]);
         $profile->ticket()->update([
             'camera' => $request->camera,
             'description' => $request->description
@@ -52,7 +49,6 @@ class TicketController extends Controller
 
     public function destroy(Profile $profile): void
     {
-        $this->authorize('createOrModify', [Ticket::class, $profile]);
         $profile->ticket()->delete();
     }
 }
