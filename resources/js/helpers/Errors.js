@@ -1,31 +1,38 @@
 export default class Errors {
     constructor() {
-        this.errors = [];
+        this.list = [];
+        this.message = null;
     }
 
     has(field) {
-        return this.errors.hasOwnProperty(field);
+        return this.list.hasOwnProperty(field);
     }
 
     any() {
-        return Object.keys(this.errors).length > 0;
+        return Object.keys(this.list).length > 0;
     }
 
     get(field) {
-        if (this.errors[field]) {
-            return this.errors[field][0];
+        if (this.list[field]) {
+            return this.list[field][0];
         }
     }
 
-    fill(errors) {
-        this.errors = errors;
+    errorMessage() {
+        return this.message;
+    }
+
+    fill(data) {
+        this.list = data.errors;
+        this.message = data.message;
     }
 
     clear(field) {
-        delete this.errors[field];
+        delete this.list[field];
+        delete this.message;
     }
 
     reset() {
-        this.errors = {};
+        this.list = {};
     }
 }

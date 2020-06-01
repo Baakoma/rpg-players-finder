@@ -1980,6 +1980,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_Messenger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/Messenger */ "./resources/js/helpers/Messenger.js");
+/* harmony import */ var _helpers_Errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/Errors */ "./resources/js/helpers/Errors.js");
 //
 //
 //
@@ -2008,6 +2009,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2016,13 +2022,16 @@ __webpack_require__.r(__webpack_exports__);
       userData: {
         email: '',
         password: ''
-      }
+      },
+      Errors: new _helpers_Errors__WEBPACK_IMPORTED_MODULE_1__["default"]()
     };
   },
   methods: {
     login: function login() {
       var _this = this;
 
+      this.fetching = true;
+      this.Errors.clear();
       this.$store.dispatch('login', this.userData).then(function () {
         _this.$router.push({
           name: 'home'
@@ -2033,10 +2042,14 @@ __webpack_require__.r(__webpack_exports__);
         var response = error.response;
 
         if (response.status === 422) {
-          _helpers_Messenger__WEBPACK_IMPORTED_MODULE_0__["default"].error('Something went wront. Try again');
+          _this.Errors.fill(response.data);
+
+          _helpers_Messenger__WEBPACK_IMPORTED_MODULE_0__["default"].error(_this.Errors.message);
         } else {
           throw error;
         }
+      })["finally"](function () {
+        return _this.fetching = false;
       });
     }
   }
@@ -2054,6 +2067,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_Messenger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/Messenger */ "./resources/js/helpers/Messenger.js");
+/* harmony import */ var _helpers_Errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/Errors */ "./resources/js/helpers/Errors.js");
 //
 //
 //
@@ -2098,6 +2112,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2108,7 +2131,8 @@ __webpack_require__.r(__webpack_exports__);
         email: '',
         password: '',
         password_confirmation: ''
-      }
+      },
+      Errors: new _helpers_Errors__WEBPACK_IMPORTED_MODULE_1__["default"]()
     };
   },
   methods: {
@@ -2116,6 +2140,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.fetching = true;
+      this.Errors.clear();
       this.$store.dispatch('register', this.userData).then(function () {
         _this.$router.push({
           name: 'home'
@@ -2124,8 +2149,18 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function () {
           return _helpers_Messenger__WEBPACK_IMPORTED_MODULE_0__["default"].success('You\'re logged in');
         });
+      })["catch"](function (error) {
+        var response = error.response;
+
+        if (response.status === 422) {
+          _this.Errors.fill(response.data);
+
+          _helpers_Messenger__WEBPACK_IMPORTED_MODULE_0__["default"].error(_this.Errors.message);
+        } else {
+          throw error;
+        }
       })["finally"](function () {
-        _this.fetching = false;
+        return _this.fetching = false;
       });
     }
   }
@@ -19384,7 +19419,7 @@ var render = function() {
                 ? _c(
                     "b-navbar-item",
                     { attrs: { tag: "router-link", to: { name: "home" } } },
-                    [_vm._v("\n                Wydarzenia\n            ")]
+                    [_vm._v("\n                Events\n            ")]
                   )
                 : _vm._e(),
               _vm._v(" "),
@@ -19402,7 +19437,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                        Rejestracja\n                    "
+                              "\n                        Sign up\n                    "
                             )
                           ]
                         )
@@ -19417,7 +19452,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                        Zaloguj się\n                    "
+                              "\n                        Sign in\n                    "
                             )
                           ]
                         )
@@ -19438,7 +19473,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                        Wyloguj się\n                    "
+                              "\n                        Logout\n                    "
                             )
                           ]
                         )
@@ -19492,9 +19527,7 @@ var render = function() {
     "div",
     { staticStyle: { width: "600px" } },
     [
-      _c("h1", { staticClass: "title is-1" }, [
-        _vm._v("Sign in to RPG Player Finder")
-      ]),
+      _c("h1", { staticClass: "title is-1" }, [_vm._v("Sign in")]),
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
@@ -19512,10 +19545,21 @@ var render = function() {
         [
           _c(
             "b-field",
-            { attrs: { label: "Email" } },
+            {
+              attrs: {
+                label: "Email",
+                type: { "is-danger": _vm.Errors.has("email") },
+                message: _vm.Errors.get("email")
+              }
+            },
             [
               _c("b-input", {
-                attrs: { type: "email", name: "email", required: "" },
+                attrs: { type: "text", name: "email" },
+                on: {
+                  input: function($event) {
+                    return _vm.Errors.clear("email")
+                  }
+                },
                 model: {
                   value: _vm.userData.email,
                   callback: function($$v) {
@@ -19530,14 +19574,24 @@ var render = function() {
           _vm._v(" "),
           _c(
             "b-field",
-            { attrs: { label: "Password" } },
+            {
+              attrs: {
+                label: "Password",
+                type: { "is-danger": _vm.Errors.has("password") },
+                message: _vm.Errors.get("password")
+              }
+            },
             [
               _c("b-input", {
                 attrs: {
                   type: "password",
                   name: "password",
-                  required: "",
                   "password-reveal": ""
+                },
+                on: {
+                  input: function($event) {
+                    return _vm.Errors.clear("password")
+                  }
                 },
                 model: {
                   value: _vm.userData.password,
@@ -19553,7 +19607,13 @@ var render = function() {
           _vm._v(" "),
           _c(
             "b-button",
-            { attrs: { type: "is-primary", "native-type": "submit" } },
+            {
+              attrs: {
+                type: "is-primary",
+                "native-type": "submit",
+                disabled: _vm.Errors.any()
+              }
+            },
             [_vm._v("Sign in")]
           )
         ],
@@ -19616,10 +19676,21 @@ var render = function() {
         [
           _c(
             "b-field",
-            { attrs: { label: "Username" } },
+            {
+              attrs: {
+                label: "Username",
+                type: { "is-danger": _vm.Errors.has("name") },
+                message: _vm.Errors.get("name")
+              }
+            },
             [
               _c("b-input", {
-                attrs: { type: "text", name: "name", required: "" },
+                attrs: { type: "text", name: "name" },
+                on: {
+                  input: function($event) {
+                    return _vm.Errors.clear("name")
+                  }
+                },
                 model: {
                   value: _vm.userData.name,
                   callback: function($$v) {
@@ -19634,10 +19705,21 @@ var render = function() {
           _vm._v(" "),
           _c(
             "b-field",
-            { attrs: { label: "Email" } },
+            {
+              attrs: {
+                label: "Email",
+                type: { "is-danger": _vm.Errors.has("email") },
+                message: _vm.Errors.get("email")
+              }
+            },
             [
               _c("b-input", {
-                attrs: { type: "email", name: "email", required: "" },
+                attrs: { type: "text", name: "email" },
+                on: {
+                  input: function($event) {
+                    return _vm.Errors.clear("email")
+                  }
+                },
                 model: {
                   value: _vm.userData.email,
                   callback: function($$v) {
@@ -19652,14 +19734,24 @@ var render = function() {
           _vm._v(" "),
           _c(
             "b-field",
-            { attrs: { label: "Password" } },
+            {
+              attrs: {
+                label: "Password",
+                type: { "is-danger": _vm.Errors.has("password") },
+                message: _vm.Errors.get("password")
+              }
+            },
             [
               _c("b-input", {
                 attrs: {
                   type: "password",
                   name: "password",
-                  required: "",
                   "password-reveal": ""
+                },
+                on: {
+                  input: function($event) {
+                    return _vm.Errors.clear("password")
+                  }
                 },
                 model: {
                   value: _vm.userData.password,
@@ -19675,13 +19767,20 @@ var render = function() {
           _vm._v(" "),
           _c(
             "b-field",
-            { attrs: { label: "Confirm password" } },
+            {
+              attrs: {
+                label: "Confirm password",
+                type: { "is-danger": _vm.Errors.has("password_confirmation") },
+                message: _vm.Errors.get("password_confirmation")
+              }
+            },
             [
               _c("b-input", {
-                attrs: {
-                  type: "password",
-                  required: "",
-                  name: "passwordConfirmation"
+                attrs: { type: "password", name: "password_confirmation" },
+                on: {
+                  input: function($event) {
+                    return _vm.Errors.clear("password_confirmation")
+                  }
                 },
                 model: {
                   value: _vm.userData.password_confirmation,
@@ -36070,6 +36169,78 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_f348271a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_template_id_f348271a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/helpers/Errors.js":
+/*!****************************************!*\
+  !*** ./resources/js/helpers/Errors.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Errors; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Errors = /*#__PURE__*/function () {
+  function Errors() {
+    _classCallCheck(this, Errors);
+
+    this.list = [];
+    this.message = null;
+  }
+
+  _createClass(Errors, [{
+    key: "has",
+    value: function has(field) {
+      return this.list.hasOwnProperty(field);
+    }
+  }, {
+    key: "any",
+    value: function any() {
+      return Object.keys(this.list).length > 0;
+    }
+  }, {
+    key: "get",
+    value: function get(field) {
+      if (this.list[field]) {
+        return this.list[field][0];
+      }
+    }
+  }, {
+    key: "errorMessage",
+    value: function errorMessage() {
+      return this.message;
+    }
+  }, {
+    key: "fill",
+    value: function fill(data) {
+      this.list = data.errors;
+      this.message = data.message;
+    }
+  }, {
+    key: "clear",
+    value: function clear(field) {
+      delete this.list[field];
+      delete this.message;
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.list = {};
+    }
+  }]);
+
+  return Errors;
+}();
 
 
 

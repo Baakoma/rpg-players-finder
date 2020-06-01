@@ -8,18 +8,18 @@
             </template>
             <template slot="end">
                 <b-navbar-item tag="router-link" :to="{ name: 'home' }" v-if="isLoggedIn">
-                    Wydarzenia
+                    Events
                 </b-navbar-item>
                 <b-navbar-item tag="div">
                     <div class="buttons">
                         <router-link class="button is-success" :to="{ name: 'register' }" v-if="!isLoggedIn">
-                            Rejestracja
+                            Sign up
                         </router-link>
                         <router-link class="button is-primary" :to="{ name: 'login' }" v-if="!isLoggedIn">
-                            Zaloguj się
+                            Sign in
                         </router-link>
                         <a class="button is-danger" href="/logout" @click.prevent="logout" v-if="isLoggedIn">
-                            Wyloguj się
+                            Logout
                         </a>
                     </div>
                 </b-navbar-item>
