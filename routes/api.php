@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 
-Route::post('login', 'AuthController@login');
-Route::post('register', 'AuthController@register');
+/** Authentication */
+Route::post('/register', 'RegisterController@register');
+Route::post('/login', 'LoginController@login');
+Route::post('/logout', 'LogoutController@logout');
+Route::get('/user', 'UserController@user');
 
+/** Everyone */
 Route::get('/filters', 'SearchController@searchTicket');
 Route::get('/events', 'SearchController@searchEvent');
 
@@ -12,9 +18,8 @@ Route::get('/systems', 'SystemController@index');
 Route::get('/languages', 'LanguageController@index');
 Route::get('/types', 'TypeController@index');
 
-Route::middleware('auth.jwt')->group(function (): void {
-    Route::post('logout', 'AuthController@logout');
-
+/** Only users+ */
+Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('/profile/{profile}', 'ProfileController@show');
     Route::put('/profile/{profile}', 'ProfileController@update');
 
@@ -44,7 +49,8 @@ Route::middleware('auth.jwt')->group(function (): void {
     Route::delete('/ticket/{profile}', 'TicketController@destroy');
 });
 
-Route::group(['middleware' => ['auth.jwt', 'is.admin']], function (): void {
+/** Only admin */
+Route::group(['middleware' => ['auth:sanctum', 'is.admin']], function (): void {
     Route::post('/systems', 'SystemController@create');
     Route::get('/systems/{system}', 'SystemController@show');
     Route::put('/systems/{system}', 'SystemController@update');

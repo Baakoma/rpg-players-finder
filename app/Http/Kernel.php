@@ -1,14 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http;
 
 use App\Http\Middleware\CheckForMaintenanceMode;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\VerifyCsrfToken;
+use Fruitcake\Cors\HandleCors;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
@@ -24,12 +29,13 @@ use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Tymon\JWTAuth\Http\Middleware\Authenticate;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 class Kernel extends HttpKernel
 {
     protected $middleware = [
         TrustProxies::class,
+        HandleCors::class,
         CheckForMaintenanceMode::class,
         ValidatePostSize::class,
         TrimStrings::class,
@@ -48,21 +54,23 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            EnsureFrontendRequestsAreStateful::class,
             'throttle:60,1',
             'bindings',
         ],
     ];
 
     protected $routeMiddleware = [
+        'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
         'bindings' => SubstituteBindings::class,
         'cache.headers' => SetCacheHeaders::class,
         'can' => Authorize::class,
+        'guest' => RedirectIfAuthenticated::class,
         'password.confirm' => RequirePassword::class,
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
-        'auth.jwt'  =>  Authenticate::class,
         'is.admin' => IsAdmin::class,
         'setLocale' => SetLocale::class,
     ];

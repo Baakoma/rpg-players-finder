@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Laravel\Telescope\Telescope;
@@ -9,7 +11,7 @@ use Laravel\Telescope\TelescopeApplicationServiceProvider;
 
 class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         $this->hideSensitiveRequestDetails();
 
@@ -26,7 +28,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
         });
     }
 
-    protected function hideSensitiveRequestDetails()
+    protected function hideSensitiveRequestDetails(): void
     {
         if ($this->app->isLocal()) {
             return;
