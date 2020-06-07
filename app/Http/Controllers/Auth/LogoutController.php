@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class LogoutController extends Controller
 {
@@ -18,6 +18,8 @@ class LogoutController extends Controller
     public function logout(Request $request)
     {
         $this->guard()->logout();
+
+        Log::info('User '.Auth::id().' logged out');
 
         $request->session()->invalidate();
 

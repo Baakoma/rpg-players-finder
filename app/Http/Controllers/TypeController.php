@@ -7,16 +7,19 @@ use App\Http\Resources\TypeResource;
 use App\Models\Type;
 use App\Services\TypeManager;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class TypeController extends Controller
 {
     public function show(Type $type): JsonResource
     {
+        Log::info('User '.Auth::id().' viewed type '.$type->id);
         return new TypeResource($type);
     }
 
     public function index(): JsonResource
     {
+        Log::info('User '.Auth::id().' indexed types');
         return TypeResource::collection(Type::all());
     }
 
