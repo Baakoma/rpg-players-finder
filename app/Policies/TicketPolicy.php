@@ -9,6 +9,14 @@ class TicketPolicy
 {
     use HandlesAuthorization;
 
+    public function before(User $user) : ?bool
+    {
+        if($user->isAdmin())
+        {
+            return true;
+        }
+    }
+
     public function view(User $user, Profile $profile) : bool
     {
         return $user->is(User::findOrFail($profile->id)) || $user->ownerEvents->count() > 0;

@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Http\Requests\InviteEventFormRequest;
+use App\Http\Requests\InviteEventRequest;
 use App\Models\{Event, Invitation, User};
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -10,12 +10,20 @@ class InvitationPolicy
 {
     use HandlesAuthorization;
 
+    public function before(User $user) : ?bool
+    {
+        if($user->isAdmin())
+        {
+            return true;
+        }
+    }
+
     public function view(User $user, Invitation $invitation) : bool
     {
         return $user->is(User::findOrFail($invitation->player_id))  || $user->is(User::findOrFail($invitation->event->owner_id));
     }
 
-    public function create(User $user, InviteEventFormRequest $request) : bool
+    public function create(User $user, InviteEventRequest $request) : bool
     {
         $event = Event::findOrFail($request->event_id);
         return $user->is(User::findOrFail($event->owner_id));

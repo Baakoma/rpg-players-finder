@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TicketRequest;
 use App\Http\Resources\TicketResource;
-use App\Models\Profile;
+use App\Models\{Profile, Ticket};
 use App\Services\TicketManager;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -13,7 +13,7 @@ class TicketController extends Controller
     public function create(TicketRequest $request, Profile $profile, TicketManager $ticketManager): JsonResource
     {
         $this->authorize('createOrModify', [Ticket::class, $profile]);
-       
+
         $date = $request->only('camera', 'description', 'systems', 'types', 'languages');
         return new TicketResource($ticketManager->createOrUpdateTicket($date, $profile));
     }
@@ -27,7 +27,7 @@ class TicketController extends Controller
     public function update(TicketRequest $request, Profile $profile, TicketManager $ticketManager): JsonResource
     {
         $this->authorize('createOrModify', [Ticket::class, $profile]);
-        
+
         $data = $request->only('camera', 'description', 'systems', 'types', 'languages');
         return new TicketResource($ticketManager->createOrUpdateTicket($data, $profile));
     }
