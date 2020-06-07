@@ -11,6 +11,13 @@ class JoinRequestPolicy
 {
     use HandlesAuthorization;
 
+    public function before (User $user)
+    {
+        if($user->isAdmin()){
+            return true;
+        }
+    }
+
     public function view(User $user, JoinRequest $joinRequest) : bool
     {
         $owner = new Collection($user->ownerEvents->pluck('id'));

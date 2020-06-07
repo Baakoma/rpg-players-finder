@@ -10,6 +10,13 @@ class InvitationPolicy
 {
     use HandlesAuthorization;
 
+    public function before (User $user)
+    {
+        if($user->isAdmin()){
+            return true;
+        }
+    }
+
     public function view(User $user, Invitation $invitation) : bool
     {
         return $user->is(User::findOrFail($invitation->player_id))  || $user->is(User::findOrFail($invitation->event->owner_id));

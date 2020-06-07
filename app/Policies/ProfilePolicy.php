@@ -9,6 +9,13 @@ class ProfilePolicy
 {
     use HandlesAuthorization;
 
+    public function before (User $user)
+    {
+        if($user->isAdmin()){
+            return true;
+        }
+    }
+
     public function update(User $user, Profile $profile) : bool
     {
         return $user->is(User::findOrFail($profile->user_id));
