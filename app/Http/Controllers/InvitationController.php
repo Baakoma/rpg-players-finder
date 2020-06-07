@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InviteEventRequest;
 use App\Http\Resources\InvitationResource;
-use App\Models\{Invitation, Event};
+use App\Models\Invitation;
 use App\Services\InvitationManager;
 use Illuminate\Http\Resources\Json\JsonResource;
 

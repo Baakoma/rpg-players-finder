@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Invitation extends Model
 {
@@ -28,6 +29,11 @@ class Invitation extends Model
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class, 'event_id');
+    }
+
+    public function notification(): MorphOne
+    {
+        return $this->morphOne('App\Models\Notification', 'data');
     }
 
     public function acceptInvitation(): void
