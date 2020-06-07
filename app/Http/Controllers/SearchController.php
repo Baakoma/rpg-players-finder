@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchRequest;
+use App\Http\Resources\EventResourceCollection;
+use App\Http\Resources\ProfileResourceCollection;
 use App\Services\SearchManager;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class SearchController extends Controller
 {
-    public function searchTicket(SearchRequest $request, SearchManager $searchManager): LengthAwarePaginator
+    public function searchProfile(SearchRequest $request, SearchManager $searchManager): ProfileResourceCollection
     {
         $filters = [
             'systems',
@@ -21,10 +23,11 @@ class SearchController extends Controller
 
         $basicFilters = $this->getBasicFilters($request);
         $filtersFound = $this->findFilters($request, $filters);
-        return $searchManager->getTicketsPaginator($filtersFound, $basicFilters);
+
+        return new ProfileResourceCollection($searchManager->getProfilePaginator($filtersFound, $basicFilters));
     }
 
-    public function searchEvent(SearchRequest $request, SearchManager $searchManager): LengthAwarePaginator
+    public function searchEvent(SearchRequest $request, SearchManager $searchManager): EventResourceCollection
     {
         $filters = [
             'systems',
@@ -34,17 +37,20 @@ class SearchController extends Controller
 
         $basicFilters = $this->getBasicFilters($request);
         $filtersFound = $this->findFilters($request, $filters);
-        return $searchManager->getEventsPaginator($filtersFound, $basicFilters);
+
+        return new EventResourceCollection($searchManager->getProfilePaginator($filtersFound, $basicFilters));
     }
 
     private function findFilters(SearchRequest $request, array $filters): Collection
     {
         $filtersFound = collect();
+
         foreach ($filters as $filter) {
             if ($request->has($filter)) {
                 $filtersFound[$filter] = $request->input($filter);
             }
         }
+
         return $filtersFound;
     }
 

@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Event;
-use App\Models\Ticket;
+use App\Models\Profile;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 
 class SearchManager
 {
-    public function getTicketsPaginator(Collection $filters, Collection $basicFilters): LengthAwarePaginator
+    public function getProfilePaginator(Collection $filters, Collection $basicFilters): LengthAwarePaginator
     {
         $multipleFilters = [
             'systems',
@@ -19,23 +19,23 @@ class SearchManager
             'languages'
         ];
 
-        $tickets = (new Ticket())->newQuery();
+        $profiles = (new Profile())->newQuery();
 
         foreach ($multipleFilters as $value) {
             if ($filters->has($value)) {
-                $tickets->whereHas($value, function (Builder $query) use ($filters, $value): void {
+                $profiles->whereHas($value, function (Builder $query) use ($filters, $value): void {
                     $query->whereIn($value . '.id', $filters->get($value));
                 });
             }
         }
 
         if ($filters->has('camera')) {
-            $tickets->where('camera', $filters->get('camera'));
+            $profiles->where('camera', $filters->get('camera'));
         }
 
         if ($filters->has('age')) {
             $age = $filters->get('age');
-            $tickets->whereHas('profile', function (Builder $query) use ($age): void {
+            $profiles->whereHas('profile', function (Builder $query) use ($age): void {
                 if ($age['min'] === $age['max']) {
                     $dateFrom = Carbon::createFromDate()->subYears($age['max'] + 1)->addDay()->toDateString();
                 } else {
@@ -45,7 +45,8 @@ class SearchManager
                 $query->whereBetween('birth_date', [$dateFrom, $dateTo]);
             });
         }
-        return $this->paginate($tickets, $basicFilters);
+
+        return $this->paginate($profiles, $basicFilters);
     }
 
     public function getEventsPaginator(Collection $filters, Collection $basicFilters): LengthAwarePaginator
@@ -72,7 +73,6 @@ class SearchManager
     private function paginate(Builder $builder, Collection $sortFilters): LengthAwarePaginator
     {
         $sorted = $builder->orderBy($sortFilters->get('sortBy'), $sortFilters->get('orderBy'));
-        $chunk = $sorted->paginate($sortFilters->get('perPage'), ['*'], 'page', $sortFilters->get('page'));
-        return $chunk;
+        return $sorted->paginate($sortFilters->get('perPage'), ['*'], 'page', $sortFilters->get('page'));
     }
 }

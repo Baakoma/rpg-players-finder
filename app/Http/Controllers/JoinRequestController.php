@@ -19,26 +19,25 @@ class JoinRequestController extends Controller
     public function create(JoinRequestEventRequest $request, JoinRequestManager $joinRequestManager): JsonResource
     {
         $this->authorize('create', [JoinRequest::class, $request]);
-        $joinRequest = $joinRequestManager->createJoinRequest($request->only('event_id', 'player_id', 'message'));
+        $joinRequest = $joinRequestManager->create($request->only('event_id', 'player_id', 'message'));
         return new JoinRequestResource($joinRequest);
     }
 
     public function accept(JoinRequest $joinRequest, JoinRequestManager $joinRequestManager): JsonResource
     {
         $this->authorize('acceptOrDecline', $joinRequest);
-        return new JoinRequestResource($joinRequestManager->acceptJoinRequest($joinRequest));
+        return new JoinRequestResource($joinRequestManager->accept($joinRequest));
     }
 
     public function decline(JoinRequest $joinRequest, JoinRequestManager $joinRequestManager): JsonResource
     {
         $this->authorize('acceptOrDecline', $joinRequest);
-        return new JoinRequestResource($joinRequestManager->declineJoinRequest($joinRequest));
+        return new JoinRequestResource($joinRequestManager->decline($joinRequest));
     }
 
-    public function close(JoinRequest $joinRequest): JsonResource
+    public function close(JoinRequest $joinRequest, JoinRequestManager $joinRequestManager): JsonResource
     {
         $this->authorize('close', $joinRequest);
-        $joinRequest->closeJoinRequest();
-        return new JoinRequestResource($joinRequest);
+        return new JoinRequestResource($joinRequestManager->close($joinRequest));
     }
 }

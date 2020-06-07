@@ -20,7 +20,7 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request): void
     {
-        $user = $this->create($request->only('name', 'email', 'password'));
+        $user = $this->create($request->only('email', 'password'));
 
         event(new Registered($user));
 
@@ -35,7 +35,6 @@ class RegisterController extends Controller
     private function create(array $data): User
     {
         return User::create([
-            'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

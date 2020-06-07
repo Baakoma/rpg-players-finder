@@ -7,19 +7,19 @@ use App\Models\JoinRequest;
 
 class JoinRequestManager
 {
-    public function createJoinRequest(array $joinRequestData): JoinRequest
+    public function create(array $data): JoinRequest
     {
-        $event = Event::query()->findOrFail($joinRequestData['event_id']);
-        if ($event->playerExist($joinRequestData['player_id'])) {
+        $event = Event::query()->findOrFail($data['event_id']);
+        if ($event->playerExist($data['player_id'])) {
             abort(400, 'You cannot create the join request');
         }
-        $joinRequest = new JoinRequest($joinRequestData);
+        $joinRequest = new JoinRequest($data);
         $joinRequest->save();
         $joinRequest->refresh();
         return $joinRequest;
     }
 
-    public function acceptJoinRequest(JoinRequest $joinRequest): JoinRequest
+    public function accept(JoinRequest $joinRequest): JoinRequest
     {
         $event = $joinRequest->event;
         if (!$event->canAccess($joinRequest->player)) {
@@ -30,15 +30,15 @@ class JoinRequestManager
         return $joinRequest;
     }
 
-    public function declineJoinRequest(JoinRequest $joinRequest): JoinRequest
+    public function decline(JoinRequest $joinRequest): JoinRequest
     {
         $joinRequest->declineJoinRequest();
         return $joinRequest;
     }
 
-    public function deleteJoinRequest(JoinRequest $joinRequest): JoinRequest
+    public function close(JoinRequest $joinRequest): JoinRequest
     {
-        $joinRequest->delete();
+        $joinRequest->closeJoinRequest();;
         return $joinRequest;
     }
 }

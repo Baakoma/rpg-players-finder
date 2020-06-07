@@ -14,11 +14,11 @@ class ProfileResource extends JsonResource
             'name' => $this->name,
             'age' => Carbon::parse($this->birth_date)->age,
             'sex' => $this->sex,
+            'camera' => $this->sex,
+            'discord' => $this->discord,
             'description' => $this->description,
             'languages' => $this->languages,
             'systems' => $this->systems,
-            'owner_events' => $this->user->ownerEvents,
-            'events' => $this->user->events
         ];
     }
 }
