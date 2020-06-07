@@ -16,4 +16,12 @@ class TypeRequest extends FormRequest
             'description' => 'required|string',
         ];
     }
+
+    public function withValidator(Validator $validator) : void
+    {
+        if($validator->fails())
+        {
+            Log::warning('User '.Auth::id().' failed type validation');
+        }
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\{Auth, Log};
+use Illuminate\Validation\Validator;
 
 class TicketRequest extends FormRequest
 {
@@ -18,5 +20,13 @@ class TicketRequest extends FormRequest
             'camera' => 'required|boolean',
             'description' => 'string|max:500|nullable',
         ];
+    }
+
+    public function withValidator(Validator $validator) : void
+    {
+        if($validator->fails())
+        {
+            Log::warning('User '.Auth::id().' failed ticket validation');
+        }
     }
 }

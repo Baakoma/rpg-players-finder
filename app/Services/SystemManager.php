@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\System;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class SystemManager
 {
@@ -14,6 +15,7 @@ class SystemManager
         ]);
         $system->save();
         $system->links()->createMany($data['links']);
+        Log::info('User '.Auth::id().' created system '.$system->id);
         return $system;
     }
 
@@ -25,12 +27,14 @@ class SystemManager
         ]);
         $system->syncLinks($updateData['links']);
         $system->refresh();
+        Log::info('User '.Auth::id().' updated system '.$system->id);
         return $system;
     }
 
     public function deleteSystem(System $system): System
     {
         $system->delete();
+        Log::info('User '.Auth::id().' deleted system '.$system->id);
         return $system;
     }
 }

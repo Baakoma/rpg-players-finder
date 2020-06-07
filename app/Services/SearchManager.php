@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class SearchManager
 {
@@ -45,6 +46,7 @@ class SearchManager
                 $query->whereBetween('birth_date', [$dateFrom, $dateTo]);
             });
         }
+        Log::info('User '.Auth::id().' searched for tickets');
         return $this->paginate($tickets, $basicFilters);
     }
 
@@ -66,6 +68,7 @@ class SearchManager
                 });
             }
         }
+        Log::info('User '.Auth::id().' searched for events');
         return $this->paginate($events, $basicFilters);
     }
 
