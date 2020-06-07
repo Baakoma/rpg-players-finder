@@ -11,9 +11,10 @@ class JoinRequestPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user)
+    public function before(User $user) : ?bool
     {
-        if($user->isAdmin()){
+        if($user->isAdmin())
+        {
             return true;
         }
     }
