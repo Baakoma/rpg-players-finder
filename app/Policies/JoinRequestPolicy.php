@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Http\Requests\JoinRequestEventFormRequest;
+use App\Http\Requests\JoinRequestEventRequest;
 use Illuminate\Support\Collection;
 use App\Models\{User, JoinRequest};
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -11,7 +11,7 @@ class JoinRequestPolicy
 {
     use HandlesAuthorization;
 
-    public function before (User $user)
+    public function before(User $user)
     {
         if($user->isAdmin()){
             return true;
@@ -24,7 +24,7 @@ class JoinRequestPolicy
         return $user->is(User::findOrFail($joinRequest->player_id)) || $owner->contains($joinRequest->event_id);
     }
 
-    public function create(User $user, JoinRequestEventFormRequest $request) : bool
+    public function create(User $user, JoinRequestEventRequest $request) : bool
     {
         return $user->is(User::findOrFail($request->player_id));
     }

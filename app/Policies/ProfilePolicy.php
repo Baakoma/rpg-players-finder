@@ -9,7 +9,7 @@ class ProfilePolicy
 {
     use HandlesAuthorization;
 
-    public function before (User $user)
+    public function before(User $user)
     {
         if($user->isAdmin()){
             return true;
