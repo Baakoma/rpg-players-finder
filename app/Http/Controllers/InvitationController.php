@@ -19,32 +19,25 @@ class InvitationController extends Controller
     public function create(InviteEventRequest $request, InvitationManager $invitationManager): JsonResource
     {
         $this->authorize('create', [Invitation::class, $request]);
-        $invitation = $invitationManager->createInvitation($request->only('event_id', 'player_id', 'message'));
+        $invitation = $invitationManager->create($request->only('event_id', 'player_id', 'message'));
         return new InvitationResource($invitation);
-    }
-
-    public function delete(Invitation $invitation, InvitationManager $invitationManager): JsonResource
-    {
-        $this->authorize('delete', $invitation);
-        return new InvitationResource($invitationManager->deleteInvitation($invitation));
     }
 
     public function accept(Invitation $invitation, InvitationManager $invitationManager): JsonResource
     {
         $this->authorize('acceptOrDecline', $invitation);
-        return new InvitationResource($invitationManager->acceptInvitation($invitation));
+        return new InvitationResource($invitationManager->accept($invitation));
     }
 
     public function decline(Invitation $invitation, InvitationManager $invitationManager): JsonResource
     {
         $this->authorize('acceptOrDecline', $invitation);
-        return new InvitationResource($invitationManager->declineInvitation($invitation));
+        return new InvitationResource($invitationManager->decline($invitation));
     }
 
-    public function close(Invitation $invitation): JsonResource
+    public function close(Invitation $invitation, InvitationManager $invitationManager): JsonResource
     {
         $this->authorize('close', $invitation);
-        $invitation->closeInvitation();
-        return new InvitationResource($invitation);
+        return new InvitationResource($invitationManager->close($invitation));
     }
 }

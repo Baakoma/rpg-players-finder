@@ -13,7 +13,9 @@ class Profile extends Model
         'name',
         'birth_date',
         'sex',
-        'description'
+        'discord',
+        'camera',
+        'description',
     ];
 
     public function languages(): BelongsToMany
@@ -27,9 +29,9 @@ class Profile extends Model
             ->withPivot('system_id', 'lore_knowledge_rating', 'mechanic_knowledge_rating', 'roleplay_rating', 'experience');
     }
 
-    public function ticket(): HasOne
+    public function types(): BelongsToMany
     {
-        return $this->hasOne(Ticket::class);
+        return $this->belongsToMany(Type::class);
     }
 
     public function user(): BelongsTo

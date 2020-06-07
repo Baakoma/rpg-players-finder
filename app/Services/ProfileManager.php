@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 
 class ProfileManager
 {
-    public function updateProfile(Profile $profile, array $updateRequest, array $updateSystems): Profile
+    public function updateProfile(Profile $profile, array $updateRequest, array $updateSystems, array $types): Profile
     {
         $profile->update($updateRequest);
 
@@ -18,6 +18,7 @@ class ProfileManager
             });
         }
 
+        $profile->types()->sync($types);
         $profile->systems()->sync($systems);
         $profile->save();
         return $profile;

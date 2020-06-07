@@ -7,19 +7,19 @@ use App\Models\Invitation;
 
 class InvitationManager
 {
-    public function createInvitation(array $invitationData): Invitation
+    public function create(array $data): Invitation
     {
-        $event = Event::query()->findOrFail($invitationData['event_id']);
-        if ($event->playerExist($invitationData['player_id'])) {
+        $event = Event::query()->findOrFail($data['event_id']);
+        if ($event->playerExist($data['player_id'])) {
             abort(400, 'You cannot create the invitation');
         }
-        $invitation = new Invitation($invitationData);
+        $invitation = new Invitation($data);
         $invitation->save();
         $invitation->refresh();
         return $invitation;
     }
 
-    public function acceptInvitation(Invitation $invitation): Invitation
+    public function accept(Invitation $invitation): Invitation
     {
         $event = $invitation->event;
         if (!$event->canAccess($invitation->player)) {
@@ -30,15 +30,15 @@ class InvitationManager
         return $invitation;
     }
 
-    public function declineInvitation(Invitation $invitation): Invitation
+    public function decline(Invitation $invitation): Invitation
     {
         $invitation->declineInvitation();
         return $invitation;
     }
 
-    public function deleteInvitation(Invitation $invitation): Invitation
+    public function close(Invitation $invitation): Invitation
     {
-        $invitation->delete();
+        $invitation->closeInvitation();
         return $invitation;
     }
 }
