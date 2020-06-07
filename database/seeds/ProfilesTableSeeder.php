@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\{Profile, Language, System, Ticket};
+use App\Models\{Profile, Language, System};
 
 class ProfilesTableSeeder extends Seeder
 {
@@ -29,11 +29,6 @@ class ProfilesTableSeeder extends Seeder
                     'experience' => rand(0, 10)
                 ]
             );
-        });
-
-        Profile::all()->each(function (Profile $profile)
-        {
-            $profile->ticket()->save(factory(Ticket::class)->make());
         });
     }
 }

@@ -14,6 +14,8 @@ class CreateProfilesTable extends Migration
             $table->string('name')->nullable();
             $table->date('birth_date')->nullable();
             $table->integer('sex')->nullable();
+            $table->boolean('camera')->default(0);
+            $table->string('discord')->nullable();
             $table->string('description', 500)->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

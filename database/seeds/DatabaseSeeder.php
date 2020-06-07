@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             ProfilesTableSeeder::class,
             EventsTableSeeder::class,
-            TicketTableSeeder::class
         ]);
     }
 }

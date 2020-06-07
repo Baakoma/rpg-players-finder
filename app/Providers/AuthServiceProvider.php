@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Models\{Event, JoinRequest, Profile, Invitation, Ticket};
-use App\Policies\{EventPolicy, JoinRequestPolicy, ProfilePolicy, InvitationPolicy, TicketPolicy};
+use App\Models\{Event, JoinRequest, Profile, Invitation};
+use App\Policies\{EventPolicy, JoinRequestPolicy, ProfilePolicy, InvitationPolicy};
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -15,7 +15,6 @@ class AuthServiceProvider extends ServiceProvider
         Event::class => EventPolicy::class,
         Invitation::class => InvitationPolicy::class,
         JoinRequest::class => JoinRequestPolicy::class,
-        Ticket::class => TicketPolicy::class,
     ];
 
     public function boot(): void
