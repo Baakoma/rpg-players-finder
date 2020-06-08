@@ -8,8 +8,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\StatefulGuard;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\{Auth, Hash, Log};
 
 class RegisterController extends Controller
 {
@@ -25,6 +24,7 @@ class RegisterController extends Controller
         event(new Registered($user));
 
         $this->guard()->login($user);
+        Log::info('User '.Auth::id().' has registered');
     }
 
     private function guard(): StatefulGuard

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Event;
 use App\Models\JoinRequest;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class JoinRequestManager
 {
@@ -16,6 +17,7 @@ class JoinRequestManager
         $joinRequest = new JoinRequest($data);
         $joinRequest->save();
         $joinRequest->refresh();
+        Log::info('User '.Auth::id().' created join-request '.$joinRequest->id);
         return $joinRequest;
     }
 
@@ -27,18 +29,21 @@ class JoinRequestManager
         }
         $event->players()->attach($joinRequest->player);
         $joinRequest->acceptJoinRequest();
+        Log::info('User '.Auth::id().' accepted join-request '.$joinRequest->id);
         return $joinRequest;
     }
 
     public function decline(JoinRequest $joinRequest): JoinRequest
     {
         $joinRequest->declineJoinRequest();
+        Log::info('User '.Auth::id().' declined join-request '.$joinRequest->id);
         return $joinRequest;
     }
 
     public function close(JoinRequest $joinRequest): JoinRequest
     {
         $joinRequest->closeJoinRequest();;
+        Log::info('User '.Auth::id().' deleted join-request '.$joinRequest->id);
         return $joinRequest;
     }
 }

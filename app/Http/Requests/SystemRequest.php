@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\{Rule, Validator};
+use Illuminate\Support\Facades\{Auth, Log};
 
 class SystemRequest extends FormRequest
 {
@@ -17,5 +18,13 @@ class SystemRequest extends FormRequest
             'links.*.name' => 'required|string',
             'links.*.url' => 'required|string',
         ];
+    }
+
+    public function withValidator(Validator $validator) : void
+    {
+        if($validator->fails())
+        {
+            Log::warning('User '.Auth::id().' failed system validation');
+        }
     }
 }

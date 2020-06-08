@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Event;
 use App\Models\Invitation;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class InvitationManager
 {
@@ -16,6 +17,7 @@ class InvitationManager
         $invitation = new Invitation($data);
         $invitation->save();
         $invitation->refresh();
+        Log::info('User '.Auth::id().' created invitation '.$invitation->id);
         return $invitation;
     }
 
@@ -27,18 +29,21 @@ class InvitationManager
         }
         $event->players()->attach($invitation->player);
         $invitation->acceptInvitation();
+        Log::info('User '.Auth::id().' accepted invitation '.$invitation->id);
         return $invitation;
     }
 
     public function decline(Invitation $invitation): Invitation
     {
         $invitation->declineInvitation();
+        Log::info('User '.Auth::id().' declined invitation '.$invitation->id);
         return $invitation;
     }
 
     public function close(Invitation $invitation): Invitation
     {
         $invitation->closeInvitation();
+        Log::info('User '.Auth::id().' deleted invitation '.$invitation->id);
         return $invitation;
     }
 }

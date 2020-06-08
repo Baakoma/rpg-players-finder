@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
+
 
 class UpdateEventRequest extends FormRequest
 {
@@ -16,5 +18,13 @@ class UpdateEventRequest extends FormRequest
             'system_id' => 'required|numeric|exists:systems,id',
             'language_id' => 'required|numeric|exists:languages,id',
         ];
+    }
+
+    public function withValidator(Validator $validator) : void
+    {
+        if($validator->fails())
+        {
+            Log::warning('User '.Auth::id().' failed event update validation');
+        }
     }
 }

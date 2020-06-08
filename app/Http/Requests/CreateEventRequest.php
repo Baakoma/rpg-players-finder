@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\{Auth, Log};
+use Illuminate\Validation\Validator;
 
 class CreateEventRequest extends FormRequest
 {
@@ -17,5 +19,13 @@ class CreateEventRequest extends FormRequest
             'system_id' => 'required|numeric|exists:systems,id',
             'language_id' => 'required|numeric|exists:languages,id',
         ];
+    }
+
+    public function withValidator(Validator $validator) : void
+    {
+        if($validator->fails())
+        {
+            Log::warning('User '.Auth::id().' failed event create validation');
+        }
     }
 }

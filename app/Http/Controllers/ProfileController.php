@@ -7,11 +7,13 @@ use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
 use App\Services\ProfileManager;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class ProfileController extends Controller
 {
     public function show(Profile $profile): JsonResource
     {
+        Log::info('User '.Auth::id().' viewed profile '.$profile->id);
         return new ProfileResource($profile);
     }
 

@@ -7,16 +7,19 @@ use App\Http\Resources\SystemResource;
 use App\Models\System;
 use App\Services\SystemManager;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class SystemController extends Controller
 {
     public function show(System $system): JsonResource
     {
+        Log::info('User '.Auth::id().' viewed system '.$system->id);
         return new SystemResource($system);
     }
 
     public function index(): JsonResource
     {
+        Log::info('User '.Auth::id().' indexed systems');
         return SystemResource::collection(System::all());
     }
 

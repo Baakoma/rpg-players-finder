@@ -7,16 +7,19 @@ use App\Http\Resources\LanguageResource;
 use App\Models\Language;
 use App\Services\LanguageManager;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class LanguageController extends Controller
 {
     public function show(Language $language): JsonResource
     {
+        Log::info('User '.Auth::id().' viewed language '.$language->id);
         return new LanguageResource($language);
     }
 
     public function index(): JsonResource
     {
+        Log::info('User '.Auth::id().' indexed languages');
         return LanguageResource::collection(Language::all());
     }
 

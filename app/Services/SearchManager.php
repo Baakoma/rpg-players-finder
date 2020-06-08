@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class SearchManager
 {
@@ -46,7 +47,8 @@ class SearchManager
             });
         }
 
-        return $this->paginate($profiles, $basicFilters);
+        Log::info('User '.Auth::id().' searched for tickets');
+        return $this->paginate($tickets, $basicFilters);
     }
 
     public function getEventsPaginator(Collection $filters, Collection $basicFilters): LengthAwarePaginator
@@ -67,6 +69,7 @@ class SearchManager
                 });
             }
         }
+        Log::info('User '.Auth::id().' searched for events');
         return $this->paginate($events, $basicFilters);
     }
 
