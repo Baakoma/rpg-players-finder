@@ -9,7 +9,7 @@ class EventPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user) : ?bool
+    public function before(User $user)
     {
         if ($user->isAdmin())
         {
