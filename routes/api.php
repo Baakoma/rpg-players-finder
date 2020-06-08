@@ -6,9 +6,15 @@ use Illuminate\Support\Facades\Route;
 
 /** Authentication */
 Route::post('/register', 'RegisterController@register');
-Route::post('/login', 'LoginController@login');
+Route::post('/login', 'LoginController@login')->name('login');
 Route::post('/logout', 'LogoutController@logout');
 Route::get('/user', 'UserController@user');
+
+Route::get('/email/resend', 'VerificationController@resend')->name('verification.resend');
+Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify');
+
+Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
 
 /** Everyone */
 Route::get('/filters', 'SearchController@searchTicket');
