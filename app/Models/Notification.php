@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Notification extends Model
@@ -12,6 +13,7 @@ class Notification extends Model
     protected $fillable = [
         'data_id',
         'data_type',
+        'user_id',
     ];
 
     private $dataTypes = [
@@ -28,5 +30,10 @@ class Notification extends Model
     public function data(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
