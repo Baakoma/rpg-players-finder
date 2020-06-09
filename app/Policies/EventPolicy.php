@@ -26,4 +26,9 @@ class EventPolicy
     {
         return $user->is(User::findOrFail($event->owner_id));
     }
+
+    public function leave(User $user, Event $event) : bool
+    {
+        return $event->playerExist($user->id);
+    }
 }
