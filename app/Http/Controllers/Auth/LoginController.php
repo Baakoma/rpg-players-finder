@@ -6,8 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use Illuminate\Contracts\Auth\StatefulGuard;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class LoginController extends Controller
 {
@@ -24,6 +24,7 @@ class LoginController extends Controller
                 'email' => [trans('auth.failed')],
             ]);
         }
+        Log::info('User '.Auth::id().' logged in');
     }
 
     private function attemptLogin(LoginRequest $request): bool

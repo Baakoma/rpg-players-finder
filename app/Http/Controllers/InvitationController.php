@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InviteEventRequest;
 use App\Http\Resources\InvitationResource;
-use App\Models\{Invitation, Event};
+use Illuminate\Support\Facades\{Auth, Log};
+use App\Models\Invitation;
 use App\Services\InvitationManager;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -13,6 +14,7 @@ class InvitationController extends Controller
     public function show(Invitation $invitation): JsonResource
     {
         $this->authorize('view', $invitation);
+        Log::info('User '.Auth::id().' viewed invitation '.$invitation->id);
         return new InvitationResource($invitation);
     }
 

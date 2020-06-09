@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Profile;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class ProfileManager
 {
@@ -21,6 +22,7 @@ class ProfileManager
         $profile->types()->sync($types);
         $profile->systems()->sync($systems);
         $profile->save();
+        Log::info('User '.Auth::id().' updated profile '.$profile->id);
         return $profile;
     }
 }

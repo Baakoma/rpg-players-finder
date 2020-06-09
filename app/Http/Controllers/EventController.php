@@ -8,12 +8,14 @@ use App\Http\Resources\EventResource;
 use App\Models\Event;
 use App\Services\EventManager;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\{Auth, Log};
 
 class EventController extends Controller
 {
     public function show(Event $event): JsonResource
     {
         $this->authorize('view', $event);
+        Log::info('User '.Auth::id().' viewed event '.$event->id);
         return new EventResource($event);
     }
 
