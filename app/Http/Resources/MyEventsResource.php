@@ -9,7 +9,7 @@ class MyEventsResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'events' => $this->ownerEvents->where('is_active', '=', '0')
+            'events' => $this->ownerEvents->where('is_active', '=', '1')
         ];
     }
 }
