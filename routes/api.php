@@ -18,6 +18,8 @@ Route::get('/systems', 'SystemController@index');
 Route::get('/languages', 'LanguageController@index');
 Route::get('/types', 'TypeController@index');
 
+Route::get('/notifications','NotificationController@index');
+
 /** Only users+ */
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('/profile/{profile}', 'ProfileController@show');
