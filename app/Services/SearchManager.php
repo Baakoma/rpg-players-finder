@@ -48,7 +48,7 @@ class SearchManager
         }
 
         Log::info('User '.Auth::id().' searched for tickets');
-        return $this->paginate($tickets, $basicFilters);
+        return $this->paginate($profiles, $basicFilters);
     }
 
     public function getEventsPaginator(Collection $filters, Collection $basicFilters): LengthAwarePaginator
