@@ -13,8 +13,9 @@ class SystemManager
             'name' => $data['name'],
             'description' => $data['description']
         ]);
+
         $system->save();
-        $system->links()->createMany($data['links']);
+
         Log::info('User '.Auth::id().' created system '.$system->id);
         return $system;
     }
@@ -25,7 +26,7 @@ class SystemManager
             'name' => $updateData['name'],
             'description' => $updateData['description']
         ]);
-        $system->syncLinks($updateData['links']);
+
         $system->refresh();
         Log::info('User '.Auth::id().' updated system '.$system->id);
         return $system;

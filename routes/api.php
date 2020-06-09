@@ -44,11 +44,6 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::post('/join-request/{joinRequest}/accept', 'JoinRequestController@accept');
     Route::post('/join-request/{joinRequest}/decline', 'JoinRequestController@decline');
     Route::post('/join-request/{joinRequest}/close', 'JoinRequestController@close');
-
-    Route::post('/ticket/{profile}', 'TicketController@create');
-    Route::get('/ticket/{profile}', 'TicketController@show');
-    Route::put('/ticket/{profile}', 'TicketController@update');
-    Route::delete('/ticket/{profile}', 'TicketController@destroy');
 });
 
 /** Only admin */

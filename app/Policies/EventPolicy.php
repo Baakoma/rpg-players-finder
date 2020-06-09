@@ -11,19 +11,18 @@ class EventPolicy
 
     public function before(User $user)
     {
-        if ($user->isAdmin())
-        {
+        if ($user->isAdmin()) {
             return true;
         }
     }
 
     public function view(User $user, Event $event) : bool
     {
-        return $event->public_access || $user->is(User::findOrFail($event->owner_id)) || $event->playerExist($user->id);
+        return $event->public_access || $user->is($event->owner) || $event->playerExist($user->id);
     }
 
     public function modify(User $user, Event $event) : bool
     {
-        return $user->is(User::findOrFail($event->owner_id));
+        return $user->is($event->owner);
     }
 }

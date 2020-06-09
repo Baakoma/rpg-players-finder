@@ -24,14 +24,4 @@ class System extends Model
     {
         return $this->hasMany(Event::class);
     }
-
-    public function links(): HasMany
-    {
-        return $this->hasMany(Link::class);
-    }
-
-    public function syncLinks(array $updateData): void
-    {
-        $this->links()->delete();
-        $this->links()->createMany($updateData);
-    }}
+}

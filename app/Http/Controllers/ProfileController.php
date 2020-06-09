@@ -21,7 +21,7 @@ class ProfileController extends Controller
     {
         $this->authorize('update', $profile);
 
-        $updateRequest = $request->only('name', 'birth_date', 'sex', 'description', 'languages', 'camera', 'discord');
-        return new ProfileResource($profileManager->updateProfile($profile, $updateRequest, $request['systems'], $request['types']));
+        $updateRequest = $request->only('birth_date', 'sex', 'description', 'languages', 'camera', 'discord');
+        return new ProfileResource($profileManager->updateProfile($profile, $updateRequest, $request['systems'], $request['languages'], $request['types']));
     }
 }

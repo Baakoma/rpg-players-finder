@@ -10,12 +10,15 @@ class Profile extends Model
     protected $table = 'profiles';
 
     protected $fillable = [
-        'name',
         'birth_date',
         'sex',
         'discord',
         'camera',
         'description',
+    ];
+
+    protected $casts = [
+        'camera' => 'boolean',
     ];
 
     public function languages(): BelongsToMany
@@ -25,8 +28,7 @@ class Profile extends Model
 
     public function systems(): BelongsToMany
     {
-        return $this->belongsToMany(System::class)
-            ->withPivot('system_id', 'lore_knowledge_rating', 'mechanic_knowledge_rating', 'roleplay_rating', 'experience');
+        return $this->belongsToMany(System::class);
     }
 
     public function types(): BelongsToMany

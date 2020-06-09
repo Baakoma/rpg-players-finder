@@ -1,0 +1,60 @@
+$sizes: (0,10,15,20,25,30,50);
+$positions: ('top','left','bottom','right');
+
+@each $size in $sizes {
+    .m-#{$size} {
+        margin: $size + px;
+    }
+    .p-#{$size} {
+        padding: $size + px;
+    }
+    @each $position in $positions {
+        .m#{str-slice($position, 0, 1)}-#{$size} {
+            margin-#{$position}: $size + px;
+        }
+        .p#{str-slice($position, 0, 1)}-#{$size} {
+            padding-#{$position}: $size + px;
+        }
+    }
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.justify-content-flex-start {
+    justify-content: flex-start;
+}
+
+.justify-content-flex-end {
+    justify-content: flex-end;
+}
+
+.justify-content-space-between {
+    justify-content: space-between;
+}
+
+.justify-content-space-around {
+    justify-content: space-around;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.align-items-flex-start {
+    align-items: flex-start;
+}
+
+.align-items-flex-end {
+    align-items: flex-end;
+}
+
+.align-items-baseline {
+    align-items: baseline;
+}
+
+.align-items-stretch {
+    align-items: stretch;
+}
+
