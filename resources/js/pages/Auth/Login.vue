@@ -52,7 +52,7 @@
                 this.$store.dispatch('login', this.userData)
                     .then(() => {
                         this.$router.push({ name: 'home'})
-                            .then(() => Messenger.success('You\'re logged in'));
+                            .then(() => Messenger.success('You are logged in'));
                     })
                     .catch((error) => {
                         const response = error.response;

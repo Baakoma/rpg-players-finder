@@ -13,16 +13,15 @@ class JoinRequestPolicy
 
     public function before(User $user)
     {
-        if($user->isAdmin())
-        {
+        if ($user->isAdmin()) {
             return true;
         }
     }
 
     public function view(User $user, JoinRequest $joinRequest) : bool
     {
-        $owner = new Collection($user->ownerEvents->pluck('id'));
-        return $user->is(User::findOrFail($joinRequest->player_id)) || $owner->contains($joinRequest->event_id);
+        $owner = collect($user->ownerEvents->pluck('id'));
+        return $user->is($joinRequest->player) || $owner->contains($joinRequest->event_id);
     }
 
     public function create(User $user, JoinRequestEventRequest $request) : bool
@@ -32,7 +31,7 @@ class JoinRequestPolicy
 
     public function acceptOrDecline(User $user, JoinRequest $joinRequest) : bool
     {
-        $owner = new Collection($user->ownerEvents->pluck('id'));
+        $owner = collect($user->ownerEvents->pluck('id'));
         return $owner->contains($joinRequest->event_id);
     }
 

@@ -11,14 +11,13 @@ class ProfilePolicy
 
     public function before(User $user)
     {
-        if($user->isAdmin())
-        {
+        if ($user->isAdmin()) {
             return true;
         }
     }
 
     public function update(User $user, Profile $profile) : bool
     {
-        return $user->is(User::findOrFail($profile->user_id));
+        return $user->is($profile->user);
     }
 }

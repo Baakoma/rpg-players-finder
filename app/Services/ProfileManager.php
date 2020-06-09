@@ -3,26 +3,21 @@
 namespace App\Services;
 
 use App\Models\Profile;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\{Auth, Log};
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProfileManager
 {
-    public function updateProfile(Profile $profile, array $updateRequest, array $updateSystems, array $types): Profile
+    public function updateProfile(Profile $profile, array $updateRequest, array $systems, array $languages, array $types): Profile
     {
         $profile->update($updateRequest);
 
-        $systems = [];
-        foreach ($updateSystems as $system) {
-            $systems[$system['id']] = Arr::where($system, function ($key) {
-                return !($key === 'id');
-            });
-        }
-
+        $profile->languages()->sync($languages);
         $profile->types()->sync($types);
         $profile->systems()->sync($systems);
         $profile->save();
         Log::info('User '.Auth::id().' updated profile '.$profile->id);
+
         return $profile;
     }
 }

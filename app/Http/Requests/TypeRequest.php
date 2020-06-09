@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class TypeRequest extends FormRequest
@@ -19,7 +22,7 @@ class TypeRequest extends FormRequest
 
     public function withValidator(Validator $validator) : void
     {
-        if($validator->fails())
+        if ($validator->fails())
         {
             Log::warning('User '.Auth::id().' failed type validation');
         }

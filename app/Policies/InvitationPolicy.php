@@ -12,35 +12,34 @@ class InvitationPolicy
 
     public function before(User $user)
     {
-        if($user->isAdmin())
-        {
+        if ($user->isAdmin()) {
             return true;
         }
     }
 
-    public function view(User $user, Invitation $invitation) : bool
+    public function view(User $user, Invitation $invitation): bool
     {
-        return $user->is(User::findOrFail($invitation->player_id))  || $user->is(User::findOrFail($invitation->event->owner_id));
+        return $user->is($invitation->player)  || $user->is($invitation->event->owner);
     }
 
-    public function create(User $user, InviteEventRequest $request) : bool
+    public function create(User $user, InviteEventRequest $request): bool
     {
         $event = Event::findOrFail($request->event_id);
-        return $user->is(User::findOrFail($event->owner_id));
+        return $user->is($event->owner);
     }
 
-    public function delete(User $user, Invitation $invitation) : bool
+    public function delete(User $user, Invitation $invitation): bool
     {
-        return $user->is(User::findOrFail($invitation->event->owner_id));
+        return $user->is($invitation->event->owner);
     }
 
-    public function acceptOrDecline(User $user, Invitation $invitation) : bool
+    public function acceptOrDecline(User $user, Invitation $invitation): bool
     {
-        return $user->is(User::findOrFail($invitation->player_id));
+        return $user->is($invitation->player);
     }
 
-    public function close(User $user, Invitation $invitation) : bool
+    public function close(User $user, Invitation $invitation): bool
     {
-        return $user->is(User::findOrFail($invitation->event->owner_id));
+        return $user->is($invitation->event->owner);
     }
 }

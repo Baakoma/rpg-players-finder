@@ -14,6 +14,7 @@ class User extends Authenticatable
     private const ROLE_USER = 0;
 
     protected $fillable = [
+        'name',
         'role',
         'email',
         'password',
@@ -29,7 +30,7 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return self::ROLE_ADMIN === 'role';
+        return self::ROLE_ADMIN === $this->role;
     }
 
     public function events(): BelongsToMany

@@ -75,7 +75,7 @@
                     .then(() => {
                         this.$router.push({ name: 'home'})
                             .then(() => Messenger.info('Your account has been created succesfully'))
-                            .then(() => Messenger.success('You\'re logged in'))
+                            .then(() => Messenger.success('You are logged in'))
                     })
                     .catch((error) => {
                         const response = error.response;

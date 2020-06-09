@@ -22,12 +22,6 @@ class ProfilesTableSeeder extends Seeder
         {
             $profile->systems()->attach(
                 $systems->random(rand(1, 3))->pluck('id')->toArray(),
-                [
-                    'lore_knowledge_rating' => rand(0, 10),
-                    'mechanic_knowledge_rating' => rand(0, 10),
-                    'roleplay_rating' => rand(0, 10),
-                    'experience' => rand(0, 10)
-                ]
             );
         });
     }

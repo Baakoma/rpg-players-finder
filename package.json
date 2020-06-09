@@ -21,6 +21,7 @@
     "dependencies": {
         "buefy": "^0.8.15",
         "lodash": "^4.17.15",
+        "moment": "^2.26.0",
         "node-sass": "^4.13.1",
         "sass-loader": "^8.0.2",
         "vue-router": "^3.1.6",

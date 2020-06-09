@@ -21,7 +21,7 @@ class EventController extends Controller
 
     public function create(CreateEventRequest $request, EventManager $eventManager): JsonResource
     {
-        $createRequest = $request->only('name', 'owner_id', 'max_users', 'public_access', 'type_id', 'system_id', 'language_id');
+        $createRequest = $request->only('name', 'description', 'owner_id', 'max_users', 'public_access', 'type_id', 'system_id', 'language_id');
         return new EventResource($eventManager->createEvent($createRequest));
     }
 
@@ -34,7 +34,7 @@ class EventController extends Controller
     public function update(UpdateEventRequest $request, Event $event, EventManager $eventManager): JsonResource
     {
         $this->authorize('modify', $event);
-        $updateRequest = $request->only('name', 'max_users', 'public_access', 'type_id', 'system_id', 'language_id');
+        $updateRequest = $request->only('name', 'description', 'max_users', 'public_access', 'type_id', 'system_id', 'language_id');
         return new EventResource($eventManager->updateEvent($event, $updateRequest));
     }
 

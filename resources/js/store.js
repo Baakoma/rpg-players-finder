@@ -31,12 +31,20 @@ export default new Vuex.Store({
                 });
         },
         register({ commit }, user) {
-            return axios.post('/register', user)
-                .then((response) => {
-                    commit('authSuccess', response.data);
-                    localStorage.setItem('user', JSON.stringify(response.data));
+            return axios.post('/register',  user)
+                .then(() => {
+                    return axios.get('/user')
+                        .then(({data}) => {
+                            commit('authSuccess', data);
+                            localStorage.setItem('user', JSON.stringify(data));
 
-                    return Promise.resolve(response.data);
+                            return Promise.resolve(data);
+                        })
+                })
+                .catch((error) => {
+                    commit('authError');
+
+                    return Promise.reject(error);
                 });
         },
         logout({ commit }) {

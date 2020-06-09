@@ -11,14 +11,16 @@ class ProfileResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->user->name,
             'age' => Carbon::parse($this->birth_date)->age,
+            'birth_date' => $this->birth_date,
             'sex' => $this->sex,
-            'camera' => $this->sex,
+            'camera' => $this->camera,
             'discord' => $this->discord,
             'description' => $this->description,
-            'languages' => $this->languages,
-            'systems' => $this->systems,
+            'languages' => $this->languages->pluck('pivot.language_id'),
+            'systems' => $this->systems->pluck('pivot.system_id'),
+            'types' => $this->types->pluck('pivot.type_id'),
         ];
     }
 }

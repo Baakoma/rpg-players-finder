@@ -25,12 +25,12 @@ class SystemController extends Controller
 
     public function create(SystemRequest $request, SystemManager $systemManager): JsonResource
     {
-        return new SystemResource($systemManager->createSystem($request->only('name', 'description', 'links')));
+        return new SystemResource($systemManager->createSystem($request->only('name', 'description')));
     }
 
     public function update(SystemRequest $request, System $system, SystemManager $systemManager): JsonResource
     {
-        return new SystemResource($systemManager->updateSystem($system, $request->only('name', 'description', 'links')));
+        return new SystemResource($systemManager->updateSystem($system, $request->only('name', 'description')));
     }
 
     public function delete(System $system, SystemManager $systemManager): JsonResource
