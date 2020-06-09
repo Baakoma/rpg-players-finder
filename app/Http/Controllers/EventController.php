@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Http\Requests\KickOrLeaveRequest;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
 use App\Services\EventManager;
@@ -43,5 +44,19 @@ class EventController extends Controller
         $this->authorize('modify', $event);
         $event->closeEvent();
         return new EventResource($event);
+    }
+
+    public function kickPlayer(Event $event, KickOrLeaveRequest $request): void
+    {
+        $this->authorize('modify', $event);
+        $event->players()->detach($request->id);
+        Log::info('User '.Auth::id().' kicked player '.$request->id. ' from event '.$event->id);
+    }
+
+    public function leaveEvent(Event $event, KickOrLeaveRequest $request): void
+    {
+        $this->authorize('leave', $event);
+        $event->players()->detach($request->id);
+        Log::info('User '.Auth::id().' left event '.$event->id);
     }
 }

@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::put('/events/{event}', 'EventController@update');
     Route::post('/events/{event}/close', 'EventController@close');
     Route::delete('/events/{event}', 'EventController@delete');
+    Route::put('/events/{event}/kick', 'EventController@kickPlayer');
+    Route::put('/events/{event}/leave', 'EventController@leaveEvent');
 
     Route::post('/invitations', 'InvitationController@create');
     Route::get('/invitations/{invitation}', 'InvitationController@show');
