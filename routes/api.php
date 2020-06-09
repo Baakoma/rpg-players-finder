@@ -20,6 +20,13 @@ Route::get('/types', 'TypeController@index');
 
 Route::get('/notifications','NotificationController@index');
 
+Route::get('/friends', 'FriendsListController@index');
+Route::post('/friends', 'FriendsListController@create');
+Route::get('/friends/{friendsList}', 'FriendsListController@show');
+Route::delete('/friends/{friendsList}', 'FriendsListController@destroy');
+Route::post('/friends/{friendsList}/accept', 'FriendsListController@accept');
+Route::post('/friends/{friendsList}/decline', 'FriendsListController@decline');
+
 /** Only users+ */
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('/profile/{profile}', 'ProfileController@show');

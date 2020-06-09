@@ -14,6 +14,7 @@ class User extends Authenticatable
     private const ROLE_USER = 0;
 
     protected $fillable = [
+        'name',
         'role',
         'email',
         'password',
@@ -55,5 +56,10 @@ class User extends Authenticatable
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class);
+    }
+
+    public function friendsList(): HasMany
+    {
+        return $this->hasMany(FriendsList::class);
     }
 }
