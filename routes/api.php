@@ -22,6 +22,9 @@ Route::get('/types', 'TypeController@index');
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('/profile/{profile}', 'ProfileController@show');
     Route::put('/profile/{profile}', 'ProfileController@update');
+    Route::get('/profile/{user}/myevents', 'ProfileController@indexMyEvents');
+    Route::get('/profile/{user}/events', 'ProfileController@indexEvents');
+    Route::get('/profile/{user}/events/history', 'ProfileController@indexEventsHistory');
 
     Route::post('/events', 'EventController@create');
     Route::get('/events/{event}', 'EventController@show');
@@ -44,11 +47,6 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::post('/join-request/{joinRequest}/accept', 'JoinRequestController@accept');
     Route::post('/join-request/{joinRequest}/decline', 'JoinRequestController@decline');
     Route::post('/join-request/{joinRequest}/close', 'JoinRequestController@close');
-
-    Route::post('/ticket/{profile}', 'TicketController@create');
-    Route::get('/ticket/{profile}', 'TicketController@show');
-    Route::put('/ticket/{profile}', 'TicketController@update');
-    Route::delete('/ticket/{profile}', 'TicketController@destroy');
 });
 
 /** Only admin */
